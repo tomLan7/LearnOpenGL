@@ -5,7 +5,7 @@
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include<GLFW/glfw3.h>
-
+#include"Shader.h"
 GLFWwindow* initWindow() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -50,60 +50,9 @@ void someOpenGLFunctionThatDrawsOurTriangle() {
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
 //由顶点着色器设置出参来控制 片段着色器
-GLuint ShaderTest() {
+ShaderProgram* ShaderTest() {
     //设置着色器代码
-    const char* vertexShaderSource = R"(
-    #version 330 core
-    layout (location = 7) in vec3 position; // position变量的属性位置值为0
-    layout (location = 8) in vec3 color; // position变量的属性位置值为0
-    out vec4 vertexColor; // 为片段着色器指定一个颜色输出
-    void main()
-    {
-        gl_Position = vec4(position, 1.0); // 注意我们如何把一个vec3作为vec4的构造器的参数
-        vertexColor = vec4(color, 1.0f); 
-    }
-    )";
-    GLuint vertexShader;
-    //创建着色器对象。定点着色器
-    vertexShader = glCreateShader(GL_VERTEX_SHADER);
-    //绑定着色器对象为某个源代码。只绑定一个对象。不设置长度
-    glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-    glCompileShader(vertexShader);
-
-    GLint success;
-    GLchar infoLog[512];
-    //获得某个着色器对象的编译状态
-    glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-    if (!success)
-    {
-        glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-        std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
-    }
-    const char* fragmentShaderSource = R"(
-        #version 330 core
-        in vec4 vertexColor; // 从顶点着色器传来的输入变量（名称相同、类型相同）
-        out vec4 color; // 片段着色器输出的变量名可以任意命名，类型必须是vec4
-        void main()
-        {
-            color = vertexColor;
-            //color=vec4(0.5f,0.5f,0.5f,0.5f);
-        }
-    )";
-    GLuint fragmentShader;
-    //创建片段着色器
-    fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragmentShader, 1, &fragmentShaderSource, nullptr);
-    glCompileShader(fragmentShader);
-
-    GLuint shaderProgram;
-    //创建着色器程序对象
-    shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
-    glAttachShader(shaderProgram, fragmentShader);
-    //连接所有附加的着色器对象为着色器程序
-    glLinkProgram(shaderProgram);
-    glDeleteShader(vertexShader);
-    glDeleteShader(fragmentShader);
+    auto shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx6.vs", "lx6.frag");
     return shaderProgram;
 }
 
@@ -123,7 +72,7 @@ int main()
     //缓冲区，1表示生成缓冲区对象的数量。可以函数调用中生成多个对象，此时VBO也应该是对应的GLuint数组的地址。缓冲区对象类似一个指针。
     glGenBuffers(1, &VBO);
 
-    GLuint shaderProgram = ShaderTest();
+    ShaderProgram* shaderProgram = ShaderTest();
 
     GLuint VAO;
     //创建顶点数组数组
@@ -153,7 +102,7 @@ int main()
     {
         //检查事件
         glfwPollEvents();
-        glUseProgram(shaderProgram);
+        shaderProgram->User();
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         glBindVertexArray(VAO);

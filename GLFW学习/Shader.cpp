@@ -51,7 +51,7 @@ Shader Shader::FromFile(const std::string& path, GLenum shaderType)
 	}
 	const GLchar* ShaderCode_C = ShaderCode.c_str();
 	Shader newShader(glCreateShader(shaderType), shaderType);
-
-	glShaderSource((GLuint)newShader, 1, &ShaderCode_C, NULL);
+	GLuint guint=(GLuint)newShader;
+	glShaderSource(guint, 1, &ShaderCode_C, NULL);
 	return newShader;
 }

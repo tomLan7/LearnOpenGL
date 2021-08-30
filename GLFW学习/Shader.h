@@ -1,6 +1,7 @@
 #pragma once
 #include<string>
 #include<memory>
+#include<iostream>
 /*封装原则：
 * 一些经常用来分享的用智能指针包装。
 * 一些经常临时使用的用栈区对象
@@ -8,13 +9,19 @@
 */
 class OpenGLObjectBase {
 protected:
-	GLuint ObjectId;
+	GLuint ObjectId=0;
 	virtual ~OpenGLObjectBase() {
 		glDeleteShader(ObjectId);
 	}
 	OpenGLObjectBase(GLuint ObjectId) {
 		this->ObjectId = ObjectId;
 	}
+	OpenGLObjectBase(OpenGLObjectBase&& other) {
+		std::swap(this->ObjectId,other.ObjectId);
+	}
+	OpenGLObjectBase() = delete;
+	OpenGLObjectBase(const OpenGLObjectBase&) = delete;
+
 public:
 	explicit operator GLuint() {
 		return ObjectId;
@@ -29,6 +36,9 @@ public:
 	}
 	Shader(GLenum Type) :OpenGLObjectBase(glCreateShader(Type)) {
 		ShaderType = Type;
+	}
+	Shader(Shader&& other) :OpenGLObjectBase(std::move(other)) {
+		std::swap(this->ShaderType, other.ShaderType);
 	}
 
 	static Shader FromFile(const std::string& path, GLenum shaderType);
