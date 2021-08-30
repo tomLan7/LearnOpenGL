@@ -98,7 +98,7 @@ GLuint ShaderTest() {
     GLuint shaderProgram;
     //创建着色器程序对象
     shaderProgram = glCreateProgram();
-    glAttachShader(shaderProgram, vertexShader);
+    glAttachShader(shaderProgram,vertexShader);
     glAttachShader(shaderProgram, fragmentShader);
     //连接所有附加的着色器对象为着色器程序
     glLinkProgram(shaderProgram);
@@ -154,7 +154,7 @@ int main()
         //检查事件
         glfwPollEvents();
         glUseProgram(shaderProgram);
-        glClearColor(0.2, 0.3f, 0.3f, 1.0f);
+        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         glBindVertexArray(VAO);
         someOpenGLFunctionThatDrawsOurTriangle();

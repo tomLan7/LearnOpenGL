@@ -159,11 +159,18 @@
     <ClCompile Include="lx4 着色器.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="lx5 缓冲输入数据和封装着色器.cpp" />
+    <ClCompile Include="lx5 缓冲输入顶点和颜色数据.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="lx6 封装的Shader.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Shader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GLFW学习.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

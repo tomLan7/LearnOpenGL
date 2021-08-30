@@ -27,10 +27,13 @@
     <ClCompile Include="lx4 着色器.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="lx5 缓冲输入数据和封装着色器.cpp">
+    <ClCompile Include="lx5 缓冲输入顶点和颜色数据.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lx6 封装的Shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -38,5 +41,13 @@
     <ClInclude Include="Shader.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="GLFW学习.rc">
+      <Filter>资源文件</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>
