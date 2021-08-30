@@ -24,5 +24,19 @@
     <ClCompile Include="lx3 长方形.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx4 着色器.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lx5 缓冲输入数据和封装着色器.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Shader.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
