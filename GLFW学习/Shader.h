@@ -24,8 +24,13 @@ class Shader:public OpenGLObjectBase
 {
 	GLenum ShaderType;
 public:
-	using OpenGLObjectBase::OpenGLObjectBase;
-	
+	Shader(GLuint ObjectId, GLenum Type):OpenGLObjectBase (ObjectId){
+		ShaderType = Type;
+	}
+	Shader(GLenum Type) :OpenGLObjectBase(glCreateShader(Type)) {
+		ShaderType = Type;
+	}
+
 	static Shader FromFile(const std::string& path, GLenum shaderType);
 	GLint CompileShader() {
 		glCompileShader(ObjectId);
@@ -38,8 +43,6 @@ public:
 		glGetShaderInfoLog(ObjectId, 512, NULL, infoLog);
 		return std::make_shared<std::string>(infoLog);
 	}
-
-	
 };
 class ShaderProgram:public OpenGLObjectBase {
 public:

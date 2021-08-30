@@ -6,22 +6,22 @@
 #include <GL/glew.h>
 #include "Shader.h"
 using namespace std;
-inline ShaderProgram* ShaderProgram::CreateFromVertexAndFragmentPath(const std::string& vertexPath, const std::string& fragmentPath) {
+ShaderProgram* ShaderProgram::CreateFromVertexAndFragmentPath(const std::string& vertexPath, const std::string& fragmentPath) {
 	auto ShaderVertex = Shader::FromFile(vertexPath, GL_VERTEX_SHADER);
 	auto ShaderFragment = Shader::FromFile(fragmentPath, GL_FRAGMENT_SHADER);
 	if (!ShaderVertex.CompileShader()) {
-		cout << ShaderVertex.GetLog() << endl;
+		cout << "Failed To Shader Compile"<<ShaderVertex.GetLog() << endl;
 		return nullptr;
 	}
 	if (!ShaderFragment.CompileShader()) {
-		cout << ShaderFragment.GetLog() << endl;
+		cout << "Failed To Shader Compile" << ShaderFragment.GetLog() << endl;
 		return nullptr;
 	}
 	auto shaderProgram = ShaderProgram::Create();
 	shaderProgram->AttachShader(ShaderVertex);
 	shaderProgram->AttachShader(ShaderFragment);
 	if (!shaderProgram->LinkProgram()) {
-		cout << ShaderFragment.GetLog() << endl;
+		cout << "Failed To Shader Link" << shaderProgram->GetLog() << endl;
 		delete shaderProgram;
 		return nullptr;
 	}
@@ -50,7 +50,8 @@ Shader Shader::FromFile(const std::string& path, GLenum shaderType)
 		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
 	}
 	const GLchar* ShaderCode_C = ShaderCode.c_str();
-	Shader newShader(glCreateShader(shaderType));
+	Shader newShader(glCreateShader(shaderType), shaderType);
+
 	glShaderSource((GLuint)newShader, 1, &ShaderCode_C, NULL);
 	return newShader;
 }

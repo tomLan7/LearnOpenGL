@@ -44,10 +44,16 @@
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="GLFW学习.rc">
+    <Text Include="lx6.vs">
       <Filter>资源文件</Filter>
-    </ResourceCompile>
+    </Text>
+    <Text Include="lx6.frag">
+      <Filter>资源文件</Filter>
+    </Text>
   </ItemGroup>
 </Project>
