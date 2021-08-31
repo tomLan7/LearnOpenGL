@@ -39,6 +39,9 @@
     <ClCompile Include="lx7 移动和颜色等于位置.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx8 纹理.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
