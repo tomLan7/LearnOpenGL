@@ -6,6 +6,8 @@
 #include <GL/glew.h>
 #include<GLFW/glfw3.h>
 #include"Shader.h"
+#include<unordered_map>
+using namespace std;
 GLFWwindow* initWindow() {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
