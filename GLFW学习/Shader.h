@@ -75,6 +75,12 @@ public:
 	void User() {
 		glUseProgram(ObjectId);
 	}
+	void Uniform(const std::string & attrName,float Value) {
+		glUniform1f(glGetUniformLocation(this->ObjectId, attrName.c_str()), Value);
+	}
+	void Uniform(const std::string& attrName, float ValueX,float ValueY,float ValueZ,float ValueW) {
+		glUniform4f(glGetUniformLocation(this->ObjectId, attrName.c_str()), ValueX, ValueY, ValueZ, ValueW);
+	}
 
 	static ShaderProgram* Create() {
 		return new ShaderProgram(glCreateProgram());

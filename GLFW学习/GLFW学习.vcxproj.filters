@@ -36,6 +36,9 @@
     <ClCompile Include="lx6 封装的Shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx7 移动和颜色等于位置.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -55,5 +58,13 @@
     <Text Include="lx6.frag">
       <Filter>资源文件</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lx7.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx7.vs">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
