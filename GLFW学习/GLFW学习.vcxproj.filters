@@ -42,6 +42,9 @@
     <ClCompile Include="lx8 纹理.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx9 多纹理.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -69,5 +72,25 @@
     <None Include="lx7.vs">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="lx8.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx8.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx9.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx9.vs">
+      <Filter>资源文件</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="container.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="picture.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
   </ItemGroup>
 </Project>

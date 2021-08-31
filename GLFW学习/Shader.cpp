@@ -10,11 +10,11 @@ ShaderProgram* ShaderProgram::CreateFromVertexAndFragmentPath(const std::string&
 	auto ShaderVertex = Shader::FromFile(vertexPath, GL_VERTEX_SHADER);
 	auto ShaderFragment = Shader::FromFile(fragmentPath, GL_FRAGMENT_SHADER);
 	if (!ShaderVertex.CompileShader()) {
-		cout << "Failed To Shader Compile"<<ShaderVertex.GetLog() << endl;
+		cout << "Failed To Vertex Shader Compile"<<ShaderVertex.GetLog() << endl;
 		return nullptr;
 	}
 	if (!ShaderFragment.CompileShader()) {
-		cout << "Failed To Shader Compile" << ShaderFragment.GetLog() << endl;
+		cout << "Failed To Fragment Shader Compile" << ShaderFragment.GetLog() << endl;
 		return nullptr;
 	}
 	auto shaderProgram = ShaderProgram::Create();

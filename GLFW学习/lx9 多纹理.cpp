@@ -57,7 +57,7 @@ void someOpenGLFunctionThatDrawsOurTriangle() {
 //由顶点着色器设置出参来控制 片段着色器
 ShaderProgram* ShaderTest() {
     //设置着色器代码
-    auto shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx8.vs", "lx8.frag");
+    auto shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx9.vs", "lx9.frag");
     return shaderProgram;
 }
 void shaderTestMainLoop(ShaderProgram* shaderProgram) {
@@ -78,20 +78,7 @@ int main()
     glfwGetFramebufferSize(window, &width, &height);
     //设置视图变换
     glViewport(0, 0, width, height);
-    //纹理相关
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    int texWidth, texHeight;
-    unsigned char* image = SOIL_load_image("container.jpg", &texWidth, &texHeight, 0, SOIL_LOAD_RGB);
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
-    //自动生成多级图像
-    glGenerateMipmap(GL_TEXTURE_2D);
-    SOIL_free_image_data(image);
-    glBindTexture(GL_TEXTURE_2D, 0);
+    
 
 
     GLuint VBO;
@@ -99,6 +86,31 @@ int main()
     glGenBuffers(1, &VBO);
 
     ShaderProgram* shaderProgram = ShaderTest();
+
+    //纹理相关
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
+    GLuint texture[2];
+    glGenTextures(2, texture);
+
+    glBindTexture(GL_TEXTURE_2D, texture[0]);
+    int texWidth, texHeight;
+    unsigned char* image = SOIL_load_image("container.jpg", &texWidth, &texHeight, 0, SOIL_LOAD_RGB);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    glBindTexture(GL_TEXTURE_2D, texture[1]);
+    unsigned char* image2 = SOIL_load_image("picture.jpg", &texWidth, &texHeight, 0, SOIL_LOAD_RGB);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image2);
+    //自动生成多级图像
+    glGenerateMipmap(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    SOIL_free_image_data(image);
+    SOIL_free_image_data(image2);
+
+
+
 
     GLuint VAO;
     //创建顶点数组数组
@@ -135,10 +147,19 @@ int main()
         glfwPollEvents();
         shaderTestMainLoop(shaderProgram);
         shaderProgram->User();
+
+
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, texture[0]);
+        glUniform1i(glGetUniformLocation(shaderProgram->operator GLuint(), "ourTexture1"), 0);
+
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, texture[1]);
+        glUniform1i(glGetUniformLocation(shaderProgram->operator GLuint(), "ourTexture2"), 1);
+
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         glBindVertexArray(VAO); 
-        glBindTexture(GL_TEXTURE_2D, texture);
         someOpenGLFunctionThatDrawsOurTriangle();
         glBindVertexArray(0);
 
