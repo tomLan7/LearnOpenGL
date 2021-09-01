@@ -63,10 +63,11 @@ ShaderProgram* ShaderTest() {
 void shaderTestMainLoop(ShaderProgram* shaderProgram) {
     // 更新uniform颜色
     GLfloat timeValue = glfwGetTime();
-    GLfloat offsetValue = (sin(timeValue) / 2) + 0.5;
+    GLfloat offsetValue = (sin(timeValue) / 2);
     shaderProgram->Uniform("offset", offsetValue);
 }
-
+GLfloat mixValue=0.2;
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 int main()
 {
     GLFWwindow* window = initWindow();
@@ -78,6 +79,7 @@ int main()
     glfwGetFramebufferSize(window, &width, &height);
     //设置视图变换
     glViewport(0, 0, width, height);
+    glfwSetKeyCallback(window, key_callback);
     
 
 
@@ -88,12 +90,13 @@ int main()
     ShaderProgram* shaderProgram = ShaderTest();
 
     //纹理相关
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
     GLuint texture[2];
     glGenTextures(2, texture);
 
     glBindTexture(GL_TEXTURE_2D, texture[0]);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     int texWidth, texHeight;
     unsigned char* image = SOIL_load_image("container.jpg", &texWidth, &texHeight, 0, SOIL_LOAD_RGB);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
@@ -101,6 +104,9 @@ int main()
     glBindTexture(GL_TEXTURE_2D, 0);
 
     glBindTexture(GL_TEXTURE_2D, texture[1]);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
     unsigned char* image2 = SOIL_load_image("picture.jpg", &texWidth, &texHeight, 0, SOIL_LOAD_RGB);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, texWidth, texHeight, 0, GL_RGB, GL_UNSIGNED_BYTE, image2);
     //自动生成多级图像
@@ -151,12 +157,13 @@ int main()
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture[0]);
-        glUniform1i(glGetUniformLocation(shaderProgram->operator GLuint(), "ourTexture1"), 0);
+        shaderProgram->Uniform("ourTexture1",0);
 
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture[1]);
-        glUniform1i(glGetUniformLocation(shaderProgram->operator GLuint(), "ourTexture2"), 1);
+        shaderProgram->Uniform("ourTexture2",1);
 
+        shaderProgram->Uniform("mixValue",mixValue);
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         glBindVertexArray(VAO); 
@@ -168,4 +175,22 @@ int main()
     }
     glfwTerminate();
     return 0;
+}
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GL_TRUE);
+    // Change value of uniform with arrow keys (sets amount of textre mix)
+    if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+    {
+        mixValue += 0.1f;
+        if (mixValue >= 1.0f)
+            mixValue = 1.0f;
+    }
+    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+    {
+        mixValue -= 0.1f;
+        if (mixValue <= 0.0f)
+            mixValue = 0.0f;
+    }
 }
