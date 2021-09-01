@@ -4,8 +4,16 @@
 #include<sstream>
 #define GLEW_STATIC
 #include <GL/glew.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include "Shader.h"
 using namespace std;
+void ShaderProgram::Uniform(const std::string& attName, glm::mat4& mat)
+{
+	GLuint transformLoc = glGetUniformLocation(ObjectId, attName.c_str());
+	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(mat));
+}
 ShaderProgram* ShaderProgram::CreateFromVertexAndFragmentPath(const std::string& vertexPath, const std::string& fragmentPath) {
 	auto ShaderVertex = Shader::FromFile(vertexPath, GL_VERTEX_SHADER);
 	auto ShaderFragment = Shader::FromFile(fragmentPath, GL_FRAGMENT_SHADER);

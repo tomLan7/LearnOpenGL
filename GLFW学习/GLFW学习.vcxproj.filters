@@ -45,6 +45,12 @@
     <ClCompile Include="lx9 多纹理.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx10 数学库GLM.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lx11 二维变换.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">

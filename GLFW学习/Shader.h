@@ -7,6 +7,7 @@
 * 一些经常临时使用的用栈区对象
 * 一些需要长期保留的用堆区封装
 */
+
 class OpenGLObjectBase {
 protected:
 	GLuint ObjectId=0;
@@ -83,8 +84,8 @@ public:
 	}
 	void Uniform(const std::string& attName, int TextureIndex) {
 		glUniform1i(glGetUniformLocation(this->ObjectId, attName.c_str()), TextureIndex);
-
 	}
+	void Uniform(const std::string& attName, glm::mat4& mat);
 
 	static ShaderProgram* Create() {
 		return new ShaderProgram(glCreateProgram());
