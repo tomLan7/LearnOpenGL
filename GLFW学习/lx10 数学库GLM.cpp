@@ -13,7 +13,7 @@ int main() {
 	//无参生成的是零矩阵
 	glm::mat4 trans;
 	//变换矩阵和位移向量，生成 位移矩阵
-	trans = glm::translate(glm::mat4(1.0f),glm::vec3(1.0f, 1.0f, 0.0f));
+	trans = glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 1.0f, 0.0f));
 	glm::mat4 myScalingMatrix = glm::scale(glm::mat4(1.0f),glm::vec3(2.0f, 2.0f, 2.0f));
 	vec = trans * vec;
 	cout << vec << endl;

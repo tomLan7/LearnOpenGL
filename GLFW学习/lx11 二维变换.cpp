@@ -6,27 +6,14 @@
 #include <GL/glew.h>
 #include<GLFW/glfw3.h>
 #include<SOIL/SOIL.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include"Shader.h"
-GLFWwindow* initWindow() {
-    glfwInit();
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    //核心模式
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    //可以让用户手动修改窗口大小
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+#include"Window.h"
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
-    if (window == nullptr)
-    {
-        std::cout << "Failed to create GLFW window" << std::endl;
-        //退出并销毁资源
-        glfwTerminate();
-        exit(-1);
-    }
-    glfwMakeContextCurrent(window);
-    return window;
-}
+using namespace std;
+using namespace glm;
 void initGLEW() {
     glewExperimental = GL_TRUE;
     if (glewInit() != GLEW_OK)
@@ -46,20 +33,34 @@ GLuint indices[] = { // 注意索引从0开始!
     0, 1, 3, // 第一个三角形
     1, 2, 3  // 第二个三角形
 };
-void someOpenGLFunctionThatDrawsOurTriangle() {
+float Rotation=0;
+float x, y,z;
+float scale=1;
+void someOpenGLFunctionThatDrawsOurTriangle(ShaderProgram* shaderProgram) {
     //使用线框模式
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
+    auto TransMat = glm::translate(glm::mat4(1), glm::vec3(x, y, 0.0f));
+    shaderProgram->Uniform("transform", TransMat);
+    auto ScaleMat = glm::scale(glm::mat4(1), glm::vec3(::scale, ::scale, 1.f));
+    shaderProgram->Uniform("scaleform", ScaleMat);
+    auto RotationMat = glm::rotate(glm::mat4(1), radians(Rotation), glm::vec3(0.0, 0.0, 1.0));
+    shaderProgram->Uniform("rotation", RotationMat);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+    auto TransMat2 = glm::translate(glm::mat4(1), glm::vec3(x+0.2, y+0.2, 0.0f));
+    shaderProgram->Uniform("transform", TransMat2);
+    auto ScaleMat2 = glm::scale(glm::mat4(1), glm::vec3(1/::scale, 1/::scale, 1.f));
+    shaderProgram->Uniform("scaleform", ScaleMat2);
+    auto RotationMat2 = glm::rotate(glm::mat4(1), radians(-Rotation), glm::vec3(0.0, 0.0, 1.0));
+    shaderProgram->Uniform("rotation", RotationMat2);
     glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
     //glDrawArrays(GL_TRIANGLES,0,3);
     //使用当前激活的着色器和之前的顶点属性配置和VBO的顶点数据(用VAO间接绑定)，
     //glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }
-//由顶点着色器设置出参来控制 片段着色器
-ShaderProgram* ShaderTest() {
-    //设置着色器代码
-    auto shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx9.vs", "lx9.frag");
-    return shaderProgram;
-}
+
 void shaderTestMainLoop(ShaderProgram* shaderProgram) {
     // 更新uniform颜色
     GLfloat timeValue = glfwGetTime();
@@ -73,16 +74,13 @@ GLfloat mixValue = 0.2;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 int main()
 {
-    GLFWwindow* window = initWindow();
+    Window* window = Window::CreateWindow();
     //允许使用高级功能
     initGLEW();
 
-    int width, height;
-    //获得窗口缓冲区大小
-    glfwGetFramebufferSize(window, &width, &height);
     //设置视图变换
-    glViewport(0, 0, width, height);
-    glfwSetKeyCallback(window, key_callback);
+    glViewport(0, 0, window->width, window->height);
+    window->SetKeyCallback(key_callback);
 
 
 
@@ -90,7 +88,7 @@ int main()
     //缓冲区，1表示生成缓冲区对象的数量。可以函数调用中生成多个对象，此时VBO也应该是对应的GLuint数组的地址。缓冲区对象类似一个指针。
     glGenBuffers(1, &VBO);
 
-    ShaderProgram* shaderProgram = ShaderTest();
+    ShaderProgram* shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx11.vs", "lx11.frag");
 
     //纹理相关
     GLuint texture[2];
@@ -150,7 +148,7 @@ int main()
     glBindVertexArray(0);
 
     //主循环
-    while (!glfwWindowShouldClose(window))
+    while (!window->IsShouldClose())
     {
         glfwWaitEventsTimeout(1/60.);
         //检查事件
@@ -158,6 +156,8 @@ int main()
         shaderTestMainLoop(shaderProgram);
         shaderProgram->User();
 
+
+        shaderProgram->Uniform("mixValue", mixValue);
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture[0]);
@@ -167,34 +167,74 @@ int main()
         glBindTexture(GL_TEXTURE_2D, texture[1]);
         shaderProgram->Uniform("ourTexture2", 1);
 
-        shaderProgram->Uniform("mixValue", mixValue);
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-        glClear(GL_COLOR_BUFFER_BIT);
         glBindVertexArray(VAO);
-        someOpenGLFunctionThatDrawsOurTriangle();
+        someOpenGLFunctionThatDrawsOurTriangle(shaderProgram);
         glBindVertexArray(0);
 
         //交换缓冲区，双缓冲机制
-        glfwSwapBuffers(window);
+        window->SwapBuffers();
     }
     glfwTerminate();
     return 0;
 }
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, GL_TRUE);
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window,GL_TRUE);
+    }else
     // Change value of uniform with arrow keys (sets amount of textre mix)
-    if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+    if (key == GLFW_KEY_KP_ADD && action == GLFW_PRESS)
     {
         mixValue += 0.1f;
         if (mixValue >= 1.0f)
             mixValue = 1.0f;
     }
-    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+    else
+    if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_PRESS)
     {
         mixValue -= 0.1f;
         if (mixValue <= 0.0f)
             mixValue = 0.0f;
     }
+    else
+
+    if (key == GLFW_KEY_UP && action == GLFW_PRESS)
+    {
+        y +=0.1f;
+    }
+    else
+    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
+    {
+        y -= 0.1f;
+    }
+    else
+    if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
+    {
+        x -= 0.1f;
+    }
+    else
+    if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
+    {
+        x += 0.1f;
+    }
+    else
+    if (key == GLFW_KEY_Q && action == GLFW_PRESS)
+    {
+        Rotation+=15;
+    }
+    else
+    if (key == GLFW_KEY_E && action == GLFW_PRESS)
+    {
+        Rotation -= 15;
+    }
+    else
+    if (key == GLFW_KEY_W && action == GLFW_PRESS) {
+        ::scale*=1.1;
+    }
+    else
+    if (key == GLFW_KEY_S && action == GLFW_PRESS) {
+        ::scale *=0.9;
+
+    }
+
 }

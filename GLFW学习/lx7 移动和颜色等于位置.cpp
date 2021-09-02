@@ -59,6 +59,7 @@ ShaderProgram* ShaderTest() {
 }
 void shaderTestMainLoop(ShaderProgram* shaderProgram) {
     // 更新uniform颜色
+    //以秒为单位
     GLfloat timeValue = glfwGetTime();
     GLfloat offsetValue = (sin(timeValue) / 2) + 0.5;
     shaderProgram->Uniform("offset", offsetValue);

@@ -179,17 +179,21 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="lx6.vs" />
     <Text Include="lx6.frag" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="lx11.frag" />
+    <None Include="lx11.vs" />
     <None Include="lx7.frag" />
     <None Include="lx7.vs" />
     <None Include="lx8.frag" />
