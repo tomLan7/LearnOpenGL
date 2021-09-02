@@ -7,8 +7,7 @@ public:
 	int height;
 	Window(GLFWwindow* glWindow) {
 		this->glWindow = glWindow;
-
-		glfwGetFramebufferSize(glWindow, &width, &height);
+		RefreshSize();
 	}
 	void SetKeyCallback(GLFWkeyfun callback){
 
@@ -22,6 +21,12 @@ public:
 	}
 	void SetWindowShouldClose(GLboolean BOOL) {
 		glfwSetWindowShouldClose(glWindow, BOOL);
+	}
+	void RefreshSize() {
+		glfwGetFramebufferSize(glWindow, &width, &height);
+	}
+	void SetWindowSizeCallback(GLFWwindowsizefun callback) {
+		glfwSetWindowSizeCallback(glWindow, callback);
 	}
 public:
 	static Window* CreateWindow();

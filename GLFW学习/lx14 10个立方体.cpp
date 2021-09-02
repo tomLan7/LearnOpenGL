@@ -121,7 +121,10 @@ int main()
     //设置视图变换
     glViewport(0, 0, window->width, window->height);
     window->SetKeyCallback(key_callback);
+    window->SetWindowSizeCallback([](GLFWwindow* window, int width, int height){
 
+        glViewport(0, 0, width, height);
+    });
     glm::mat4  model = glm::rotate(mat4(1), glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
     mat4 view = glm::translate(mat4(1), glm::vec3(0.0f, 0.0f, -3.0f));
     mat4 projection = glm::perspective(glm::radians(45.0f), window->width / (float)window->height, 0.1f, 100.0f);
@@ -254,62 +257,72 @@ int main()
     glfwTerminate();
     return 0;
 }
+//规划一下按键：
+//数字键用来控制场景的元素的模型矩阵。8462移动。79旋转。13缩放。+-变色。
+//摄像机操作：wasd前进后退。q左转，e右转。空格上移，ctrl下移
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
-        glfwSetWindowShouldClose(window, GL_TRUE);
-    }
-    else
-        // Change value of uniform with arrow keys (sets amount of textre mix)
-        if (key == GLFW_KEY_KP_ADD && action == GLFW_PRESS)
+    if (action==GLFW_PRESS||action==GLFW_REPEAT) {
+        switch (key)
         {
+        case GLFW_KEY_ESCAPE:
+            glfwSetWindowShouldClose(window, GL_TRUE);
+            break;
+        case GLFW_KEY_KP_ADD:
             mixValue += 0.1f;
             if (mixValue >= 1.0f)
                 mixValue = 1.0f;
+            break;
+        case GLFW_KEY_KP_SUBTRACT:
+            mixValue -= 0.1f;
+            if (mixValue <= 0.0f)
+                mixValue = 0.0f;
+            break;
+        case GLFW_KEY_KP_1:
+            ::scale *= 1.1;
+            break;
+        case GLFW_KEY_KP_2:
+            y -= 0.1f;
+            break;
+        case GLFW_KEY_KP_3:
+            ::scale *= 0.9;
+            break;
+        case GLFW_KEY_KP_4:
+            x -= 0.1f;
+            break;
+        case GLFW_KEY_KP_5:
+            break;
+        case GLFW_KEY_KP_6:
+            x += 0.1f;
+            break;
+        case GLFW_KEY_KP_7:
+            Rotation += 15;
+            break;
+        case GLFW_KEY_KP_8:  
+                y += 0.1f;
+            break;
+        case GLFW_KEY_KP_9:
+            Rotation -= 15;
+            break;
+        case GLFW_KEY_W:
+            break;
+        case GLFW_KEY_A:
+            break;
+        case GLFW_KEY_S:
+            break;
+        case GLFW_KEY_D:
+            break;
+        case GLFW_KEY_Q:
+            break;
+        case GLFW_KEY_E:
+            break;
+        case GLFW_KEY_SPACE:
+            break;
+        case GLFW_KEY_COMMA:
+            cout << ctrl << endl;
+            break;
+        default:
+            break;
         }
-        else
-            if (key == GLFW_KEY_KP_SUBTRACT && action == GLFW_PRESS)
-            {
-                mixValue -= 0.1f;
-                if (mixValue <= 0.0f)
-                    mixValue = 0.0f;
-            }
-            else
-                if (key == GLFW_KEY_UP && action == GLFW_PRESS)
-                {
-                    y += 0.1f;
-                }
-                else
-                    if (key == GLFW_KEY_DOWN && action == GLFW_PRESS)
-                    {
-                        y -= 0.1f;
-                    }
-                    else
-                        if (key == GLFW_KEY_LEFT && action == GLFW_PRESS)
-                        {
-                            x -= 0.1f;
-                        }
-                        else
-                            if (key == GLFW_KEY_RIGHT && action == GLFW_PRESS)
-                            {
-                                x += 0.1f;
-                            }
-                            else
-                                if (key == GLFW_KEY_Q && action == GLFW_PRESS)
-                                {
-                                    Rotation += 15;
-                                }
-                                else
-                                    if (key == GLFW_KEY_E && action == GLFW_PRESS)
-                                    {
-                                        Rotation -= 15;
-                                    }
-                                    else
-                                        if (key == GLFW_KEY_W && action == GLFW_PRESS) {
-                                            ::scale *= 1.1;
-                                        }
-                                        else
-                                            if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-                                                ::scale *= 0.9;
-                                            }
+    }
 }
