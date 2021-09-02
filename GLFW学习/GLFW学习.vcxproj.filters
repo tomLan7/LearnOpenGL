@@ -54,6 +54,15 @@
     <ClCompile Include="Window.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx12 3D平板.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lx13 3D立方体.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lx14 10个立方体.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -100,6 +109,12 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx11.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx12.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx12.vs">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
