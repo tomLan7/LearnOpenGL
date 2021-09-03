@@ -75,6 +75,12 @@ float x, y, z;
 float scale = 1;
 
 
+glm::mat4 viewRotation(1);
+glm::mat4 viewMove(1);
+mat4 view;
+mat4 projection;
+
+
 void someOpenGLFunctionThatDrawsOurTriangle(ShaderProgram* shaderProgram) {
     //使用线框模式
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
@@ -112,6 +118,9 @@ void shaderTestMainLoop(ShaderProgram* shaderProgram) {
 }
 GLfloat mixValue = 0.2;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mode);
+void changeState(Window* window);
+bool keys[1024] = { 0 };
 int main()
 {
     Window* window = Window::CreateWindow();
@@ -120,14 +129,14 @@ int main()
 
     //设置视图变换
     glViewport(0, 0, window->width, window->height);
-    window->SetKeyCallback(key_callback);
+    window->SetKeyCallback(key_callback2);
     window->SetWindowSizeCallback([](GLFWwindow* window, int width, int height){
 
         glViewport(0, 0, width, height);
     });
-    glm::mat4  model = glm::rotate(mat4(1), glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    mat4 view = glm::translate(mat4(1), glm::vec3(0.0f, 0.0f, -3.0f));
-    mat4 projection = glm::perspective(glm::radians(45.0f), window->width / (float)window->height, 0.1f, 100.0f);
+    //model = glm::rotate(mat4(1), glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    view = glm::translate(mat4(1), glm::vec3(0.0f, 0.0f, -3.0f));
+    projection = glm::perspective(glm::radians(45.0f), window->width / (float)window->height, 0.1f, 100.0f);
     glm::vec3 cubePositions[] = {
       glm::vec3(0.0f,  0.0f,  0.0f),
       glm::vec3(2.0f,  5.0f, -15.0f),
@@ -145,14 +154,14 @@ int main()
     //缓冲区，1表示生成缓冲区对象的数量。可以函数调用中生成多个对象，此时VBO也应该是对应的GLuint数组的地址。缓冲区对象类似一个指针。
     glGenBuffers(1, &VBO);
 
-    ShaderProgram* shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx12.vs", "lx12.frag");
+    ShaderProgram* shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx14.vs", "lx12.frag");
 
     //纹理相关
     GLuint texture[2];
     glGenTextures(2, texture);
 
     glBindTexture(GL_TEXTURE_2D, texture[0]);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     int texWidth, texHeight;
@@ -162,7 +171,7 @@ int main()
     glBindTexture(GL_TEXTURE_2D, 0);
 
     glBindTexture(GL_TEXTURE_2D, texture[1]);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);
     unsigned char* image2 = SOIL_load_image("picture.jpg", &texWidth, &texHeight, 0, SOIL_LOAD_RGB);
@@ -203,11 +212,17 @@ int main()
     glBindVertexArray(0);
     glEnable(GL_DEPTH_TEST);
     //主循环
+    double NextFrameDelay = 1 / 60.;
+    double nextTime= glfwGetTime()+ NextFrameDelay;
     while (!window->IsShouldClose())
     {
-        glfwWaitEventsTimeout(1 / 60.);
+        double needSleep=nextTime - glfwGetTime();
+        needSleep = needSleep>0?needSleep:0;
+        nextTime += NextFrameDelay;
+        glfwWaitEventsTimeout(needSleep);
         //检查事件
         glfwPollEvents();
+        changeState(window);
         shaderTestMainLoop(shaderProgram);
         shaderProgram->User();
 
@@ -222,8 +237,8 @@ int main()
         glBindTexture(GL_TEXTURE_2D, texture[1]);
         shaderProgram->Uniform("ourTexture2", 1);
 
-        shaderProgram->Uniform("model", model);
-        shaderProgram->Uniform("view", view);
+        //shaderProgram->Uniform("model", model);
+        shaderProgram->Uniform("view", viewMove* viewRotation* view);
         shaderProgram->Uniform("projection", projection);
 
         auto TransMat = glm::translate(glm::mat4(1), glm::vec3(x, y, 0.0f));
@@ -262,6 +277,7 @@ int main()
 //摄像机操作：wasd前进后退。q左转，e右转。空格上移，ctrl下移
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
+    
     if (action==GLFW_PRESS||action==GLFW_REPEAT) {
         switch (key)
         {
@@ -305,24 +321,155 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             Rotation -= 15;
             break;
         case GLFW_KEY_W:
+            view = viewRotation * view;
+            viewRotation = mat4(1);
+            viewMove = translate(viewMove,vec3(0,0,0.1));
             break;
         case GLFW_KEY_A:
+            view = viewRotation * view;
+            viewRotation = mat4(1);
+            viewMove = translate(viewMove, vec3(0.1, 0, 0));
             break;
         case GLFW_KEY_S:
+            view = viewRotation * view;
+            viewRotation = mat4(1);
+            viewMove = translate(viewMove, vec3(0, 0, -0.1));
             break;
         case GLFW_KEY_D:
+            view = viewRotation * view;
+            viewRotation = mat4(1);
+            viewMove = translate(viewMove, vec3(-0.1, 0, 0));
             break;
         case GLFW_KEY_Q:
+            view = viewMove * view;
+            viewMove = mat4(1);
+            viewRotation = rotate(viewRotation,radians(-10.f),vec3(0,1,0));
             break;
         case GLFW_KEY_E:
+            view = viewMove * view;
+            viewMove = mat4(1);
+            viewRotation = rotate(viewRotation, radians(10.f), vec3(0, 1, 0));
             break;
         case GLFW_KEY_SPACE:
+            view = viewRotation * view;
+            viewRotation = mat4(1);
+            viewMove = translate(viewMove, vec3(0, -0.1, 0));
             break;
-        case GLFW_KEY_COMMA:
-            cout << ctrl << endl;
+        case GLFW_KEY_LEFT_CONTROL:
+            view = viewRotation * view;
+            viewRotation = mat4(1);
+            viewMove = translate(viewMove, vec3(0,0.1, 0));
             break;
         default:
             break;
         }
+    }
+}
+void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+    if (action == GLFW_PRESS) {
+        keys[key] = true;
+    }
+    if (action == GLFW_RELEASE) {
+        keys[key] = false;
+    }
+}
+void changeState(Window* window) {
+    for (int i = 0; i < 1024; i++) {
+        if (keys[i] == true)
+            switch (i)
+            {
+            case GLFW_KEY_ESCAPE:
+                window->SetWindowShouldClose(GL_TRUE);
+                break;
+            case GLFW_KEY_KP_ADD:
+                mixValue += 0.1f;
+                if (mixValue >= 1.0f)
+                    mixValue = 1.0f;
+                break;
+            case GLFW_KEY_KP_SUBTRACT:
+                mixValue -= 0.1f;
+                if (mixValue <= 0.0f)
+                    mixValue = 0.0f;
+                break;
+            case GLFW_KEY_KP_1:
+                ::scale *= 1.1;
+                break;
+            case GLFW_KEY_KP_2:
+                y -= 0.1f;
+                break;
+            case GLFW_KEY_KP_3:
+                ::scale *= 0.9;
+                break;
+            case GLFW_KEY_KP_4:
+                x -= 0.1f;
+                break;
+            case GLFW_KEY_KP_5:
+                break;
+            case GLFW_KEY_KP_6:
+                x += 0.1f;
+                break;
+            case GLFW_KEY_KP_7:
+                Rotation += 15;
+                break;
+            case GLFW_KEY_KP_8:
+                y += 0.1f;
+                break;
+            case GLFW_KEY_KP_9:
+                Rotation -= 15;
+                break;
+            case GLFW_KEY_W:
+                view = viewRotation * view;
+                viewRotation = mat4(1);
+                viewMove = translate(viewMove, vec3(0, 0, 0.1));
+                break;
+            case GLFW_KEY_A:
+                view = viewRotation * view;
+                viewRotation = mat4(1);
+                viewMove = translate(viewMove, vec3(0.1, 0, 0));
+                break;
+            case GLFW_KEY_S:
+                view = viewRotation * view;
+                viewRotation = mat4(1);
+                viewMove = translate(viewMove, vec3(0, 0, -0.1));
+                break;
+            case GLFW_KEY_D:
+                view = viewRotation * view;
+                viewRotation = mat4(1);
+                viewMove = translate(viewMove, vec3(-0.1, 0, 0));
+                break;
+            case GLFW_KEY_Q:
+                view = viewMove * view;
+                viewMove = mat4(1);
+                viewRotation = rotate(viewRotation, radians(-3.f), vec3(0, 1, 0));
+                break;
+            case GLFW_KEY_E:
+                view = viewMove * view;
+                viewMove = mat4(1);
+                viewRotation = rotate(viewRotation, radians(3.f), vec3(0, 1, 0));
+                break;
+            case GLFW_KEY_SPACE:
+                view = viewRotation * view;
+                viewRotation = mat4(1);
+                viewMove = translate(viewMove, vec3(0, -0.1, 0));
+                break;
+            case GLFW_KEY_LEFT_CONTROL:
+                view = viewRotation * view;
+                viewRotation = mat4(1);
+                viewMove = translate(viewMove, vec3(0, 0.1, 0));
+                break;
+            case GLFW_KEY_R:
+                view = viewRotation * view;
+                viewRotation = mat4(1);
+                viewMove = translate(viewMove, vec3(0, 0.1, 0));
+                break;
+            case GLFW_KEY_F:
+                view = viewRotation * view;
+                viewRotation = mat4(1);
+                viewMove = translate(viewMove, vec3(0, 0.1, 0));
+                break;
+            default:
+                break;
+            }
     }
 }

@@ -9,7 +9,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Shader.h"
 using namespace std;
-void ShaderProgram::Uniform(const std::string& attName, glm::mat4& mat)
+void ShaderProgram::Uniform(const std::string& attName,const glm::mat4& mat)
 {
 	GLuint transformLoc = glGetUniformLocation(ObjectId, attName.c_str());
 	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(mat));
