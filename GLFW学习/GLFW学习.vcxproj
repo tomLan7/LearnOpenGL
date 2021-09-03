@@ -161,7 +161,10 @@
     <ClCompile Include="lx13 3D立方体.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="lx14 10个立方体.cpp" />
+    <ClCompile Include="lx14 10个立方体.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="lx15 摄像机测试.cpp" />
     <ClCompile Include="lx2 三角形.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>

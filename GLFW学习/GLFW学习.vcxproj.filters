@@ -63,6 +63,9 @@
     <ClCompile Include="lx14 10个立方体.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx15 摄像机测试.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">

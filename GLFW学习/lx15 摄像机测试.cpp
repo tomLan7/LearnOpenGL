@@ -118,7 +118,7 @@ void shaderTestMainLoop(ShaderProgram* shaderProgram) {
 }
 GLfloat mixValue = 0.2;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mode); 
+void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void changeState(Window* window);
 bool keys[1024] = { 0 };
@@ -131,9 +131,9 @@ int main()
     //设置视图变换
     glViewport(0, 0, window->width, window->height);
     window->SetKeyCallback(key_callback2);
-    window->SetWindowSizeCallback([](GLFWwindow* window, int width, int height){
+    window->SetWindowSizeCallback([](GLFWwindow* window, int width, int height) {
         glViewport(0, 0, width, height);
-    });
+        });
     window->SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     window->SetCursorPosCallback(mouse_callback);
     //model = glm::rotate(mat4(1), glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
@@ -215,11 +215,11 @@ int main()
     glEnable(GL_DEPTH_TEST);
     //主循环
     double NextFrameDelay = 1 / 60.;
-    double nextTime= glfwGetTime()+ NextFrameDelay;
+    double nextTime = glfwGetTime() + NextFrameDelay;
     while (!window->IsShouldClose())
     {
-        double needSleep=nextTime - glfwGetTime();
-        needSleep = needSleep>0?needSleep:0;
+        double needSleep = nextTime - glfwGetTime();
+        needSleep = needSleep > 0 ? needSleep : 0;
         nextTime += NextFrameDelay;
         glfwWaitEventsTimeout(needSleep);
         //检查事件
@@ -240,7 +240,7 @@ int main()
         shaderProgram->Uniform("ourTexture2", 1);
 
         //shaderProgram->Uniform("model", model);
-        shaderProgram->Uniform("view", viewMove* viewRotation* view);
+        shaderProgram->Uniform("view", viewMove * viewRotation * view);
         shaderProgram->Uniform("projection", projection);
 
         auto TransMat = glm::translate(glm::mat4(1), glm::vec3(x, y, 0.0f));
@@ -259,14 +259,14 @@ int main()
             glm::mat4 model;
             model = glm::translate(mat4(1), cubePositions[i]);
             GLfloat angle = 20.0f * i;
-            model = glm::rotate(model,radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+            model = glm::rotate(model, radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
             shaderProgram->Uniform("model", model);
 
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
         glBindVertexArray(0);
         //someOpenGLFunctionThatDrawsOurTriangle(shaderProgram);
-        
+
 
         //交换缓冲区，双缓冲机制
         window->SwapBuffers();
@@ -279,8 +279,8 @@ int main()
 //摄像机操作：wasd前进后退。q左转，e右转。空格上移，ctrl下移
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
-    
-    if (action==GLFW_PRESS||action==GLFW_REPEAT) {
+
+    if (action == GLFW_PRESS || action == GLFW_REPEAT) {
         switch (key)
         {
         case GLFW_KEY_ESCAPE:
@@ -316,8 +316,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         case GLFW_KEY_KP_7:
             Rotation += 15;
             break;
-        case GLFW_KEY_KP_8:  
-                y += 0.1f;
+        case GLFW_KEY_KP_8:
+            y += 0.1f;
             break;
         case GLFW_KEY_KP_9:
             Rotation -= 15;
@@ -325,7 +325,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         case GLFW_KEY_W:
             view = viewRotation * view;
             viewRotation = mat4(1);
-            viewMove = translate(viewMove,vec3(0,0,0.1));
+            viewMove = translate(viewMove, vec3(0, 0, 0.1));
             break;
         case GLFW_KEY_A:
             view = viewRotation * view;
@@ -345,7 +345,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         case GLFW_KEY_Q:
             view = viewMove * view;
             viewMove = mat4(1);
-            viewRotation = rotate(viewRotation,radians(-10.f),vec3(0,1,0));
+            viewRotation = rotate(viewRotation, radians(-10.f), vec3(0, 1, 0));
             break;
         case GLFW_KEY_E:
             view = viewMove * view;
@@ -360,7 +360,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         case GLFW_KEY_LEFT_CONTROL:
             view = viewRotation * view;
             viewRotation = mat4(1);
-            viewMove = translate(viewMove, vec3(0,0.1, 0));
+            viewMove = translate(viewMove, vec3(0, 0.1, 0));
             break;
         default:
             break;
@@ -476,8 +476,8 @@ void changeState(Window* window) {
     }
 }
 
-double preX,preY;
-bool start=true;
+double preX, preY;
+bool start = true;
 void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
 
     if (start) {
@@ -494,10 +494,10 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     viewRotation = mat4(1);
     viewRotation = rotate(viewRotation, radians((float)offsetX), vec3(0, 1, 0));
     viewRotation = rotate(viewRotation, radians((float)offsetY), vec3(1, 0, 0));
-    
+
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
-    glfwSetCursorPos(window,width/2,height/2);
+    glfwSetCursorPos(window, width / 2, height / 2);
     preX = width / 2;
     preY = height / 2;
 }

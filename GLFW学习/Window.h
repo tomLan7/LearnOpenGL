@@ -28,6 +28,12 @@ public:
 	void SetWindowSizeCallback(GLFWwindowsizefun callback) {
 		glfwSetWindowSizeCallback(glWindow, callback);
 	}
+	void SetInputMode(int mode,int value) {
+		glfwSetInputMode(glWindow, mode, mode);
+	}
+	void SetCursorPosCallback(GLFWcursorposfun callback) {
+		glfwSetCursorPosCallback(glWindow,callback);
+	}
 public:
 	static Window* CreateWindow();
 };
