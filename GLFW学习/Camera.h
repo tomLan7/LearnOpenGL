@@ -22,11 +22,11 @@ public:
 };
 //先使用自带的lookat，成功后再试试用自己的lookat
 class FPSCamera {
+public:
 	glm::vec3 up;
 	glm::vec3 target;
 	glm::vec3 pos;
 
-public:
 	FPSCamera():up(0,0,1),target(0,1,0),pos(0,0,0){
 	}
 	/*vec3 getRightVector() {
@@ -45,11 +45,12 @@ public:
 	void mouseOrder(float offsetX, float offsetY);
 };
 class EulerFPSCamera {
+public:
 	glm::vec3 up;
 	glm::vec3 pos;
 
 	float Pitch=0,Roll=0, Yaw = 0;//X,Y,Z旋转的角。翻滚，俯航，偏航
-public:
+
 	EulerFPSCamera() :up(0, 0, 1), pos(0, 0, 0) {
 	}
 	glm::vec3 target() {

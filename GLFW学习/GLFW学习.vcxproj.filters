@@ -159,6 +159,12 @@
     <None Include="lx18.vs">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="lx19.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx19.vs">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">

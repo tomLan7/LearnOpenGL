@@ -229,6 +229,8 @@
     <None Include="lx17.frag" />
     <None Include="lx18.frag" />
     <None Include="lx18.vs" />
+    <None Include="lx19.frag" />
+    <None Include="lx19.vs" />
     <None Include="lx7.frag" />
     <None Include="lx7.vs" />
     <None Include="lx8.frag" />

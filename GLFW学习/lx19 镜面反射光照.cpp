@@ -143,7 +143,7 @@ int main()
       glm::vec3(1.5f,  0.2f, -1.5f),
       glm::vec3(-1.3f,  1.0f, -1.5f)
     };
-    ShaderProgram* shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx18.vs", "lx18.frag");
+    ShaderProgram* shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx19.vs", "lx19.frag");
     ShaderProgram* LightShaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx18.vs", "lx16light.frag");
 
     GLuint VBO;
@@ -212,7 +212,9 @@ int main()
             shaderProgram->Uniform("lightColor", vec3(1, 1, 1));
             shaderProgram->Uniform("objectColor", vec3(1.0f, 0.5f, 0.31f));
             shaderProgram->Uniform("ambientStrength", 0.3f);
+            shaderProgram->Uniform("specularStrength",0.5f);
             shaderProgram->Uniform("lightPos", lightPos);
+            shaderProgram->Uniform("viewPos", camera->pos);
             glDrawArrays(GL_TRIANGLES, 0, 36);
         }
 
