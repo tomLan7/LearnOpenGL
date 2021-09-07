@@ -85,6 +85,9 @@ public:
 	void Uniform(const std::string& attName, int TextureIndex) {
 		glUniform1i(glGetUniformLocation(this->ObjectId, attName.c_str()), TextureIndex);
 	}
+	void Uniform(const std::string& attName,glm::vec3 value) {
+		glUniform3f(glGetUniformLocation(this->ObjectId, attName.c_str()), value.x, value.y, value.z);
+	}
 	void Uniform(const std::string& attName, const glm::mat4& mat);
 
 	static ShaderProgram* Create() {

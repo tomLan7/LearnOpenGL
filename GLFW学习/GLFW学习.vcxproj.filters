@@ -69,6 +69,18 @@
     <ClCompile Include="Camera.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx16 光照场地搭建.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lx17 环境光照.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lx18 漫反射光照.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lx19 镜面反射光照.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -127,6 +139,24 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx14.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx16.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx16.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx16light.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx17.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx18.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx18.vs">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

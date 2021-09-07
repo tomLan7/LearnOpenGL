@@ -165,7 +165,19 @@
     <ClCompile Include="lx14 10个立方体.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="lx15 摄像机测试.cpp" />
+    <ClCompile Include="lx15 摄像机测试.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="lx16 光照场地搭建.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="lx17 环境光照.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="lx18 漫反射光照.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="lx19 镜面反射光照.cpp" />
     <ClCompile Include="lx2 三角形.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -211,6 +223,12 @@
     <None Include="lx12.frag" />
     <None Include="lx12.vs" />
     <None Include="lx14.vs" />
+    <None Include="lx16.frag" />
+    <None Include="lx16.vs" />
+    <None Include="lx16light.frag" />
+    <None Include="lx17.frag" />
+    <None Include="lx18.frag" />
+    <None Include="lx18.vs" />
     <None Include="lx7.frag" />
     <None Include="lx7.vs" />
     <None Include="lx8.frag" />
