@@ -34,6 +34,9 @@ public:
 	void SetCursorPosCallback(GLFWcursorposfun callback) {
 		glfwSetCursorPosCallback(glWindow,callback);
 	}
+	void SetScrollCallback(GLFWscrollfun callback) {
+		glfwSetScrollCallback(glWindow,callback);
+	}
 public:
 	static Window* CreateWindow();
 };

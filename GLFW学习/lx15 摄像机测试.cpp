@@ -78,6 +78,7 @@ float scale = 1;
 
 
 mat4 projection;
+float angleView=45;
 
 
 void someOpenGLFunctionThatDrawsOurTriangle(ShaderProgram* shaderProgram) {
@@ -120,8 +121,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void changeState(Window* window);
+void scroll_callback(GLFWwindow*, double, double);
+
 bool keys[1024] = { 0 };
-FPSCamera* camera=new FPSCamera();
+EulerFPSCamera* camera=new EulerFPSCamera();
 int main()
 {
     Window* window = Window::CreateWindow();
@@ -136,8 +139,8 @@ int main()
         });
     window->SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     window->SetCursorPosCallback(mouse_callback);
+    window->SetScrollCallback(scroll_callback);
     //model = glm::rotate(mat4(1), glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    projection = glm::perspective(glm::radians(45.0f), window->width / (float)window->height, 0.1f, 100.0f);
     glm::vec3 cubePositions[] = {
       glm::vec3(0.0f,  0.0f,  0.0f),
       glm::vec3(2.0f,  5.0f, -15.0f),
@@ -240,6 +243,7 @@ int main()
 
         //shaderProgram->Uniform("model", model);
         shaderProgram->Uniform("view", camera->ToViewMatrix());
+        projection = glm::perspective(glm::radians(angleView), window->width / (float)window->height, 0.1f, 100.0f);
         shaderProgram->Uniform("projection", projection);
 
         auto TransMat = glm::translate(glm::mat4(1), glm::vec3(x, y, 0.0f));
@@ -428,4 +432,8 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     glfwGetFramebufferSize(window, &width, &height);
     preX = xpos;
     preY = ypos;
+}
+
+void scroll_callback(GLFWwindow*, double dx, double dy) {
+    angleView += dy;
 }

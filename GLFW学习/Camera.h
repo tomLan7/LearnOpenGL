@@ -1,6 +1,7 @@
 #pragma once
 //先定义任意视角的相机，下一步定义FPS相机，最后想办法抽象出相机父类
 //相机的原理就是管理 视图view矩阵的变化。
+#include<iostream>
 class WeightlessnessCamera
 {
 	glm::mat4 viewRotation;
@@ -44,5 +45,35 @@ public:
 	void mouseOrder(float offsetX, float offsetY);
 };
 class EulerFPSCamera {
+	glm::vec3 up;
+	glm::vec3 pos;
 
+	float Pitch=0,Roll=0, Yaw = 0;//X,Y,Z旋转的角。翻滚，俯航，偏航
+public:
+	EulerFPSCamera() :up(0, 0, 1), pos(0, 0, 0) {
+	}
+	glm::vec3 target() {
+		return glm::normalize(glm::vec3(cos(Yaw), sin(Yaw), sin(Pitch)))+pos;
+	}
+	glm::vec3 face() {
+		return glm::normalize(target() - pos);
+	}
+	glm::mat4 ToViewMatrix() {
+		return  glm::lookAt(pos, target(), up);
+	}
+	void keyOrder(int key);
+	void mouseOrder(float offsetX, float offsetY);
+	void PitchAdd(float value) {
+		Pitch += value;
+		if (Pitch > glm::radians(90.0f)) Pitch = glm::radians(90.0f);
+
+		if (Pitch < glm::radians(-90.0f)) Pitch = glm::radians(-90.0f);
+		std::cout << Pitch << std::endl;
+	}
+	void RollAdd(float value) {
+		Roll += value;
+	}
+	void YawAdd(float value) {
+		Yaw += value;
+	}
 };

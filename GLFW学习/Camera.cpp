@@ -131,3 +131,46 @@ void FPSCamera::mouseOrder(float offsetX, float offsetY)
     target = pos + (vec3)(rotate(mat4(1), -radians(offsetY), cross(faceV, up)) * vec4(faceV, 0));
 
 }
+
+void EulerFPSCamera::keyOrder(int key) {
+    vec3 faceV = face();
+    switch (key)
+    {
+    case GLFW_KEY_W:
+        pos += vec3(faceV.x, faceV.y, 0) * 0.1f;
+        break;
+    case GLFW_KEY_A:
+        pos += -cross(vec3(faceV.x, faceV.y, 0), up) * 0.1f;
+        break;
+    case GLFW_KEY_S:
+        pos += -vec3(faceV.x, faceV.y, 0) * 0.1f;
+        break;
+    case GLFW_KEY_D:
+        pos += cross(vec3(faceV.x, faceV.y, 0), up) * 0.1f;
+        break;
+    case GLFW_KEY_Q:
+        YawAdd(radians(3.0f));
+        break;
+    case GLFW_KEY_E:
+        YawAdd(radians(-3.0f));
+        break;
+    case GLFW_KEY_SPACE:
+        pos += vec3(0, 0, 1) * 0.1f;
+        break;
+    case GLFW_KEY_LEFT_CONTROL:
+        pos += -vec3(0, 0, 1) * 0.1f;
+        break;
+    case GLFW_KEY_R:
+        PitchAdd(radians(3.0f));
+        break;
+    case GLFW_KEY_F:
+        PitchAdd(radians(-3.0f));
+        break;
+    default:
+        break;
+    }
+}
+void EulerFPSCamera::mouseOrder(float offsetX, float offsetY) {
+    YawAdd(radians(-offsetX));
+    PitchAdd(radians(-offsetY));
+}
