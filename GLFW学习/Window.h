@@ -29,7 +29,7 @@ public:
 		glfwSetWindowSizeCallback(glWindow, callback);
 	}
 	void SetInputMode(int mode,int value) {
-		glfwSetInputMode(glWindow, mode, mode);
+		glfwSetInputMode(glWindow, mode, value);
 	}
 	void SetCursorPosCallback(GLFWcursorposfun callback) {
 		glfwSetCursorPosCallback(glWindow,callback);

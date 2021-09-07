@@ -9,6 +9,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include"Camera.h"
 #include"Shader.h"
 #include"Window.h"
 
@@ -75,9 +76,7 @@ float x, y, z;
 float scale = 1;
 
 
-glm::mat4 viewRotation(1);
-glm::mat4 viewMove(1);
-mat4 view;
+
 mat4 projection;
 
 
@@ -122,6 +121,7 @@ void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mo
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void changeState(Window* window);
 bool keys[1024] = { 0 };
+FPSCamera* camera=new FPSCamera();
 int main()
 {
     Window* window = Window::CreateWindow();
@@ -137,7 +137,6 @@ int main()
     window->SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     window->SetCursorPosCallback(mouse_callback);
     //model = glm::rotate(mat4(1), glm::radians(-55.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    view = glm::translate(mat4(1), glm::vec3(0.0f, 0.0f, -3.0f));
     projection = glm::perspective(glm::radians(45.0f), window->width / (float)window->height, 0.1f, 100.0f);
     glm::vec3 cubePositions[] = {
       glm::vec3(0.0f,  0.0f,  0.0f),
@@ -240,7 +239,7 @@ int main()
         shaderProgram->Uniform("ourTexture2", 1);
 
         //shaderProgram->Uniform("model", model);
-        shaderProgram->Uniform("view", viewMove * viewRotation * view);
+        shaderProgram->Uniform("view", camera->ToViewMatrix());
         shaderProgram->Uniform("projection", projection);
 
         auto TransMat = glm::translate(glm::mat4(1), glm::vec3(x, y, 0.0f));
@@ -323,44 +322,16 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             Rotation -= 15;
             break;
         case GLFW_KEY_W:
-            view = viewRotation * view;
-            viewRotation = mat4(1);
-            viewMove = translate(viewMove, vec3(0, 0, 0.1));
-            break;
         case GLFW_KEY_A:
-            view = viewRotation * view;
-            viewRotation = mat4(1);
-            viewMove = translate(viewMove, vec3(0.1, 0, 0));
-            break;
         case GLFW_KEY_S:
-            view = viewRotation * view;
-            viewRotation = mat4(1);
-            viewMove = translate(viewMove, vec3(0, 0, -0.1));
-            break;
         case GLFW_KEY_D:
-            view = viewRotation * view;
-            viewRotation = mat4(1);
-            viewMove = translate(viewMove, vec3(-0.1, 0, 0));
-            break;
         case GLFW_KEY_Q:
-            view = viewMove * view;
-            viewMove = mat4(1);
-            viewRotation = rotate(viewRotation, radians(-10.f), vec3(0, 1, 0));
-            break;
         case GLFW_KEY_E:
-            view = viewMove * view;
-            viewMove = mat4(1);
-            viewRotation = rotate(viewRotation, radians(10.f), vec3(0, 1, 0));
-            break;
         case GLFW_KEY_SPACE:
-            view = viewRotation * view;
-            viewRotation = mat4(1);
-            viewMove = translate(viewMove, vec3(0, -0.1, 0));
-            break;
         case GLFW_KEY_LEFT_CONTROL:
-            view = viewRotation * view;
-            viewRotation = mat4(1);
-            viewMove = translate(viewMove, vec3(0, 0.1, 0));
+        case GLFW_KEY_R:
+        case GLFW_KEY_F:
+            camera->keyOrder(key);
             break;
         default:
             break;
@@ -420,56 +391,20 @@ void changeState(Window* window) {
             case GLFW_KEY_KP_9:
                 Rotation -= 15;
                 break;
+
             case GLFW_KEY_W:
-                view = viewRotation * view;
-                viewRotation = mat4(1);
-                viewMove = translate(viewMove, vec3(0, 0, 0.1));
-                break;
             case GLFW_KEY_A:
-                view = viewRotation * view;
-                viewRotation = mat4(1);
-                viewMove = translate(viewMove, vec3(0.1, 0, 0));
-                break;
             case GLFW_KEY_S:
-                view = viewRotation * view;
-                viewRotation = mat4(1);
-                viewMove = translate(viewMove, vec3(0, 0, -0.1));
-                break;
             case GLFW_KEY_D:
-                view = viewRotation * view;
-                viewRotation = mat4(1);
-                viewMove = translate(viewMove, vec3(-0.1, 0, 0));
-                break;
             case GLFW_KEY_Q:
-                view = viewMove * view;
-                viewMove = mat4(1);
-                viewRotation = rotate(viewRotation, radians(-3.f), vec3(0, 1, 0));
-                break;
             case GLFW_KEY_E:
-                view = viewMove * view;
-                viewMove = mat4(1);
-                viewRotation = rotate(viewRotation, radians(3.f), vec3(0, 1, 0));
-                break;
             case GLFW_KEY_SPACE:
-                view = viewRotation * view;
-                viewRotation = mat4(1);
-                viewMove = translate(viewMove, vec3(0, -0.1, 0));
-                break;
             case GLFW_KEY_LEFT_CONTROL:
-                view = viewRotation * view;
-                viewRotation = mat4(1);
-                viewMove = translate(viewMove, vec3(0, 0.1, 0));
-                break;
             case GLFW_KEY_R:
-                view = viewRotation * view;
-                viewRotation = mat4(1);
-                viewMove = translate(viewMove, vec3(0, 0.1, 0));
-                break;
             case GLFW_KEY_F:
-                view = viewRotation * view;
-                viewRotation = mat4(1);
-                viewMove = translate(viewMove, vec3(0, 0.1, 0));
-                break;
+                camera->keyOrder(i);
+            
+              
             default:
                 break;
             }
@@ -488,16 +423,9 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos) {
     }
     double offsetX = xpos - preX;
     double offsetY = ypos - preY;
-    view = viewMove * view;
-    viewMove = mat4(1);
-    view = viewRotation * view;
-    viewRotation = mat4(1);
-    viewRotation = rotate(viewRotation, radians((float)offsetX), vec3(0, 1, 0));
-    viewRotation = rotate(viewRotation, radians((float)offsetY), vec3(1, 0, 0));
-
+    camera->mouseOrder(offsetX,offsetY);
     int width, height;
     glfwGetFramebufferSize(window, &width, &height);
-    glfwSetCursorPos(window, width / 2, height / 2);
-    preX = width / 2;
-    preY = height / 2;
+    preX = xpos;
+    preY = ypos;
 }
