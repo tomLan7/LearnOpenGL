@@ -81,6 +81,9 @@
     <ClCompile Include="lx19 镜面反射光照.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx20 材质.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -163,6 +166,12 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx19.vs">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx20.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx20.vs">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

@@ -9,21 +9,11 @@ uniform mat4 rotation;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-uniform vec3 lightPos;//model坐标
 uniform vec3 viewPos;
-uniform float ambientStrength;
-uniform float specularStrength;
-uniform vec3 objectColor;
-uniform vec3 lightColor;
-out vec3 LightPos;
 out vec3 VertexColor;//不使用
 void main()
 {
     Normal=(model*rotation*vec4(normal,0)).xyz;
     gl_Position = projection*view*model*transform*rotation*scaleform*vec4(position, 1.0); // 注意我们如何把一个vec3作为vec4的构造器的参数
     FragPos = vec3((model*transform*rotation*scaleform*vec4(position, 1.0)).xyz); 
-    LightPos=lightPos+(transform*vec4(0.0f,0.0f,0.0f,1.0f)).xyz;
-
-
-    
 }

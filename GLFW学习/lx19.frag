@@ -8,6 +8,8 @@ uniform float ambientStrength;
 uniform float specularStrength;
 uniform vec3 objectColor;
 uniform vec3 lightColor;
+
+in vec3 VertexColor;
 void main()
 {
     vec3 norm=normalize(Normal);
