@@ -143,7 +143,7 @@ int main()
       glm::vec3(1.5f,  0.2f, -1.5f),
       glm::vec3(-1.3f,  1.0f, -1.5f)
     };
-    ShaderProgram* shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx20.vs", "lx20.frag");
+    ShaderProgram* shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx20.vert", "lx20.frag");
     ShaderProgram* LightShaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx18.vs", "lx16light.frag");
 
     GLuint VBO;

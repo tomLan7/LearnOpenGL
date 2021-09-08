@@ -145,7 +145,6 @@ int main()
     };
     ShaderProgram* shaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx19.vs", "lx19.frag");
     ShaderProgram* LightShaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx18.vs", "lx16light.frag");
-
     GLuint VBO;
     //缓冲区，1表示生成缓冲区对象的数量。可以函数调用中生成多个对象，此时VBO也应该是对应的GLuint数组的地址。缓冲区对象类似一个指针。
     glGenBuffers(1, &VBO);
