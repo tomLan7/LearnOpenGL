@@ -100,7 +100,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="lx6.vs">
+    <Text Include="lx6.vert">
       <Filter>资源文件</Filter>
     </Text>
     <Text Include="lx6.frag">
@@ -111,40 +111,40 @@
     <None Include="lx7.frag">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="lx7.vs">
+    <None Include="lx7.vert">
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx8.frag">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="lx8.vs">
+    <None Include="lx8.vert">
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx9.frag">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="lx9.vs">
+    <None Include="lx9.vert">
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx11.frag">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="lx11.vs">
+    <None Include="lx11.vert">
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx12.frag">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="lx12.vs">
+    <None Include="lx12.vert">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="lx14.vs">
+    <None Include="lx14.vert">
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx16.frag">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="lx16.vs">
+    <None Include="lx16.vert">
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx16light.frag">
@@ -156,13 +156,13 @@
     <None Include="lx18.frag">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="lx18.vs">
+    <None Include="lx18.vert">
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx19.frag">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="lx19.vs">
+    <None Include="lx19.vert">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

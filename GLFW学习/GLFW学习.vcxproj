@@ -214,29 +214,29 @@
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="lx6.vs" />
+    <Text Include="lx6.vert" />
     <Text Include="lx6.frag" />
   </ItemGroup>
   <ItemGroup>
     <None Include="lx11.frag" />
-    <None Include="lx11.vs" />
+    <None Include="lx11.vert" />
     <None Include="lx12.frag" />
-    <None Include="lx12.vs" />
-    <None Include="lx14.vs" />
+    <None Include="lx12.vert" />
+    <None Include="lx14.vert" />
     <None Include="lx16.frag" />
-    <None Include="lx16.vs" />
+    <None Include="lx16.vert" />
     <None Include="lx16light.frag" />
     <None Include="lx17.frag" />
     <None Include="lx18.frag" />
-    <None Include="lx18.vs" />
+    <None Include="lx18.vert" />
     <None Include="lx19.frag" />
-    <None Include="lx19.vs" />
+    <None Include="lx19.vert" />
     <None Include="lx7.frag" />
-    <None Include="lx7.vs" />
+    <None Include="lx7.vert" />
     <None Include="lx8.frag" />
-    <None Include="lx8.vs" />
+    <None Include="lx8.vert" />
     <None Include="lx9.frag" />
-    <None Include="lx9.vs" />
+    <None Include="lx9.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg" />
