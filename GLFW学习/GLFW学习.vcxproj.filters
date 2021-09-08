@@ -171,7 +171,7 @@
     <None Include="lx20.frag">
       <Filter>资源文件</Filter>
     </None>
-    <None Include="lx20.vs">
+    <None Include="lx20.vert">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

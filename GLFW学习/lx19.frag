@@ -20,7 +20,7 @@ void main()
     vec3 viewDir = normalize(viewPos - FragPos);
     vec3 reflectDir = reflect(-lightDir, norm);//根据入射光方向计算反射光方向
 
-    float spec = pow(max(dot(viewDir, reflectDir), 0.0),256);//?
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0),256);//
     vec3 specular = specularStrength * spec * lightColor;
 
     vec3 ambient=ambientStrength*lightColor;
