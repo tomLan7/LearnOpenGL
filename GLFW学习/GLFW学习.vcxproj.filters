@@ -87,6 +87,9 @@
     <ClCompile Include="lx21 光照贴图.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx22 投光物.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -181,6 +184,9 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx21.vert">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx22.frag">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

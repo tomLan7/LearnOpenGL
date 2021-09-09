@@ -54,7 +54,10 @@ public:
 	EulerFPSCamera() :up(0, 0, 1), pos(0, 0, 0) {
 	}
 	glm::vec3 target() {
-		return glm::normalize(glm::vec3(cos(Yaw), sin(Yaw), sin(Pitch)))+pos;
+		return direction()+pos;
+	}
+	glm::vec3 direction() {
+		return glm::normalize(glm::vec3(cos(Yaw), sin(Yaw), sin(Pitch)));
 	}
 	glm::vec3 face() {
 		return glm::normalize(target() - pos);
