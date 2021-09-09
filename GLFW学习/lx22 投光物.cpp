@@ -240,8 +240,8 @@ int main()
         auto viewDirection2 = camera->direction();
         auto viewDirection = vec3(inverse(camera->ToViewMatrix()) * vec4(0, 0, -1, 0));
         shaderProgram->Uniform("viewDirection", viewDirection);
-        auto cutOff = (float)cos(glm::radians(60.));
-        shaderProgram->Uniform("cutOff", cutOff);
+        shaderProgram->Uniform("cutOff", cos(glm::radians(17.5f)));
+        shaderProgram->Uniform("outerCutOff", cos(glm::radians(22.5f)));
        
 
         glActiveTexture(GL_TEXTURE0);

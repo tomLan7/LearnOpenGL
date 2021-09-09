@@ -24,14 +24,16 @@ out vec4 color; // 片段着色器输出的变量名可以任意命名，类型必须是vec4
 in vec3 Normal;
 uniform vec3 viewPos;
 uniform vec3 viewDirection;
-float cutOff;//切光角余弦
+uniform float cutOff;//切光角余弦
+uniform float outerCutOff;//外切光角余弦
 
 uniform sampler2D ourTexture2;
 
 in vec2 TexCoord;//插值后的纹理坐标
 in vec3 VertexColor;
 void DirectionalLightAndPointLight(){
-//距离衰减
+
+    //距离衰减
     float distance = length(light.position.xyz - FragPos);
     float attenuation = 1.0f / (light.constant + light.linear*distance +light.quadratic*(distance*distance));
 
@@ -64,10 +66,28 @@ void Spotlight(){
     vec3 lightDir=normalize(viewDirection);
     vec3 FragDir = normalize(FragPos-viewPos);
     
+    
     if(dot(lightDir,FragDir)>=cutOff){
-        DirectionalLightAndPointLight();
-        
-    }else{
+        //距离衰减
+        float distance = length(viewPos - FragPos);
+        float attenuation = 1.0f / (light.constant + light.linear*distance +light.quadratic*(distance*distance));
+
+        //漫反射
+        vec3 norm = normalize(Normal);
+        float diff = max(dot(norm, -lightDir), 0.0);
+        vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoord));
+
+        //镜面反射
+        vec3 viewDir = normalize(viewPos - FragPos);
+        vec3 reflectDir = reflect(-lightDir, norm);  
+        float spec = pow(max(dot(-viewDir, reflectDir), 0.0), material.shininess);
+        vec3 specular = light.specular * spec * vec3(texture(material.specular,TexCoord));
+    
+
+         
+        vec3 result =  (diffuse + specular)*attenuation;//光线强度
+        color=vec4(result,1);
+        }else{
     }
 }
 void main()
