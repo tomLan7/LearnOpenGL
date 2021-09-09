@@ -237,11 +237,11 @@ int main()
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
-        shaderProgram->Uniform("ourTexture1",0);
+        shaderProgram->Uniform("material.diffuse",0);
 
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
-        shaderProgram->Uniform("ourTexture2",1);
+        shaderProgram->Uniform("material.specular",1);
 
         for (GLuint i = 0; i < sizeof(cubePositions) / sizeof(decltype(cubePositions[0])); i++)
         {
