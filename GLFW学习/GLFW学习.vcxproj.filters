@@ -84,6 +84,9 @@
     <ClCompile Include="lx20 材质.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx21 光照贴图.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -174,12 +177,24 @@
     <None Include="lx20.vert">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="lx21.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx21.vert">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg">
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="picture.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="container2_specular.png">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="container2.png">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>
