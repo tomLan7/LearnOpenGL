@@ -12,7 +12,6 @@
 #include"Camera.h"
 #include"Shader.h"
 #include"Window.h"
-
 using namespace std;
 using namespace glm;
 void initGLEW() {
@@ -240,8 +239,8 @@ int main()
         auto viewDirection2 = camera->direction();
         auto viewDirection = vec3(inverse(camera->ToViewMatrix()) * vec4(0, 0, -1, 0));
         shaderProgram->Uniform("viewDirection", viewDirection);
-        auto cutOff = (float)cos(glm::radians(60.));
-        shaderProgram->Uniform("cutOff", cutOff);
+        shaderProgram->Uniform("cutOff", cos(glm::radians(7.f)));
+        shaderProgram->Uniform("outerCutOff", cos(glm::radians(14.f)));
        
 
         glActiveTexture(GL_TEXTURE0);
