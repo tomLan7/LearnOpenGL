@@ -12,7 +12,6 @@
 #include"Camera.h"
 #include"Shader.h"
 #include"Window.h"
-
 using namespace std;
 using namespace glm;
 void initGLEW() {
@@ -240,17 +239,17 @@ int main()
         auto viewDirection2 = camera->direction();
         auto viewDirection = vec3(inverse(camera->ToViewMatrix()) * vec4(0, 0, -1, 0));
         shaderProgram->Uniform("viewDirection", viewDirection);
-        shaderProgram->Uniform("cutOff", cos(glm::radians(17.5f)));
-        shaderProgram->Uniform("outerCutOff", cos(glm::radians(22.5f)));
+        shaderProgram->Uniform("cutOff", cos(glm::radians(7.f)));
+        shaderProgram->Uniform("outerCutOff", cos(glm::radians(14.f)));
        
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture1);
-        shaderProgram->Uniform("material.diffuse", 0);
+        shaderProgram->UniformTextureIndex("material.diffuse", 0);
 
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture2);
-        shaderProgram->Uniform("material.specular", 1);
+        shaderProgram->UniformTextureIndex("material.specular", 1);
 
         for (GLuint i = 0; i < sizeof(cubePositions) / sizeof(decltype(cubePositions[0])); i++)
         {

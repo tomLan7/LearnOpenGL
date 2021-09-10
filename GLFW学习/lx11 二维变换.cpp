@@ -161,11 +161,11 @@ int main()
 
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, texture[0]);
-        shaderProgram->Uniform("ourTexture1", 0);
+        shaderProgram->UniformTextureIndex("ourTexture1", 0);
 
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, texture[1]);
-        shaderProgram->Uniform("ourTexture2", 1);
+        shaderProgram->UniformTextureIndex("ourTexture2", 1);
 
         glBindVertexArray(VAO);
         someOpenGLFunctionThatDrawsOurTriangle(shaderProgram);

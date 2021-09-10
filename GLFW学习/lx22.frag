@@ -65,30 +65,33 @@ void DirectionalLightAndPointLight(){
 void Spotlight(){
     vec3 lightDir=normalize(viewDirection);
     vec3 FragDir = normalize(FragPos-viewPos);
-    
-    
-    if(dot(lightDir,FragDir)>=cutOff){
+    float theta=dot(lightDir,FragDir);
         //距离衰减
-        float distance = length(viewPos - FragPos);
+        float distance = length(FragDir);
         float attenuation = 1.0f / (light.constant + light.linear*distance +light.quadratic*(distance*distance));
-
-        //漫反射
+        //环境光
+        vec3 ambient = light.ambient * vec3(texture(material.diffuse, TexCoord));
+         // 漫反射光
         vec3 norm = normalize(Normal);
+        
         float diff = max(dot(norm, -lightDir), 0.0);
         vec3 diffuse = light.diffuse * diff * vec3(texture(material.diffuse, TexCoord));
-
-        //镜面反射
-        vec3 viewDir = normalize(viewPos - FragPos);
-        vec3 reflectDir = reflect(-lightDir, norm);  
-        float spec = pow(max(dot(-viewDir, reflectDir), 0.0), material.shininess);
-        vec3 specular = light.specular * spec * vec3(texture(material.specular,TexCoord));
     
+        // 镜面高光
+        vec3 viewDir = lightDir;
+        vec3 reflectDir = reflect(-lightDir, norm);  
+        float spec = pow(max(dot(viewDir, reflectDir), 0.0), material.shininess);
+        vec3 specular = light.specular * spec * vec3(texture(material.specular,TexCoord));
 
-         
-        vec3 result =  (diffuse + specular)*attenuation;//光线强度
-        color=vec4(result,1);
-        }else{
-    }
+        
+        float epsilon = cutOff - outerCutOff;
+        //范围控制在0~1之间，插值出手电筒的角度
+        float intensity = clamp((theta - outerCutOff) / epsilon,0.0, 1.0);
+        //合成最终光照效果
+        vec3 result = (ambient + diffuse + specular)*intensity*attenuation;//光线强度
+
+        color = vec4(result, 1.0f);
+
 }
 void main()
 {
