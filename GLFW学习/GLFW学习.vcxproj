@@ -125,7 +125,7 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>SOIL.lib;opengl32.lib;glew32sd.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>assimp-vc140-mtd.lib;SOIL.lib;opengl32.lib;glew32sd.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -192,7 +192,10 @@
     <ClCompile Include="lx22 投光物.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="lx23 多光源.cpp" />
+    <ClCompile Include="lx23 多光源.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="lx24 网格模型.cpp" />
     <ClCompile Include="lx3 长方形.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -215,11 +218,13 @@
     <ClCompile Include="lx9 多纹理.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
     <ClInclude Include="Shader.h" />
@@ -249,12 +254,15 @@
     <None Include="lx21.vert" />
     <None Include="lx22.frag" />
     <None Include="lx23.frag" />
+    <None Include="lx24.frag" />
+    <None Include="lx24.vert" />
     <None Include="lx7.frag" />
     <None Include="lx7.vs" />
     <None Include="lx8.frag" />
     <None Include="lx8.vs" />
     <None Include="lx9.frag" />
     <None Include="lx9.vs" />
+    <None Include="rumah adat jawa.blend" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="container.jpg" />
