@@ -2,8 +2,7 @@
 #include <iostream>
 #include<string>
 #include<vector>
-#include <strstream>
-#include <format>
+#include <sstream>
 using namespace std;
 using namespace glm;
 
@@ -41,7 +40,7 @@ public:
         {
             glActiveTexture(GL_TEXTURE0 + i); // 在绑定纹理前需要激活适当的纹理单元
             // 检索纹理序列号 (N in diffuse_textureN)
-            strstream ss;
+            stringstream ss;
             string number;
             string name = this->textures[i].type;
             if (name == "texture_diffuse")
