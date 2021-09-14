@@ -72,7 +72,7 @@ public:
 		if (Pitch > glm::radians(90.0f)) Pitch = glm::radians(90.0f);
 
 		if (Pitch < glm::radians(-90.0f)) Pitch = glm::radians(-90.0f);
-		std::cout << Pitch << std::endl;
+		//std::cout << Pitch << std::endl;
 	}
 	void RollAdd(float value) {
 		Roll += value;

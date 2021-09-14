@@ -18,47 +18,25 @@ struct Texture
     std::string type;
     aiString path;
 };
+class ShaderProgram;
 class Mesh
 {
 public:
+    //顶点属性
     vector<Vertex> vertices;
+    //使用的顶点索引
     vector<GLuint> indices;
+    //纹理坐标
     vector<Texture> textures;
-    Mesh(vector<Vertex> vertices, vector<GLuint> indices, vector<Texture> textures)
+    Mesh(vector<Vertex>& vertices, vector<GLuint>& indices, vector<Texture>& textures)
     {
-        this->vertices = vertices;
-        this->indices = indices;
-        this->textures = textures;
+        this->vertices = move(vertices);
+        this->indices = move(indices);
+        this->textures = move(textures);
 
         this->setupMesh();
     }
-    void Draw(ShaderProgram* shader)
-    {
-        GLuint diffuseNr = 1;
-        GLuint specularNr = 1;
-        for (GLuint i = 0; i < this->textures.size(); i++)
-        {
-            glActiveTexture(GL_TEXTURE0 + i); // 在绑定纹理前需要激活适当的纹理单元
-            // 检索纹理序列号 (N in diffuse_textureN)
-            stringstream ss;
-            string number;
-            string name = this->textures[i].type;
-            if (name == "texture_diffuse")
-                ss << diffuseNr++; // 将GLuin输入到string stream
-            else if (name == "texture_specular")
-                ss << specularNr++; // 将GLuin输入到string stream
-            number = ss.str();
-
-            shader->UniformTextureIndex("material." + name + number, i);
-            glBindTexture(GL_TEXTURE_2D, this->textures[i].id);
-        }
-        glActiveTexture(GL_TEXTURE0);
-
-        // 绘制Mesh
-        glBindVertexArray(this->VAO);
-        glDrawElements(GL_TRIANGLES, this->indices.size(), GL_UNSIGNED_INT, 0);
-        glBindVertexArray(0);
-    }
+    void Draw(ShaderProgram* shader);
 
 private:
     GLuint VAO, VBO, EBO;

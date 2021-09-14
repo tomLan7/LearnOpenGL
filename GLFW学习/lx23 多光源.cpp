@@ -120,7 +120,7 @@ int main()
     window->SetKeyCallback(key_callback2);
     window->SetWindowSizeCallback([](GLFWwindow* window, int width, int height) {
         glViewport(0, 0, width, height);
-        });
+    });
     window->SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     window->SetCursorPosCallback(mouse_callback);
     window->SetScrollCallback(scroll_callback);
