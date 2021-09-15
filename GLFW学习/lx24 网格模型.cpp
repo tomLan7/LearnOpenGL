@@ -23,7 +23,6 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void changeState(Window* window);
 bool keys[1024] = { 0 };
 EulerFPSCamera* camera=new EulerFPSCamera();
-vec3 lightPos(0, 1, 0);
 mat4 lightModel;
 vector<Vertex> vertices = {
     // positions          // normals           // texture coords
@@ -71,7 +70,10 @@ vector<Vertex> vertices = {
 };
 vector<GLuint> indexs = {
     0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
-};
+}; 
+PointLight PLight{ "pointLights[0]",vec3(0,1,0) };
+DirLight Dlight{ "dirLight",vec3(1,1,1),vec3(0.2,0.2,0.2),vec3(0.3,0.3,0.3), vec3(0.4,0.4,0.4), };
+
 int main() {
     Window* window = Window::CreateWindow();
     //允许使用高级功能
@@ -85,13 +87,14 @@ int main() {
     });
     window->SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     window->SetCursorPosCallback(mouse_callback);
-    DirLight d{"dirLight",vec3(0,1,0),vec3(0.3,0.3,0.3),vec3(0.6,0.6,0.6), vec3(0.6,0.6,0.6), };
-
+    
     Mesh m2(vertices, indexs, vector<Texture>());
-    char str[] = "nanosuit/nanosuit.obj";
+    //char str[] = "nanosuit/nanosuit.obj";
+    char str[] = "X/dwarf.x";
     Model m(str);
     auto sp=ShaderProgram::CreateFromVertexAndFragmentPath("lx24.vert","lx24.frag");
     auto lightShaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx21.vert", "lx16light.frag");
+    
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glEnable(GL_DEPTH_TEST);
     while (!window->IsShouldClose())
@@ -104,18 +107,18 @@ int main() {
         sp->User(); 
 
         sp->Uniform("material.shininess",24);
-        d.Load(sp);
+        Dlight.Load(sp);
+        PLight.Load(sp);
         sp->Uniform("viewPos",camera->pos);
-        sp->Uniform("model",rotate(mat4(1),radians(90.f),vec3(1,0,0)));
+        sp->Uniform("model",rotate(scale(mat4(1),vec3(0.1,0.1,0.1)),radians(90.f),vec3(1,0,0)));
         sp->Uniform("view", camera->ToViewMatrix());
         auto projection = glm::perspective(glm::radians(45.f), window->width / (float)window->height, 0.1f, 200.0f);
         sp->Uniform("projection", projection);
 
         m.Draw(sp);
 
-
         lightShaderProgram->User();
-        lightModel = translate(mat4(1), lightPos);
+        lightModel = translate(mat4(1),PLight.position);
         lightShaderProgram->Uniform("scaleform", glm::scale(mat4(1), vec3(0.2)));
         lightShaderProgram->Uniform("transform", mat4(1));
         lightShaderProgram->Uniform("rotation", mat4(1));
@@ -159,30 +162,30 @@ void changeState(Window* window) {
                 break;
             case GLFW_KEY_LEFT:
             {
-                vec4 newViewPos = translate(mat4(1), vec3(-0.1, 0, 0)) * camera->ToViewMatrix() * vec4(lightPos, 1);
+                vec4 newViewPos = translate(mat4(1), vec3(-0.1, 0, 0)) * camera->ToViewMatrix() * vec4(PLight.position, 1);
                 vec4 newWorldPos = inverse(camera->ToViewMatrix()) * newViewPos;
-                lightPos = vec3(newWorldPos.x, newWorldPos.y, newWorldPos.z);
+                PLight.position = vec3(newWorldPos.x, newWorldPos.y, newWorldPos.z);
             }
             break;
             case GLFW_KEY_RIGHT:
             {
-                vec4 newViewPos = translate(mat4(1), vec3(0.1, 0, 0)) * camera->ToViewMatrix() * vec4(lightPos, 1);
+                vec4 newViewPos = translate(mat4(1), vec3(0.1, 0, 0)) * camera->ToViewMatrix() * vec4(PLight.position, 1);
                 vec4 newWorldPos = inverse(camera->ToViewMatrix()) * newViewPos;
-                lightPos = vec3(newWorldPos.x, newWorldPos.y, newWorldPos.z);
+                PLight.position = vec3(newWorldPos.x, newWorldPos.y, newWorldPos.z);
             }
             break;
             case GLFW_KEY_UP:
             {
-                vec4 newViewPos = translate(mat4(1), vec3(0, 0.1, 0)) * camera->ToViewMatrix() * vec4(lightPos, 1);
+                vec4 newViewPos = translate(mat4(1), vec3(0, 0.1, 0)) * camera->ToViewMatrix() * vec4(PLight.position, 1);
                 vec4 newWorldPos = inverse(camera->ToViewMatrix()) * newViewPos;
-                lightPos = vec3(newWorldPos.x, newWorldPos.y, newWorldPos.z);
+                PLight.position = vec3(newWorldPos.x, newWorldPos.y, newWorldPos.z);
             }
             break;
             case GLFW_KEY_DOWN:
             {
-                vec4 newViewPos = translate(mat4(1), vec3(0, -0.1, 0)) * camera->ToViewMatrix() * vec4(lightPos, 1);
+                vec4 newViewPos = translate(mat4(1), vec3(0, -0.1, 0)) * camera->ToViewMatrix() * vec4(PLight.position, 1);
                 vec4 newWorldPos = inverse(camera->ToViewMatrix()) * newViewPos;
-                lightPos = vec3(newWorldPos.x, newWorldPos.y, newWorldPos.z);
+                PLight.position = vec3(newWorldPos.x, newWorldPos.y, newWorldPos.z);
             }
             break;
 
