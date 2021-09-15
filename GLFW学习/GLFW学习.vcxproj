@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="LanGLTool.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="lx1 创建窗口.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -232,6 +233,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="LanGLTool.h" />
+    <ClInclude Include="Light.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="resource.h" />

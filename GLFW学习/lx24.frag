@@ -13,6 +13,7 @@ struct DirLight{
     vec3 diffuse;
     vec3 specular;
 };
+
 uniform DirLight dirLight;
 vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir); 
 
@@ -66,13 +67,14 @@ void main()
 
     // 第一步，计算平行光照
     vec3 result = CalcDirLight(dirLight, norm, viewDir);
+    color=vec4(result,1);
     // 第二步，计算顶点光照
     for(int i = 0; i < NR_POINT_LIGHTS; i++)
         result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
     // 第三部，计算 Spot light
     result += CalcSpotLight(spotLight, norm, FragPos, viewDir);
 
-    color = vec4(vec3(texture(material.texture_diffuse1, TexCoord)),1);
+    //color = vec4(vec3(texture(material.texture_diffuse1, TexCoord)),1);
     //Spotlight();
     
 }
@@ -87,6 +89,7 @@ vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir){
     vec3 ambient  = light.ambient  * vec3(texture(material.texture_diffuse1, TexCoord));
     vec3 diffuse  = light.diffuse  * diff * vec3(texture(material.texture_diffuse1, TexCoord));
     vec3 specular = light.specular * spec * vec3(texture(material.texture_specular1, TexCoord));
+   
     return (ambient + diffuse + specular);
 }
 vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)

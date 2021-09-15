@@ -174,6 +174,7 @@ int main()
     //Ö÷Ñ­»·
     double NextFrameDelay = 1 / 60.;
     double nextTime = glfwGetTime() + NextFrameDelay;
+
     while (!window->IsShouldClose())
     {
         double needSleep = nextTime - glfwGetTime();

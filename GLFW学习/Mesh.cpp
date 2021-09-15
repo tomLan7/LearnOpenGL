@@ -13,7 +13,7 @@
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 #include "Mesh.h"
-
+using namespace std;
 void Mesh::Draw(ShaderProgram* shader)
 {
     GLuint diffuseNr = 1;

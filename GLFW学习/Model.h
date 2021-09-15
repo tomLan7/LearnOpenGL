@@ -1,4 +1,5 @@
 #pragma once
+#include<vector>
 class Model
 {
 public:
@@ -7,18 +8,20 @@ public:
     {
         this->loadModel(path);
     }
-    Model(vector<Mesh>& all) {
+    Model(std::vector<Mesh>& all) {
         meshes = move(all);
     }
     void Draw(ShaderProgram* shader);
 private:
+    //已加载过的纹理，不会重新加载
+    std::vector<Texture> textures_loaded;
     /*  模型数据  */
-    vector<Mesh> meshes;
-    string directory;
+    std::vector<Mesh> meshes;
+    std::string directory;
 
     /*  私有成员函数   */
-    void loadModel(string path);
+    void loadModel(std::string path);
     void processNode(aiNode* node, const aiScene* scene);
     Mesh processMesh(aiMesh* mesh, const aiScene* scene);
-    vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, string typeName);
+    std::vector<Texture> loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName);
 };

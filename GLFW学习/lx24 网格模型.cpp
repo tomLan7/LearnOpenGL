@@ -15,78 +15,83 @@
 #include "Mesh.h"
 #include"Model.h"
 #include"LanGLTool.h"
-
-
+#include"Light.h"
+using namespace std;
+using namespace glm;
 void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void changeState(Window* window);
 bool keys[1024] = { 0 };
 EulerFPSCamera* camera=new EulerFPSCamera();
-vec3 lightPos(5, 1, 1);
+vec3 lightPos(0, 1, 0);
 mat4 lightModel;
-float vertices[] = {
-    // positions                  // texture coords
-    -0.5f, -0.5f, -0.5f,  -1.0f,  0.0f, 0.0f,
-     0.5f, -0.5f, -0.5f,  -1.0f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,  -1.0f,  1.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,  -1.0f,  1.0f, 1.0f,
-    -0.5f,  0.5f, -0.5f,  -1.0f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,  -1.0f,  0.0f, 0.0f,
+vector<Vertex> vertices = {
+    // positions          // normals           // texture coords
+   {{ -0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, { 0.0f, 0.0f,} },
+   {{  0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, { 1.0f, 0.0f,} },
+   {{  0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, { 1.0f, 1.0f,} },
+   {{  0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, { 1.0f, 1.0f,} },
+   {{ -0.5f,  0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, { 0.0f, 1.0f,} },
+   {{ -0.5f, -0.5f, -0.5f}, { 0.0f,  0.0f, -1.0f}, { 0.0f, 0.0f,} },
 
-    -0.5f, -0.5f,  0.5f,  1.0f,   0.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,  1.0f,   1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,  1.0f,   1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,  1.0f,   1.0f, 1.0f,
-    -0.5f,  0.5f,  0.5f,  1.0f,   0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,  1.0f,   0.0f, 0.0f,
+   {{ -0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f, 1.0f,},  { 0.0f, 0.0f,} },
+   {{  0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f, 1.0f,},  { 1.0f, 0.0f,} },
+   {{  0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f, 1.0f,},  { 1.0f, 1.0f,} },
+   {{  0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f, 1.0f,},  { 1.0f, 1.0f,} },
+   {{ -0.5f,  0.5f,  0.5f}, { 0.0f,  0.0f, 1.0f,},  { 0.0f, 1.0f,} },
+   {{ -0.5f, -0.5f,  0.5f}, { 0.0f,  0.0f, 1.0f,},  { 0.0f, 0.0f,} },
 
-    -0.5f,  0.5f,  0.5f,   0.0f,  1.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,   0.0f,  1.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,   0.0f,  0.0f, 1.0f,
-    -0.5f, -0.5f, -0.5f,   0.0f,  0.0f, 1.0f,
-    -0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,   0.0f,  1.0f, 0.0f,
+   {{ -0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, { 1.0f, 0.0f,} },
+   {{ -0.5f,  0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, { 1.0f, 1.0f,} },
+   {{ -0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, { 0.0f, 1.0f,} },
+   {{ -0.5f, -0.5f, -0.5f}, {-1.0f,  0.0f,  0.0f}, { 0.0f, 1.0f,} },
+   {{ -0.5f, -0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, { 0.0f, 0.0f,} },
+   {{ -0.5f,  0.5f,  0.5f}, {-1.0f,  0.0f,  0.0f}, { 1.0f, 0.0f,} },
 
-     0.5f,  0.5f,  0.5f,   0.0f,  1.0f, 0.0f,
-     0.5f,  0.5f, -0.5f,   0.0f,  1.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,   0.0f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,   0.0f,  0.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,   0.0f,  1.0f, 0.0f,
+   {{  0.5f,  0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, { 1.0f, 0.0f,} },
+   {{  0.5f,  0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, { 1.0f, 1.0f,} },
+   {{  0.5f, -0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, { 0.0f, 1.0f,} },
+   {{  0.5f, -0.5f, -0.5f}, { 1.0f,  0.0f,  0.0f}, { 0.0f, 1.0f,} },
+   {{  0.5f, -0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, { 0.0f, 0.0f,} },
+   {{  0.5f,  0.5f,  0.5f}, { 1.0f,  0.0f,  0.0f}, { 1.0f, 0.0f,} },
 
-    -0.5f, -0.5f, -0.5f,   0.0f,  0.0f, 1.0f,
-     0.5f, -0.5f, -0.5f,   0.0f,  1.0f, 1.0f,
-     0.5f, -0.5f,  0.5f,   0.0f,  1.0f, 0.0f,
-     0.5f, -0.5f,  0.5f,   0.0f,  1.0f, 0.0f,
-    -0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 0.0f,
-    -0.5f, -0.5f, -0.5f,   0.0f,  0.0f, 1.0f,
+   {{ -0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, { 0.0f, 1.0f,} },
+   {{  0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, { 1.0f, 1.0f,} },
+   {{  0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, { 1.0f, 0.0f,} },
+   {{  0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, { 1.0f, 0.0f,} },
+   {{ -0.5f, -0.5f,  0.5f}, { 0.0f, -1.0f,  0.0f}, { 0.0f, 0.0f,} },
+   {{ -0.5f, -0.5f, -0.5f}, { 0.0f, -1.0f,  0.0f}, { 0.0f, 1.0f,} },
 
-    -0.5f,  0.5f, -0.5f,   0.0f,  0.0f, 1.0f,
-     0.5f,  0.5f, -0.5f,   0.0f,  1.0f, 1.0f,
-     0.5f,  0.5f,  0.5f,   0.0f,  1.0f, 0.0f,
-     0.5f,  0.5f,  0.5f,   0.0f,  1.0f, 0.0f,
-    -0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 0.0f,
-    -0.5f,  0.5f, -0.5f,   0.0f,  0.0f, 1.0f
+   {{ -0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, { 0.0f, 1.0f,} },
+   {{  0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, { 1.0f, 1.0f,} },
+   {{  0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, { 1.0f, 0.0f,} },
+   {{  0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, { 1.0f, 0.0f,} },
+   {{ -0.5f,  0.5f,  0.5f}, { 0.0f,  1.0f,  0.0f}, { 0.0f, 0.0f,} },
+   {{ -0.5f,  0.5f, -0.5f}, { 0.0f,  1.0f,  0.0f}, { 0.0f, 1.0f } },
 };
-
+vector<GLuint> indexs = {
+    0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35
+};
 int main() {
     Window* window = Window::CreateWindow();
     //允许使用高级功能
     LanGLTool::initGLEW();
-    Mesh m(,,);
     //设置视口变换
     glViewport(0, 0, window->width, window->height);
     window->SetKeyCallback(key_callback2);
+
     window->SetWindowSizeCallback([](GLFWwindow* window, int width, int height) {
         glViewport(0, 0, width, height);
     });
     window->SetInputMode(GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     window->SetCursorPosCallback(mouse_callback);
+    DirLight d{"dirLight",vec3(0,1,0),vec3(0.3,0.3,0.3),vec3(0.6,0.6,0.6), vec3(0.6,0.6,0.6), };
 
+    Mesh m2(vertices, indexs, vector<Texture>());
     char str[] = "nanosuit/nanosuit.obj";
     Model m(str);
     auto sp=ShaderProgram::CreateFromVertexAndFragmentPath("lx24.vert","lx24.frag");
-    auto lightShaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx24.vert", "lx21.frag");
+    auto lightShaderProgram = ShaderProgram::CreateFromVertexAndFragmentPath("lx21.vert", "lx16light.frag");
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     glEnable(GL_DEPTH_TEST);
     while (!window->IsShouldClose())
@@ -98,11 +103,9 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         sp->User(); 
 
-        sp->Uniform("dirLight.direciton", vec3(1, 1, 1));
-        sp->Uniform("dirLight.ambient", vec3(1, 1, 1));
-        sp->Uniform("dirLight.diffuse", vec3(1, 1, 1));
-        sp->Uniform("dirLight.specular", vec3(1, 1, 1));
-
+        sp->Uniform("material.shininess",24);
+        d.Load(sp);
+        sp->Uniform("viewPos",camera->pos);
         sp->Uniform("model",rotate(mat4(1),radians(90.f),vec3(1,0,0)));
         sp->Uniform("view", camera->ToViewMatrix());
         auto projection = glm::perspective(glm::radians(45.f), window->width / (float)window->height, 0.1f, 200.0f);
@@ -110,15 +113,18 @@ int main() {
 
         m.Draw(sp);
 
-        glBindVertexArray(0);
+
+        lightShaderProgram->User();
         lightModel = translate(mat4(1), lightPos);
+        lightShaderProgram->Uniform("scaleform", glm::scale(mat4(1), vec3(0.2)));
+        lightShaderProgram->Uniform("transform", mat4(1));
+        lightShaderProgram->Uniform("rotation", mat4(1));
         lightShaderProgram->Uniform("model", lightModel);
-        lightShaderProgram->Uniform("scaleform", glm::scale(mat4(1), vec3(1)));
+        lightShaderProgram->Uniform("view", camera->ToViewMatrix());
+        lightShaderProgram->Uniform("projection", projection);
 
-        glDrawArrays(GL_TRIANGLES, 0, 36);
+        m2.Draw(lightShaderProgram);
 
-
-        glBindVertexArray(0);
     }
     return 0;
 }
@@ -151,7 +157,7 @@ void changeState(Window* window) {
             case GLFW_KEY_F:
                 camera->keyOrder(i);
                 break;
-            /*case GLFW_KEY_LEFT:
+            case GLFW_KEY_LEFT:
             {
                 vec4 newViewPos = translate(mat4(1), vec3(-0.1, 0, 0)) * camera->ToViewMatrix() * vec4(lightPos, 1);
                 vec4 newWorldPos = inverse(camera->ToViewMatrix()) * newViewPos;
@@ -177,7 +183,7 @@ void changeState(Window* window) {
                 vec4 newViewPos = translate(mat4(1), vec3(0, -0.1, 0)) * camera->ToViewMatrix() * vec4(lightPos, 1);
                 vec4 newWorldPos = inverse(camera->ToViewMatrix()) * newViewPos;
                 lightPos = vec3(newWorldPos.x, newWorldPos.y, newWorldPos.z);
-            }*/
+            }
             break;
 
             default:

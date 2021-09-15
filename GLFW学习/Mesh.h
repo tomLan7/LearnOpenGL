@@ -3,14 +3,12 @@
 #include<string>
 #include<vector>
 #include <sstream>
-using namespace std;
-using namespace glm;
 
 struct Vertex
 {
-    vec3 Position;
-    vec3 Normal;
-    vec2 TexCoords;
+    glm::vec3 Position;
+    glm::vec3 Normal;
+    glm::vec2 TexCoords;
 };
 struct Texture
 {
@@ -23,16 +21,16 @@ class Mesh
 {
 public:
     //顶点属性
-    vector<Vertex> vertices;
+    std::vector<Vertex> vertices;
     //使用的顶点索引
-    vector<GLuint> indices;
+    std::vector<GLuint> indices;
     //纹理坐标
-    vector<Texture> textures;
-    Mesh(vector<Vertex>& vertices, vector<GLuint>& indices, vector<Texture>& textures)
+    std::vector<Texture> textures;
+    Mesh(std::vector<Vertex>& vertices, std::vector<GLuint>& indices, const std::vector<Texture>& textures)
     {
-        this->vertices = move(vertices);
-        this->indices = move(indices);
-        this->textures = move(textures);
+        this->vertices = std::move(vertices);
+        this->indices = std::move(indices);
+        this->textures = textures;
 
         this->setupMesh();
     }

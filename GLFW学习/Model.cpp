@@ -1,4 +1,7 @@
 
+#include<string>
+#include<vector>
+
 #define GLEW_STATIC
 #include <GL/glew.h>
 #include<GLFW/glfw3.h>
@@ -15,10 +18,8 @@
 #include"LanGLTool.h"
 #include"Shader.h"
 #include"Window.h"
-#include<string>
-#include<vector>
-using namespace std;
 #include "Model.h"
+using namespace std;
 void Model::Draw(ShaderProgram* shader)
 {
     for (GLuint i = 0; i < this->meshes.size(); i++)
@@ -136,11 +137,16 @@ vector<Texture> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type,
         Texture texture;
         string textureFilename(str.C_Str());
         string fileNameNoDir = textureFilename.substr(textureFilename.find_last_of("/\\") + 1);
+        auto fileNameitor = find_if(textures_loaded.begin(), textures_loaded.end(), [&fileNameNoDir](Texture& texture){return texture.path.C_Str() == fileNameNoDir; });
+        if (fileNameitor != textures_loaded.end()) {
+            cout << "该纹理已存在" << endl;
+            textures.push_back(*fileNameitor);
+        }
         //cout << "找到的材质的" << typeName << "的物理文件名是"<< textureFilename << endl;
         //从路径下找到该文件
-        texture.id = LanGLTool::CreateTexture(directory + '/' + fileNameNoDir);
+        texture.id = LanGLTool::CreateTexture(directory+"/" + fileNameNoDir);
         texture.type = typeName;
-        texture.path = str;
+        texture.path = fileNameNoDir;
         textures.push_back(texture);
     }
     return textures;

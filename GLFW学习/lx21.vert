@@ -15,8 +15,8 @@ out vec3 VertexColor;//不使用
 out vec2 TexCoord;
 void main()
 {
-    TexCoord=texCoord;
-    Normal=(model*rotation*vec4(normal,0)).xyz;
     gl_Position = projection*view*model*transform*rotation*scaleform*vec4(position, 1.0); // 注意我们如何把一个vec3作为vec4的构造器的参数
+    Normal=(model*rotation*vec4(normal,0)).xyz;
+    TexCoord=texCoord;
     FragPos = vec3((model*transform*rotation*scaleform*vec4(position, 1.0)).xyz); 
 }
