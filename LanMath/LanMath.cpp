@@ -2,10 +2,14 @@
 //
 
 #include <iostream>
-
+#include"Vector3.h"
+using namespace lan;
+using namespace std;
 int main()
 {
-    std::cout << "Hello World!\n";
+	Vector3F nor(0,1,0);
+	Vector3F f2(-1,-1,0);
+	cout << Vector3F::reflect(f2,nor)<< endl;
 }
 
 // 运行程序: Ctrl + F5 或调试 >“开始执行(不调试)”菜单
