@@ -38,6 +38,8 @@ int main(int argc, char* argv[])
     }
     renderer = SDL_CreateRenderer(window, -1, 0);
     SDL_SetRenderDrawColor(renderer,255,255,255,255);
+    SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderDrawPoint(renderer,10,10);
     //SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
     //SDL_RenderFillRect(renderer, &bigrect);
@@ -53,7 +55,6 @@ int main(int argc, char* argv[])
     if (renderer) {
         SDL_DestroyRenderer(renderer);
     }
-
     // Close and destroy the window
     SDL_DestroyWindow(window);
 
