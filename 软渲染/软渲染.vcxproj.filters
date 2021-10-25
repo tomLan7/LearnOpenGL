@@ -27,7 +27,10 @@
     <ClCompile Include="Window.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="lx2 绘制点.cpp">
+    <ClCompile Include="lx2 显示窗口和绘制测试.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="lx3 事件循环及读取某位置像素.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

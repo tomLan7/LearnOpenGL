@@ -21,4 +21,5 @@ void lan::Panel::setPix(int x, int y)
 
 Color3B lan::Panel::getPix(int x, int y)
 {
+	return Color3B();
 }

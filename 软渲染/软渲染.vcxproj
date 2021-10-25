@@ -143,7 +143,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Color3B.cpp" />
-    <ClCompile Include="lx2 绘制点.cpp" />
+    <ClCompile Include="lx2 显示窗口和绘制测试.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="lx3 事件循环及读取某位置像素.cpp" />
     <ClCompile Include="Panel.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="lx1 初始化和退出.cpp">
