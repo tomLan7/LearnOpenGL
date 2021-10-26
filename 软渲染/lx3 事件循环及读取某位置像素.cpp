@@ -2,25 +2,18 @@
 
 #include "SDL/SDL.h"
 using namespace std;
-SDL_Color getPix(SDL_Surface* surface, int x, int y) {
+SDL_Color getPix(SDL_Window* window, int x, int y) {
+    SDL_Surface* surface = SDL_GetWindowSurface(window);
     auto format=surface->format;
     
     SDL_LockSurface(surface);
     Uint32* data = (Uint32*)surface->pixels;
     SDL_Color color;
-    cout<<"每个像素占"<<(int)surface->format->BytesPerPixel << endl;
-    cout << "宽" << surface->w << "高" << surface->h << endl;
-    for (int i = 0; i < surface->h;i++) {
-        for (int j = 0; j <surface->w; j++) {
-           
-            SDL_GetRGB(data[i*(surface->pitch/4)+j],surface->format, &color.r, &color.g, &color.b);
-            if (max(max(color.r, color.g), color.b) != 0) {
-                cout << (int)color.r << "和" << (int)color.g << "和" << (int)color.b << endl;
-            }
-        }
-    }
-    
+    //cout<<"每个像素占"<<(int)surface->format->BytesPerPixel << endl;
+    //cout << "宽" << surface->w << "高" << surface->h << endl;
+    SDL_GetRGB(data[y*surface->pitch/4+x],surface->format,&color.r, &color.g, &color.b);
     SDL_UnlockSurface(surface);
+    SDL_FreeSurface(surface);
     return color;
 }
 int main(int argc, char* argv[])
@@ -41,19 +34,21 @@ int main(int argc, char* argv[])
         printf("Could not create window: %s\n", SDL_GetError());
         return 1;
     }
-    renderer = SDL_CreateRenderer(window, -1, 0);
-    {
+    renderer = SDL_CreateSoftwareRenderer(SDL_GetWindowSurface(window));
+     {
         SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
-    SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
-    SDL_RenderDrawPoint(renderer, 10, 10);
+        SDL_RenderClear(renderer);
+        SDL_SetRenderDrawColor(renderer, 15, 23, 44, 255);
+        SDL_RenderDrawPoint(renderer, 10, 10);
 
-    SDL_RenderPresent(renderer);
+        SDL_RenderPresent(renderer);
+        SDL_UpdateWindowSurface(window);
     }
-    
-    SDL_UpdateWindowSurface(window);
-
-
+     
+     auto c1=getPix(window, 10, 15);
+     auto c2 = getPix(window, 10, 10);
+     cout << (int)c1.r << (int)c1.g << (int)c1.b << endl;
+     cout << (int)c2.r << (int)c2.g << (int)c2.b << endl;
     bool quit = false;
     SDL_Event event;
     while (!quit) {
@@ -65,8 +60,8 @@ int main(int argc, char* argv[])
             break;
         default:
 
-            SDL_Surface* surface = SDL_GetWindowSurface(window);
-            getPix(surface, 10, 15);
+           
+
             SDL_Log("event type:%d", event.type);
         }
     }

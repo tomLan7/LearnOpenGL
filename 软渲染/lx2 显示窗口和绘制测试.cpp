@@ -32,6 +32,8 @@ int main(int argc, char* argv[])
     SDL_RenderClear(renderer);
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderDrawPoint(renderer,10,10);
+    SDL_RenderDrawLine(renderer, 5, 1,20,5);
+
     
     /* Up until now everything was drawn behind the scenes.
        This will show the new, red contents of the window. */

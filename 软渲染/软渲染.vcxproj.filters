@@ -33,6 +33,12 @@
     <ClCompile Include="lx3 事件循环及读取某位置像素.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx4 测试绘点接口.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Init.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Panel.h">
@@ -42,6 +48,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Init.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

@@ -1,4 +1,6 @@
 #pragma once
+#include<iostream>
+
 namespace lan {
 	struct Color3B
 	{
@@ -11,7 +13,10 @@ namespace lan {
 			this->b = b;
 		}
 		Color3B() = default;
+		
 		static const Color3B WHITE;
+		static const Color3B BLACK;
 	};
 }
 
+std::ostream& operator<<(std::ostream& o, lan::Color3B color);
