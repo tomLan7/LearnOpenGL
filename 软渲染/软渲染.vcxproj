@@ -118,6 +118,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>D:\UGit\OpenGl\LanMath;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -152,6 +153,7 @@
     </ClCompile>
     <ClCompile Include="lx4 测试绘点接口.cpp" />
     <ClCompile Include="Panel.cpp" />
+    <ClCompile Include="Render.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="lx1 初始化和退出.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -161,6 +163,7 @@
     <ClInclude Include="Color3B.h" />
     <ClInclude Include="Panel.h" />
     <ClInclude Include="Init.h" />
+    <ClInclude Include="Render.h" />
     <ClInclude Include="Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

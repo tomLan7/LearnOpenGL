@@ -115,5 +115,7 @@ namespace lan {
 	};
 	
 }
-
-extern std::ostream& operator<<(std::ostream& out, const lan::Vector3F& vec);
+static std::ostream& operator<<(std::ostream& out, const lan::Vector3F& vec) {
+	out << vec.toString();
+	return out;
+}

@@ -15,6 +15,7 @@ namespace lan {
 		Panel(Window* surface);
 		void setDrawColor(Color3B color);
 		Color3B getDrawColor();
+		//TODO: 目前写出边界抛的异常不是想要的，可能需要特定一个异常类型
 		void setPix(int x, int y,Color3B color);
 		void setPix(int x,int y);
 		void Clear(bool userDrawColor=true);
