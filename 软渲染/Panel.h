@@ -4,7 +4,7 @@
 #include"Init.h"
 namespace lan {
 	class Window;
-	//画布类，该画布存储一副图像，可以绘点和获得某个点像素坐标，该画布具体实现方式不重要
+	//画布类，该画布存储一副图像，可以绘点和获得某个点像素坐标，该画布具体实现方式不重要。对应显示器的帧缓存。
 	class Panel
 	{
 		SDL_Surface* surface;

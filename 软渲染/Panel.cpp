@@ -26,8 +26,9 @@ void lan::Panel::setPix(int x, int y, Color3B color)
 	if (SDL_MUSTLOCK(surface)) {
 		SDL_LockSurface(surface);
 	}
+	
 	SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b,255);
-	SDL_RenderDrawPoint(renderer,x,y);
+	SDL_RenderDrawPoint(renderer,x, surface->h - y-1);
 	SDL_SetRenderDrawColor(renderer, drawColor.r, drawColor.g, drawColor.b, 255);
 
 	if (SDL_MUSTLOCK(surface)) {

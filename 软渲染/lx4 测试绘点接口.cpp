@@ -3,6 +3,13 @@
 #include"Panel.h"
 using namespace std;
 using namespace lan;
+
+//ÎÒ×ßÁË88
+#include<vector>
+#include<string>
+#include<map>
+using namespace std;
+
 int main(int argc, char* argv[]) {
 	Window window ("test setPix");
 	Panel panel(&window);
@@ -11,6 +18,9 @@ int main(int argc, char* argv[]) {
 	for (float i = 0; i < 3.14;i+=0.01) {
 		panel.setPix(i*100,sin(i)*100+200);
 	}
+    for (float i = 0; i <200; i += 0.01) {
+        panel.setPix(i, i);
+    }
 	panel.flush();
 	window.flush();
     bool quit = false;

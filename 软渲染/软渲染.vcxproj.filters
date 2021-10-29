@@ -42,6 +42,9 @@
     <ClCompile Include="Render.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="lx5 直线光栅化.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Panel.h">
