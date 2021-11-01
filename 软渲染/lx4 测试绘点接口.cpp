@@ -4,12 +4,6 @@
 using namespace std;
 using namespace lan;
 
-//ÎÒ×ßÁË88
-#include<vector>
-#include<string>
-#include<map>
-using namespace std;
-
 int main(int argc, char* argv[]) {
 	Window window ("test setPix");
 	Panel panel(&window);
