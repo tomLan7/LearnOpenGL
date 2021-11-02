@@ -9,17 +9,83 @@ namespace lan {
 	{
 		SDL_Surface* surface;
 		SDL_Renderer* renderer;
-		Color3B drawColor;
 	public:
-		Panel(SDL_Surface* surface);
-		Panel(Window* surface);
-		void setDrawColor(Color3B color);
-		Color3B getDrawColor();
+		Panel(SDL_Surface* surface) {
+			this->surface = surface;
+			renderer = SDL_CreateSoftwareRenderer(surface);
+		}
+		Panel(Window* window) :Panel(SDL_GetWindowSurface(window->SDL_window()))
+		{
+		}
+		Panel(Window& window) :Panel(SDL_GetWindowSurface(window.SDL_window()))
+		{
+		}
+		void setDrawColor(Color3B color)
+		{
+			SDL_SetRenderDrawColor(renderer,color.r,color.g,color.b,SDL_ALPHA_OPAQUE);
+		}
+		Color3B getDrawColor()
+		{
+			Color3B color;
+			SDL_GetRenderDrawColor(renderer, &color.r, &color.g, &color.b, 0);
+			return color;
+		}
 		//TODO: 目前写出边界抛的异常不是想要的，可能需要特定一个异常类型
-		void setPix(int x, int y,Color3B color);
-		void setPix(int x,int y);
-		void Clear(bool userDrawColor=true);
-		Color3B getPix(int x, int y);
+		void setPix(int x, int y, Color3B color)
+		{
+			if (SDL_MUSTLOCK(surface)) {
+				SDL_LockSurface(surface);
+			}
+			auto preColor = getDrawColor();
+			setDrawColor(color);
+			SDL_RenderDrawPoint(renderer, x, surface->h - y - 1);
+			setDrawColor(preColor);
+
+			if (SDL_MUSTLOCK(surface)) {
+				SDL_UnlockSurface(surface);
+			}
+		}
+		void setPix(int x, int y)
+		{
+			if (SDL_MUSTLOCK(surface)) {
+				SDL_LockSurface(surface);
+			}
+			SDL_RenderDrawPoint(renderer, x, surface->h - y - 1);
+			if (SDL_MUSTLOCK(surface)) {
+				SDL_UnlockSurface(surface);
+			}
+		}
+		void clear(bool userDrawColor = false)
+		{
+			if (userDrawColor) {
+				SDL_RenderClear(renderer);
+			}
+			else {
+				auto preColor = getDrawColor();
+				setDrawColor(Color3B::BLACK);
+				SDL_RenderClear(renderer);
+				setDrawColor(preColor);
+
+			}
+		}
+		Color3B getPix(int x, int y)
+		{
+			if (x<0 || x >= surface->w || y<0 || y >= surface->h) {
+				throw "错误的surface索引值";
+			}
+			if (SDL_MUSTLOCK(surface)) {
+				SDL_LockSurface(surface);
+			}
+			Color3B color;
+			SDL_Color a;
+			SDL_GetRGB(*(Uint32*)(((unsigned char)surface->pixels) + y * surface->pitch + x * surface->format->BytesPerPixel), surface->format,
+				&color.r, &color.g, &color.b);
+
+			if (SDL_MUSTLOCK(surface)) {
+				SDL_UnlockSurface(surface);
+			}
+			return color;
+		}
 		void flush() {
 			SDL_RenderPresent(renderer);
 		}

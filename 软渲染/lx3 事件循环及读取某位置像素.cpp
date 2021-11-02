@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "SDL/SDL.h"
+#include <SDL/SDL.h>
 using namespace std;
 SDL_Color getPix(SDL_Window* window, int x, int y) {
     SDL_Surface* surface = SDL_GetWindowSurface(window);
@@ -59,9 +59,6 @@ int main(int argc, char* argv[])
             quit = true;
             break;
         default:
-
-           
-
             SDL_Log("event type:%d", event.type);
         }
     }

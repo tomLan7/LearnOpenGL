@@ -16,6 +16,7 @@ namespace lan {
 		
 		static const Color3B WHITE;
 		static const Color3B BLACK;
+		static const Color3B BLUE;
 	};
 }
 
