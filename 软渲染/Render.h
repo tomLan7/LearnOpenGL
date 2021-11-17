@@ -22,8 +22,9 @@ namespace lan {
 		}
 		//依靠直线方程去计算
 		void drawLineByEquation(int startX,int startY,int endX,int endY) {
+			//计算斜率，沿着x算还是y算
 			float m = ((endY - startY) / (float)(endX - startX));
-			if (fabs(m) <= 1) {//计算斜率，沿着x算还是y算
+			if (fabs(m) <= 1) {//根据斜率绝对值是否大于1，决定是否变更x和y轴。变更的目的是让坡度放缓。
 				float b = startY - startX * m;
 				for (auto xi = startX; xi <= endX; xi++) {
 					int yi = roundf(xi * m + b);
@@ -44,7 +45,7 @@ namespace lan {
 			if (fabs(m) <= 1) {//计算斜率，沿着x算还是y算
 				float yi = startY;
 				for (int xi = startX; xi <= endX; xi+=1) {
-					yi += m;
+					yi += m;//每次增加的数值
 					drawPoint(xi, roundf(yi));
 				}
 			}
@@ -56,7 +57,14 @@ namespace lan {
 					drawPoint(roundf(xi), yi);
 				}
 			}
-
+		}
+		void drawLineByBresenham(int startX,int startY,int endX,int endY) {
+			float m = ((endY - startY) / (float)(endX - startX));
+			float b = startY - startX * m;
+			int xi=startX;
+			int yi=startY;
+			float dlower=m* (xi + 1) + b - yi;
+			float dupper = yi + 1 - m * (xi + 1) - b;
 		}
 		void drawPoint(int x,int y) {
 			try {
