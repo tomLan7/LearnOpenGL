@@ -22,6 +22,7 @@ namespace lan {
 		}
 		//依靠直线方程去计算
 		void drawLineByEquation(int startX,int startY,int endX,int endY) {
+			//计算斜率，沿着x算还是y算
 			float m = ((endY - startY) / (float)(endX - startX));
 			if (fabs(m) <= 1) {//计算斜率，沿着x算还是y算
 				float b = startY - startX * m;

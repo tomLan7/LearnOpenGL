@@ -11,8 +11,7 @@
 class OpenGLObjectBase {
 protected:
 	GLuint ObjectId=0;
-	virtual ~OpenGLObjectBase() {
-		glDeleteShader(ObjectId);
+	virtual ~OpenGLObjectBase(){
 	}
 	OpenGLObjectBase(GLuint ObjectId) {
 		this->ObjectId = ObjectId;
@@ -27,6 +26,12 @@ public:
 	explicit operator GLuint() {
 		return ObjectId;
 	}
+	GLboolean IsShader() {
+		return glIsShader(ObjectId);
+	}
+	GLboolean IsProgram() {
+		return glIsProgram(ObjectId);
+	}
 };
 class Shader:public OpenGLObjectBase
 {
@@ -35,15 +40,16 @@ public:
 	Shader(GLuint ObjectId, GLenum Type):OpenGLObjectBase (ObjectId){
 		ShaderType = Type;
 	}
-	Shader(GLenum Type) :OpenGLObjectBase(glCreateShader(Type)) {
-		ShaderType = Type;
+	Shader(GLenum Type) :Shader(glCreateShader(Type),Type) {
 	}
 	Shader(Shader&& other) :OpenGLObjectBase(std::move(other)) {
 		std::swap(this->ShaderType, other.ShaderType);
 	}
-
+	~Shader() {
+		glDeleteShader(ObjectId);
+	}
 	static Shader FromFile(const std::string& path, GLenum shaderType);
-	GLint CompileShader() {
+	GLboolean CompileShader() {
 		glCompileShader(ObjectId);
 		GLint success;
 		glGetShaderiv(ObjectId, GL_COMPILE_STATUS, &success);
@@ -62,7 +68,13 @@ public:
 	void AttachShader(Shader& shader) {
 		glAttachShader(ObjectId,(GLuint)shader);
 	}
-	GLint LinkProgram() {
+	void DetachShader(Shader& shader) {
+		glDetachShader(ObjectId, (GLuint)shader);
+	}
+	~ShaderProgram() {
+		glDeleteProgram(ObjectId);
+	}
+	GLboolean LinkProgram() {
 		glLinkProgram(ObjectId);
 		GLint success;
 		glGetShaderiv(ObjectId, GL_LINK_STATUS, &success);
