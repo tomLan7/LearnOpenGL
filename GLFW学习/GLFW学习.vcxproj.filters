@@ -30,9 +30,6 @@
     <ClCompile Include="lx5 缓冲输入顶点和颜色数据.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="lx6 封装的Shader.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Sample_SimpleOpenGL.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="LanGLTool.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -113,9 +107,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Shader.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>

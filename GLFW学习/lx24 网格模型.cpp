@@ -20,7 +20,7 @@ using namespace std;
 using namespace glm;
 void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void changeState(Window* window);
+void changeState(glfwWindow* window);
 bool keys[1024] = { 0 };
 EulerFPSCamera* camera=new EulerFPSCamera();
 mat4 lightModel;
@@ -75,7 +75,7 @@ PointLight PLight{ "pointLights[0]",vec3(0,1,0) };
 DirLight Dlight{ "dirLight",vec3(1,1,1),vec3(0.2,0.2,0.2),vec3(0.3,0.3,0.3), vec3(0.4,0.4,0.4), };
 
 int main() {
-    Window* window = Window::CreateWindow();
+    glfwWindow* window = glfwWindow::CreateWindow();
     //允许使用高级功能
     LanGLTool::initGLEW();
     //设置视口变换
@@ -140,7 +140,7 @@ void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mo
         keys[key] = false;
     }
 }
-void changeState(Window* window) {
+void changeState(glfwWindow* window) {
     for (int i = 0; i < 1024; i++) {
         if (keys[i] == true)
             switch (i)

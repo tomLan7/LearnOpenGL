@@ -1,0 +1,36 @@
+{
+  "configurations": [
+    {
+      "name": "x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": ""
+    },
+    {
+      "name": "x86-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x86" ]
+    },
+    {
+      "name": "Assimp",
+      "cacheRoot": "G:\\code\\c_c++\\LearnOpenGL\\assimp-3.3.1\\out\\build\\x86-Debug",
+      "inheritEnvironments": []
+    },
+    {
+      "name": "Assimp2",
+      "cacheRoot": "G:\\code\\c_c++\\LearnOpenGL\\assimp-3.3.1\\out\\build\\x86-Debug",
+      "inheritEnvironments": []
+    }
+  ]
+}

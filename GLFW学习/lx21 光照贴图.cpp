@@ -111,7 +111,7 @@ GLfloat mixValue = 0.2;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mode);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
-void changeState(Window* window);
+void changeState(glfwWindow* window);
 void scroll_callback(GLFWwindow*, double, double);
 
 bool keys[1024] = { 0 };
@@ -134,7 +134,7 @@ GLuint CreateTexture(std::string textureName) {
 }
 int main()
 {
-    Window* window = Window::CreateWindow();
+    glfwWindow* window = glfwWindow::CreateWindow();
     //允许使用高级功能
     initGLEW();
 
@@ -349,7 +349,7 @@ void key_callback2(GLFWwindow* window, int key, int scancode, int action, int mo
         keys[key] = false;
     }
 }
-void changeState(Window* window) {
+void changeState(glfwWindow* window) {
     for (int i = 0; i < 1024; i++) {
         if (keys[i] == true)
             switch (i)

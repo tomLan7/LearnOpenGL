@@ -1,11 +1,11 @@
 #pragma once
-class Window
+class glfwWindow
 {
 	GLFWwindow* glWindow=nullptr;
 public:
 	int width;
 	int height;
-	Window(GLFWwindow* glWindow) {
+	glfwWindow(GLFWwindow* glWindow) {
 		this->glWindow = glWindow;
 		RefreshSize();
 	}
@@ -38,6 +38,6 @@ public:
 		glfwSetScrollCallback(glWindow,callback);
 	}
 public:
-	static Window* CreateWindow();
+	static glfwWindow* CreateWindow();
 };
 

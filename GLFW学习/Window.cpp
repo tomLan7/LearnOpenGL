@@ -5,7 +5,7 @@
 #include "Window.h"
 #include<iostream>
 using namespace std;
-Window* Window::CreateWindow()
+glfwWindow* glfwWindow::CreateWindow()
 {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -25,5 +25,5 @@ Window* Window::CreateWindow()
         exit(-1);
     }
     glfwMakeContextCurrent(window);
-    return new Window(window);
+    return new glfwWindow(window);
 }

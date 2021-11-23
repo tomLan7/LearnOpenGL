@@ -114,7 +114,7 @@ GLfloat mixValue = 0.2;
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 int main()
 {
-    Window* window = Window::CreateWindow();
+    glfwWindow* window = glfwWindow::CreateWindow();
     //允许使用高级功能
     initGLEW();
 
