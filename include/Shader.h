@@ -92,8 +92,11 @@ namespace lan {
 			glGetShaderiv(ObjectId, GL_LINK_STATUS, &success);
 			return success;
 		}
-		GLboolean ValidateProgram() {
+		void ValidateProgram() {
 			glValidateProgram(ObjectId);
+		}
+		GLint GetAttribLocation(std::string str) {
+			return glGetAttribLocation(ObjectId,str.c_str());
 		}
 
 		std::shared_ptr<std::string> GetLog() {

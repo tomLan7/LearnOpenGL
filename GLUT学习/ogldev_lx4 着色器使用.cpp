@@ -39,10 +39,13 @@ int main(int  argc, char* argv[]) {
 	Vertices[2] = lan::Vector3F(0.0f, 1.0f, 0.0f);
 	glGenBuffers(1, &VBO1);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 	auto shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx4.vert", "lx4.frag");
+	GLint Location=shader->GetAttribLocation("Position");//获得对应顶点属性的下标
+	glEnableVertexAttribArray(Location);
+	glVertexAttribPointer(Location, 3, GL_FLOAT, GL_FALSE, 0, 0);
+ 
 	shader->User();
 	glutMainLoop();
 	return 0;

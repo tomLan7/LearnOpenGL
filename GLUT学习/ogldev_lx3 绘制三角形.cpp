@@ -39,7 +39,7 @@ int main(int  argc, char* argv[]) {
 	glGenBuffers(1, &VBO1);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
-	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(0);//固定管道中的顶点属性索引 0
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glutMainLoop();
