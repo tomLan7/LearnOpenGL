@@ -9,18 +9,22 @@
 using namespace std;
 GLuint VBO1;
 lan::ShaderProgram* shader;
-lan::Matrix4F trans;
+lan::Matrix4F M_trans;
+lan::Matrix4F M_rotate;
+lan::Matrix4F M_scaling;
 float Rate = 0;
 void IdleFunc() {
 	Rate += 0.001;
-	trans = lan::Matrix4F::Translate({ sin(Rate),0,0 });
-
+	M_rotate = lan::Matrix4F::RotationZ(Rate);
+	M_trans = lan::Matrix4F::Translation({ sin(Rate),0,0 });
+	M_scaling = lan::Matrix4F::Scaling({sin(Rate),sin(Rate) ,sin(Rate) });
 	glutPostRedisplay();
 }
 void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
-
-	shader->Uniform("gWorld", trans);
+	shader->Uniform("gScale", M_scaling);
+	shader->Uniform("gRotate", M_rotate);
+	shader->Uniform("gTranslate", M_trans);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 

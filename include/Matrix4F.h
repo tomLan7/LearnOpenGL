@@ -17,8 +17,33 @@ namespace lan {
 			}
 			return result;
 		}
-		static Matrix4F Translate(Vector3F translate) {
+		static Matrix4F Translation(Vector3F translate) {
 			return Matrix4F{ {1,0,0,0},{0,1.f,0,0},{0,0,1.f,0},{translate,1} };
+		}
+		static Matrix4F Scaling(Vector3F scale) {
+			return Matrix4F{ {scale.x,0,0,0},{0,scale.y,0,0},{0,0,scale.z,0},{0,0,0,1} };
+		}
+		//ÈÆÖáÄæÊ±ÕëÐý×ª
+		static Matrix4F RotationX(float radian) {
+			Vector3F newY = { 0,1,0 };
+			Vector3F newZ = { 0,0,1 };
+			newY.rotateX(-radian);
+			newZ.rotateX(-radian);
+			return Matrix4F({ 1,0,0,0 }, { newY, 0 }, { newZ,0 }, { 0,0,0,1 });
+		}
+		static Matrix4F RotationY(float radian) {
+			Vector3F newZ = { 0,0,1 };
+			Vector3F newX = { 1,0,0 };
+			newZ.rotateY(-radian);
+			newX.rotateY(-radian);
+			return Matrix4F({ newX,0 }, {0,1,0, 0 }, {newZ,0 }, { 0,0,0,1 });
+		}
+		static Matrix4F RotationZ(float radian) {
+			Vector3F newX = { 1,0,0 };
+			Vector3F newY = { 0,1,0 };
+			newX.rotateZ(-radian);
+			newY.rotateZ(-radian);
+			return Matrix4F({ newX,0 }, { newY, 0 }, { 0,0,1,0 }, { 0,0,0,1 });
 		}
 	};
 }

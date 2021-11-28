@@ -36,7 +36,26 @@ namespace lan {
 		Vector3F operator-()const {
 			return *this * -1;
 		}
-
+		//围绕Z轴的旋转，用旋转公式得到新的x和y
+		void rotateZ(float radians) {
+			float x1 = x * cos(radians) - y * sin(radians);
+			float y1 = x * sin(radians) + y * cos(radians);
+			x = x1;
+			y = y1;
+		}
+		void rotateX(float radians) {
+			float y1 = y * cos(radians) - z * sin(radians);
+			float z1 = y * sin(radians) + z * cos(radians);
+			y = y1;
+			z = z1;
+		}
+		void rotateY(float radians) {
+			float z1 = z * cos(radians) - x * sin(radians);
+			float x1 = z * sin(radians) + x * cos(radians);
+			z = z1;
+			x = x1;
+		}
+		
 		//四则运算
 		Vector3F operator+(const Vector3F& vec)const {
 			return Vector3F(x + vec.x, y + vec.y, z + vec.z);

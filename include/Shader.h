@@ -108,23 +108,62 @@ namespace lan {
 		void User() {
 			glUseProgram(ObjectId);
 		}
-		void  Uniform(const std::string& attrName, float Value) {
-			glUniform1f(glGetUniformLocation(this->ObjectId, attrName.c_str()), Value);
+		bool  Uniform(const std::string& attrName, float Value) {
+			GLint uniformIndex=glGetUniformLocation(this->ObjectId, attrName.c_str());
+			bool rtn = true;
+			if (uniformIndex==-1) {
+				rtn = false;
+			}
+			glUniform1f(uniformIndex, Value);
+			return rtn;
 		}
-		void Uniform(const std::string& attrName, float ValueX, float ValueY, float ValueZ, float ValueW) {
-			glUniform4f(glGetUniformLocation(this->ObjectId, attrName.c_str()), ValueX, ValueY, ValueZ, ValueW);
+		bool Uniform(const std::string& attrName, float ValueX, float ValueY, float ValueZ, float ValueW) {
+			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
+			bool rtn = true;
+			if (uniformIndex == -1) {
+				rtn = false;
+			}
+			else {
+				glUniform4f(uniformIndex, ValueX, ValueY, ValueZ, ValueW);
+			}
+			return rtn;
 		}
-		void UniformTextureIndex(const std::string& attName, int TextureIndex) {
-			glUniform1i(glGetUniformLocation(this->ObjectId, attName.c_str()), TextureIndex);
+		bool UniformTextureIndex(const std::string& attrName, int TextureIndex) {
+			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
+			bool rtn = true;
+			if (uniformIndex == -1) {
+				rtn = false;
+			}
+			else {
+				glUniform1i(uniformIndex, TextureIndex);
+			}
+			return rtn;
 		}
-		void Uniform(const std::string& attName, glm::vec3 value) {
-			glUniform3f(glGetUniformLocation(this->ObjectId, attName.c_str()), value.x, value.y, value.z);
+		bool Uniform(const std::string& attrName, glm::vec3 value) {
+			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
+			bool rtn = true;
+			if (uniformIndex == -1) {
+				rtn = false;
+			}
+			else {
+				glUniform3f(uniformIndex, value.x, value.y, value.z);
+			}
+			return rtn;
 		}
-		void Uniform(const std::string& attName, glm::vec4 value) {
-			glUniform4f(glGetUniformLocation(this->ObjectId, attName.c_str()), value.x, value.y, value.z, value.w);
+		bool Uniform(const std::string& attrName, glm::vec4 value) {
+			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
+			bool rtn = true;
+			if (uniformIndex == -1) {
+				rtn = false;
+			}
+			else {
+				glUniform4f(uniformIndex, value.x, value.y, value.z, value.w);
+			}
+			return rtn;
+			
 		}
-		void Uniform(const std::string& attName, const glm::mat4& mat);
-		void Uniform(const std::string& attName, const Matrix4F& mat);
+		bool Uniform(const std::string& attName, const glm::mat4& mat);
+		bool Uniform(const std::string& attName, const Matrix4F& mat);
 
 		static ShaderProgram* Create() {
 			return new ShaderProgram(glCreateProgram());
