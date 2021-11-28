@@ -10,6 +10,10 @@ namespace lan {
 			this->w = w;
 		}
 
+		HomogeneousCoordinates4F(Vector3F vec, float w):Vector3F(vec){
+			this->w = w;
+		}
+
 		HomogeneousCoordinates4F(const lan::HomogeneousCoordinates4F&) = default;
 
 		void setValue(float x, float y, float z, float w) {

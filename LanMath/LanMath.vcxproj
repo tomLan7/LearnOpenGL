@@ -144,9 +144,9 @@
     <ClCompile Include="LanMath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\HomogeneousCoordinates4F.h" />
+    <ClInclude Include="..\include\Matrix4F.h" />
     <ClInclude Include="..\include\Vector3F.h" />
-    <ClInclude Include="HomogeneousCoordinates4F.h" />
-    <ClInclude Include="Matrix4F.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -69,6 +69,9 @@
     <ClCompile Include="ogldev_lx5 uniform变量.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ogldev_lx6 变换矩阵的使用.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OGLan.h">
@@ -86,6 +89,9 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx5.vert">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx6.vert">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

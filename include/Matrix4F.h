@@ -17,5 +17,8 @@ namespace lan {
 			}
 			return result;
 		}
+		static Matrix4F Translate(Vector3F translate) {
+			return Matrix4F{ {1,0,0,0},{0,1.f,0,0},{0,0,1.f,0},{translate,1} };
+		}
 	};
 }

@@ -185,7 +185,10 @@
     <ClCompile Include="ogldev_lx4 着色器使用.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="ogldev_lx5 uniform变量.cpp" />
+    <ClCompile Include="ogldev_lx5 uniform变量.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="ogldev_lx6 变换矩阵的使用.cpp" />
     <ClCompile Include="源.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -202,6 +205,7 @@
     <None Include="lx4.frag" />
     <None Include="lx4.vert" />
     <None Include="lx5.vert" />
+    <None Include="lx6.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

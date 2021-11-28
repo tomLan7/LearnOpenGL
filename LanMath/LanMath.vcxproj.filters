@@ -23,10 +23,10 @@
     <ClInclude Include="..\include\Vector3F.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="HomogeneousCoordinates4F.h">
+    <ClInclude Include="..\include\Matrix4F.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix4F.h">
+    <ClInclude Include="..\include\HomogeneousCoordinates4F.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

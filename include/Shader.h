@@ -3,6 +3,7 @@
 #include<memory>
 #include<iostream>
 #include <glm/glm.hpp>
+#include"Matrix4F.h"
 /*封装原则：
 * 一些经常用来分享的用智能指针包装。
 * 一些经常临时使用的用栈区对象
@@ -123,6 +124,7 @@ namespace lan {
 			glUniform4f(glGetUniformLocation(this->ObjectId, attName.c_str()), value.x, value.y, value.z, value.w);
 		}
 		void Uniform(const std::string& attName, const glm::mat4& mat);
+		void Uniform(const std::string& attName, const Matrix4F& mat);
 
 		static ShaderProgram* Create() {
 			return new ShaderProgram(glCreateProgram());
