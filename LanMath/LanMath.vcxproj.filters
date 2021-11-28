@@ -18,12 +18,15 @@
     <ClCompile Include="LanMath.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\include\Vector3.h">
+    <ClInclude Include="..\include\Vector3F.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="HomogeneousCoordinates4F.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4F.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

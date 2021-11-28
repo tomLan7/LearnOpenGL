@@ -9,7 +9,7 @@ namespace lan {
 		float x=0.f;
 		float y=0.f;
 		float z=0.f;
-		Vector3F() = default;
+		Vector3F() = default; 
 
 		Vector3F(float x, float y, float z){
 			setValue(x,y,z);
@@ -43,9 +43,9 @@ namespace lan {
 		}
 
 		Vector3F& operator+=(const Vector3F& vec) {
-			x *= vec.x;
-			y *= vec.y;
-			z *= vec.z;
+			x += vec.x;
+			y += vec.y;
+			z += vec.z;
 			return *this;
 		}
 		Vector3F operator-(const Vector3F& vec)const {

@@ -85,5 +85,8 @@
     <None Include="lx4.vert">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="lx5.vert">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>
