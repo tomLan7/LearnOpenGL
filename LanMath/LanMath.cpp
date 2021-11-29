@@ -10,7 +10,7 @@ int main()
 {
 	Vector4F a(1,1,1,1);
 	Matrix4F m1{ {1,0,0,0},{0,1.f,0,0},{0,0,1,0},{5,0,0,1} };
-	
+	cout << (Matrix4F::Translation({1,1,0}) * m1)*a << endl;
 	cout << a<< endl;
 	cout << Matrix4F::Translation({1,5,3}) * a << endl;
 }

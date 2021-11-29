@@ -17,6 +17,20 @@ namespace lan {
 			}
 			return result;
 		}
+		Matrix4F operator*(const Matrix4F& mat) {
+			Matrix4F result;
+			for (int i = 0; i < 4;i++) {
+				result[i]=(*this)*mat[i];
+			}
+			return result;
+		}
+		HomogeneousCoordinates4F& operator[](size_t index) {
+			return data[index];
+		}
+		const HomogeneousCoordinates4F& operator[](size_t index)const {
+			return data[index];
+		}
+
 		static Matrix4F Translation(Vector3F translate) {
 			return Matrix4F{ {1,0,0,0},{0,1.f,0,0},{0,0,1.f,0},{translate,1} };
 		}
