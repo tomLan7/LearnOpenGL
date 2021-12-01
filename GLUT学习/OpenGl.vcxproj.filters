@@ -81,6 +81,9 @@
     <ClCompile Include="ogldev_lx8 透视投影摄像机.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ogldev_lx9 相机空间摄像机.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OGLan.h">

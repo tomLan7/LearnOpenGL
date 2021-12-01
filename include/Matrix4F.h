@@ -3,7 +3,12 @@
 namespace lan {
 	struct Matrix4F {
 		HomogeneousCoordinates4F data[4];//4个列向量，分别对应该矩阵的新坐标基
-		Matrix4F() = default;
+		Matrix4F() {
+			data[0] = { 1,0,0,0 };
+			data[1] = { 0,1,0,0 };
+			data[2] = { 0,0,1,0 };
+			data[3] = { 0,0,0,1 };
+		};
 		Matrix4F(HomogeneousCoordinates4F d1, HomogeneousCoordinates4F d2, HomogeneousCoordinates4F d3, HomogeneousCoordinates4F d4) {
 			data[0] = d1;
 			data[1] = d2;

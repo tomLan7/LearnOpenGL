@@ -22,7 +22,7 @@ void IdleFunc() {
 	camera.WorldPos(sin(Rate), 0, 0);
 	camera.Scale(sin(Rate), sin(Rate), sin(Rate));
 
-	camera.SetPerspectiveProj(250.0f, 1024, 768, 0.f, 1.0f);
+	camera.setPerspectiveProj(250.0f, 1024, 768, 0.f, 1.0f);
 	glutPostRedisplay();
 }
 void Render() {
