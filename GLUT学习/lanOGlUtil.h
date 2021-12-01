@@ -1,7 +1,7 @@
 #pragma once
-class lanOGlUtil
+class LanGLUT
 {
 public:
-	lanOGlUtil();
-	~lanOGlUtil();
+	LanGLUT();
+	~LanGLUT();
 };

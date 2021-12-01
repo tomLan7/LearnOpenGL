@@ -100,7 +100,23 @@ namespace lan {
 				break;
 			}
 		}
-
+		float& operator[](size_t index){
+			switch (index)
+			{
+			case 0:
+				return x;
+			case 1:
+				return y;
+			case 2:
+				return z;
+			case 3:
+				return w;
+			default:
+				
+				break;
+			}
+			throw "异常的向量索引";
+		}
 		std::string toString()const {
 			std::ostringstream str;
 			str << "[" << x << "," << y << "," << z <<","<<w<< "]";

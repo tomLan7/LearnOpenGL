@@ -18,19 +18,20 @@ lan::Camera camera;
 float Rate = 0;
 void IdleFunc() {
 	Rate += 0.001;
-	camera.Rotate(0,0,Rate*30);
+	camera.Rotate(0, 0, 0);
 	camera.WorldPos(sin(Rate), 0, 0);
-	camera.Scale(sin(Rate), sin(Rate), sin(Rate));
+	camera.Scale(1, 1, 1);
 
-	camera.SetPerspectiveProj(250.0f, 1024, 768, 0.f, 1.0f);
+	camera.SetPerspectiveProj(160.0f,1.f, 0.3f, 1.0f);
 	glutPostRedisplay();
 }
 void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
-	shader->Uniform("gMat", camera.GetTransNoProj());
+	glClear(GL_DEPTH_BUFFER_BIT);
+	shader->Uniform("gMat", camera.GetTransByPerspective());
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,IBO1);
-	glDrawElements(GL_TRIANGLES,12,GL_UNSIGNED_INT,0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO1);
+	glDrawElements(GL_TRIANGLES,12, GL_UNSIGNED_INT, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -38,6 +39,8 @@ void Render() {
 	glutSwapBuffers();
 }
 int main(int  argc, char* argv[]) {
+
+	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(1024, 768);
@@ -45,7 +48,8 @@ int main(int  argc, char* argv[]) {
 	glutCreateWindow("Tutorial 02");
 	glutDisplayFunc(Render);
 	glutIdleFunc(IdleFunc);
-	
+	/*camera.SetPerspectiveProj(50.0f, 1.f, 0.3f, 5.0f);
+	cout << camera.m_persProj * lan::Vector4F(0, 0,4.5, 1)<<endl;*/
 
 	GLenum res = glewInit();
 	if (res != GLEW_OK)
@@ -57,14 +61,15 @@ int main(int  argc, char* argv[]) {
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	lan::Vector3F Vertices[4];
-	Vertices[0] = lan::Vector3F(-1.0f, -1.0f, 0.5f);
-	Vertices[1] = lan::Vector3F(0.f, -1.0f, 1.0f);
-	Vertices[2] = lan::Vector3F(1.0f, -1.0f, 0.5f);
-	Vertices[3] = lan::Vector3F(0.f, 1.0f, 0.5f);
+	Vertices[0] = lan::Vector3F(0.f, 0.1f, 1.f);
+	Vertices[1] = lan::Vector3F(0.f, 0.8f, 0.0f);
+	Vertices[2] = lan::Vector3F(.9f, -.9f, 0.f);
+	Vertices[3] = lan::Vector3F(-0.9f, -0.9f, 0.f);
 	glGenBuffers(1, &VBO1);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
-
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glEnable(GL_DEPTH_TEST);
 	unsigned int Indices[] = { 0, 3, 1,
 						   1, 3, 2,
 						   2, 3, 0,

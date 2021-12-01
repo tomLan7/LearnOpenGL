@@ -2,11 +2,11 @@
 
 
 
-lanOGlUtil::lanOGlUtil()
+LanGLUT::LanGLUT()
 {
 }
 
 
-lanOGlUtil::~lanOGlUtil()
+LanGLUT::~LanGLUT()
 {
 }
