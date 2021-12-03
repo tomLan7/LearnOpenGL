@@ -75,9 +75,6 @@
     <ClCompile Include="ogldev_lx7 索引绘制.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="ogldev_lx8 透视投影摄像机.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -92,7 +89,7 @@
     <ClInclude Include="lanOGlUtil.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="Pipeline.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

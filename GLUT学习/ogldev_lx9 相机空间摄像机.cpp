@@ -6,24 +6,22 @@
 #include"Vector3F.h"
 #include"Shader.h"
 #include"Matrix4F.h"
-#include"Camera.h"
+#include"Pipeline.h"
 using namespace std;
+using namespace lan;
 GLuint VBO1;
 GLuint IBO1;
 lan::ShaderProgram* shader;
-lan::Matrix4F M_trans;
-lan::Matrix4F M_rotate;
-lan::Matrix4F M_scaling;
-lan::Camera camera;
+lan::Pipeline camera;
 float Rate = 0;
 void IdleFunc() {
 	Rate += 0.001;
 
-	//camera.setPerspectiveProj(60, 1.f, 0.3f, 1.0f);
+	camera.initPerspectiveProj(60, 1.f, 0.3f, 5.0f);
 	auto v=lan::Vector3F(0, 0, 1);
 	v.rotateY(Rate);
 	cout << v << endl;
-	camera.setCemera(v, lan::Vector3F(0,1,0 ));
+	camera.initCamera(Vector3F(0,0,-1),v, lan::Vector3F(0,1,0 ));
 	glutPostRedisplay();
 }
 void Render() {

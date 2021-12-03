@@ -14,7 +14,7 @@ lan::ShaderProgram* shader;
 lan::Matrix4F M_trans;
 lan::Matrix4F M_rotate;
 lan::Matrix4F M_scaling;
-lan::Camera camera;
+lan::Pipeline camera;
 float Rate = 0;
 void IdleFunc() {
 	Rate += 0.001;
