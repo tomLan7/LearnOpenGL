@@ -2,8 +2,8 @@
 #include"Vector3F.h"
 #include"Matrix4F.h"
 #include<iostream>
+#include"Camera.h"
 namespace lan {
-
     class Pipeline
     {
         Vector3F worldScale;
@@ -12,14 +12,9 @@ namespace lan {
         Matrix4F worldTransformation;
         bool isWorldTransDirty = false;
 
-        struct {
-            Vector3F Pos;
-            Vector3F Target;
-            Vector3F Up;
-        } m_camera;
+        static Camera main_camera;
         Matrix4F m_persProj;
-        Matrix4F cameraTransformation;
-        bool isCemeraTransDirty=false;
+        bool isPersProjTransDirty = false;
 
         Matrix4F transformation;
     public:
@@ -44,40 +39,43 @@ namespace lan {
             if (isWorldTransDirty) {
                 isWorldTransDirty = false;
                 Matrix4F ScaleTrans, RotateTrans, TranslationTrans;
-                ScaleTrans = Matrix4F::Scaling(worldScale);
-                RotateTrans = Matrix4F::Rotation(worldRotation);
-                TranslationTrans = Matrix4F::Translation(worldOffset);
+                ScaleTrans = Matrix4F::Scale(worldScale);
+                RotateTrans = Matrix4F::Rotate(worldRotation);
+                TranslationTrans = Matrix4F::Translate(worldOffset);
                 worldTransformation = TranslationTrans * RotateTrans * ScaleTrans;
             }
             return worldTransformation;
         }
 
         void initPerspectiveProj(float FOV,float aspectRatio,float zNear, float zFar) {
-            isCemeraTransDirty = true;
+            isPersProjTransDirty = true;
             m_persProj = Matrix4F::PersProjTransform(FOV,aspectRatio,zNear,zFar);
         }
         
         void initCamera(const Vector3F& position,const Vector3F& Target, const Vector3F& Up) {
-            isCemeraTransDirty = true;
-            m_camera.Pos = position;
-            m_camera.Target = Target;
-            m_camera.Up = Up;
+            main_camera=Camera(position,Target,Up);
         }
-        const Matrix4F& GetCameraTransform() {
-            if (isCemeraTransDirty) {
-                isCemeraTransDirty = false;
-                cameraTransformation=m_persProj* Matrix4F::FaceTo(m_camera.Target, m_camera.Up)* Matrix4F::Translation(-m_camera.Pos);
-            }
-            return cameraTransformation;
-        }
+        
         const Matrix4F& GetTransNoProj() {
             return worldTransformation;
         }
+        //单纯透视变换，没有相机
         const Matrix4F& GetTransByPerspective() {
             return m_persProj;
         }
-        const Matrix4F& GetTransByCameraAndPerspective() {
-            return GetCameraTransform();
+        //单纯相机变换，不透视
+        Matrix4F GetCameraTransform() {
+            return main_camera.CameraTransformation();
+        }
+        //透视和相机
+        Matrix4F GetTransByCameraAndPerspective() {
+            Matrix4F ct=GetCameraTransform();//拷贝构造方式存到ct变量中
+            Matrix4F pt = GetTransByPerspective();//拷贝构造方式存到pt变量中
+            return pt*ct;//成功
+        }
+        static void SpecialKeyboardCB(int Key, int x, int y)
+        {
+            main_camera.OnKeyboard(Key);
         }
     };
 

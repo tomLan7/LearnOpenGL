@@ -12,22 +12,23 @@ using namespace lan;
 GLuint VBO1;
 GLuint IBO1;
 lan::ShaderProgram* shader;
-lan::Pipeline camera;
+lan::Pipeline p;
 float Rate = 0;
 void IdleFunc() {
-	Rate += 0.001;
+	Rate += 0.002;
 
-	camera.initPerspectiveProj(60, 1.f, 0.3f, 5.0f);
+	//p.initPerspectiveProj(160.0f, 1.f, 0.1f, 1.0f);
 	auto v=lan::Vector3F(0, 0, 1);
 	v.rotateY(Rate);
-	cout << v << endl;
-	camera.initCamera(Vector3F(0,0,-1),v, lan::Vector3F(0,1,0 ));
+	p.initCamera(Vector3F(0,0,0),v, lan::Vector3F(0,1,0 ));
+	//p.initCamera(Vector3F(0,0,0), lan::Vector3F(0, 1, 0), lan::Vector3F(0,0,1 ));
 	glutPostRedisplay();
 }
 void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	shader->Uniform("gMat", camera.GetTransByCameraAndPerspective());
+	shader->Uniform("gMat",Matrix4F::OrthoProjTransform(-1,1,-1,1,0,1)* p.GetCameraTransform());
+	//shader->Uniform("gMat", Matrix4F());
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO1);
 	glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
@@ -59,9 +60,9 @@ int main(int  argc, char* argv[]) {
 
 	lan::Vector3F Vertices[4];
 	Vertices[0] = lan::Vector3F(0.f, 0.1f, 1.f);
-	Vertices[1] = lan::Vector3F(0.f, 0.15f, 0.0f);
-	Vertices[2] = lan::Vector3F(.15f, -.15f, 0.f);
-	Vertices[3] = lan::Vector3F(-0.15f, -0.15f, 0.f);
+	Vertices[1] = lan::Vector3F(0.f, 0.8f, 0.5f);
+	Vertices[2] = lan::Vector3F(.9f, -.9f, 0.5f);
+	Vertices[3] = lan::Vector3F(-0.9f, -0.9f, 0.5f);
 	glGenBuffers(1, &VBO1);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
@@ -74,7 +75,7 @@ int main(int  argc, char* argv[]) {
 	glGenBuffers(1, &IBO1);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO1);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
-	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx7.vert", "lx6.frag");
+	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx7.vert", "lx4.frag");
 	GLint Location = shader->GetAttribLocation("Position");//获得对应顶点属性的下标
 	glEnableVertexAttribArray(Location);
 	glVertexAttribPointer(Location, 3, GL_FLOAT, GL_FALSE, 0, 0);

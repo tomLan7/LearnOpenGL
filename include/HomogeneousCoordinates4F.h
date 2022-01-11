@@ -10,7 +10,7 @@ namespace lan {
 			this->w = w;
 		}
 
-		HomogeneousCoordinates4F(Vector3F vec, float w):Vector3F(vec){
+		HomogeneousCoordinates4F(Vector3F vec, float w) :Vector3F(vec) {
 			this->w = w;
 		}
 
@@ -37,7 +37,7 @@ namespace lan {
 		}
 		//四则运算
 		HomogeneousCoordinates4F operator+(const HomogeneousCoordinates4F& vec)const {
-			return HomogeneousCoordinates4F(x + vec.x, y + vec.y, z + vec.z,w+vec.w);
+			return HomogeneousCoordinates4F(x + vec.x, y + vec.y, z + vec.z, w + vec.w);
 		}
 
 		HomogeneousCoordinates4F& operator+=(const HomogeneousCoordinates4F& vec) {
@@ -48,7 +48,7 @@ namespace lan {
 			return *this;
 		}
 		HomogeneousCoordinates4F operator-(const HomogeneousCoordinates4F& vec)const {
-			return HomogeneousCoordinates4F(x - vec.x, y - vec.y, z - vec.z,w-vec.w);
+			return HomogeneousCoordinates4F(x - vec.x, y - vec.y, z - vec.z, w - vec.w);
 		}
 
 		HomogeneousCoordinates4F& operator-=(const HomogeneousCoordinates4F& vec) {
@@ -70,7 +70,7 @@ namespace lan {
 			return tem;
 		}
 		float operator*(HomogeneousCoordinates4F vec)const {
-			return x * vec.x + y * vec.y + z * vec.z+w*vec.w;
+			return x * vec.x + y * vec.y + z * vec.z + w * vec.w;
 		}
 
 		HomogeneousCoordinates4F& operator/=(float factor) {
@@ -83,6 +83,15 @@ namespace lan {
 			tem /= factor;
 			return tem;
 		}
+
+		bool operator!=(const HomogeneousCoordinates4F& hc) const {
+			return !this->operator==(hc);
+		}
+
+		bool operator==(const HomogeneousCoordinates4F& hc) const {
+			return this->Vector3F::operator==(hc) && w == hc.w;
+		}
+
 		float operator[](size_t index)const {
 			switch (index)
 			{
@@ -100,7 +109,7 @@ namespace lan {
 				break;
 			}
 		}
-		float& operator[](size_t index){
+		float& operator[](size_t index) {
 			switch (index)
 			{
 			case 0:
@@ -112,14 +121,14 @@ namespace lan {
 			case 3:
 				return w;
 			default:
-				
+
 				break;
 			}
 			throw "异常的向量索引";
 		}
 		std::string toString()const {
 			std::ostringstream str;
-			str << "[" << x << "," << y << "," << z <<","<<w<< "]";
+			str << "[" << x << "," << y << "," << z << "," << w << "]";
 			return str.str();
 		}
 	};

@@ -14,20 +14,20 @@ lan::ShaderProgram* shader;
 lan::Matrix4F M_trans;
 lan::Matrix4F M_rotate;
 lan::Matrix4F M_scaling;
-lan::Pipeline camera;
+lan::Pipeline p;
 float Rate = 0;
 void IdleFunc() {
 	Rate += 0.001;
-	camera.Rotate(0,0,Rate*30);
-	camera.WorldPos(sin(Rate), 0, 0);
-	camera.Scale(sin(Rate), sin(Rate), sin(Rate));
+	p.Rotate(0,0,Rate*30);
+	p.WorldPos(sin(Rate), 0, 0);
+	p.Scale(sin(Rate), sin(Rate), sin(Rate));
 
-	camera.setPerspectiveProj(250.0f, 1024, 768, 0.f, 1.0f);
+	p.setPerspectiveProj(250.0f, 1024, 768, 0.f, 1.0f);
 	glutPostRedisplay();
 }
 void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
-	shader->Uniform("gMat", camera.GetTransNoProj());
+	shader->Uniform("gMat", p.GetTransNoProj());
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER,IBO1);
 	glDrawElements(GL_TRIANGLES,12,GL_UNSIGNED_INT,0);

@@ -16,8 +16,8 @@ float Rate = 0;
 void IdleFunc() {
 	Rate += 0.001;
 	M_rotate = lan::Matrix4F::RotationZ(Rate);
-	M_trans = lan::Matrix4F::Translation({ sin(Rate),0,0 });
-	M_scaling = lan::Matrix4F::Scaling({sin(Rate),sin(Rate) ,sin(Rate) });
+	M_trans = lan::Matrix4F::Translate({ sin(Rate),0,0 });
+	M_scaling = lan::Matrix4F::Scale({sin(Rate),sin(Rate) ,sin(Rate) });
 	glutPostRedisplay();
 }
 void Render() {

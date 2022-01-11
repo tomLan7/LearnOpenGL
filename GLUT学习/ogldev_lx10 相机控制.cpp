@@ -8,49 +8,45 @@
 #include"Matrix4F.h"
 #include"Pipeline.h"
 using namespace std;
+using namespace lan;
 GLuint VBO1;
 GLuint IBO1;
 lan::ShaderProgram* shader;
-lan::Matrix4F M_trans;
-lan::Matrix4F M_rotate;
-lan::Matrix4F M_scaling;
 lan::Pipeline p;
 float Rate = 0;
-void IdleFunc() {
-	Rate += 0.001;
-	p.initRotate(0, 0, 0);
-	p.initScale(1, 1, 1);
-	p.initWorldOffset(sin(Rate), 0, 0);
-	p.initPerspectiveProj(160.0f,1.f, 0.3f, 1.0f);
-	glutPostRedisplay();
-}
-//GLUT用于绘制的回调函数
-void Render() {
+
+void RenderSceneCB() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	shader->Uniform("gMat", p.GetTransByPerspective());//使用透视功能，不使用相机矩阵。
+
+	p.initPerspectiveProj(160.0f, 1.f, 0.3f, 1.0f);
+	//p.initCamera(Vector3F(0, 0, 0), v, lan::Vector3F(0, 1, 0));
+	shader->Uniform("gMat", p.GetTransByCameraAndPerspective());
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO1);
-	glDrawElements(GL_TRIANGLES,12, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	glutSwapBuffers();
 }
-int main(int  argc, char* argv[]) {
 
-	
+static void InitializeGlutCallbacks()
+{
+	glutDisplayFunc(RenderSceneCB);
+	glutIdleFunc(RenderSceneCB);
+	glutSpecialFunc(p.SpecialKeyboardCB);
+}
+int main(int  argc, char* argv[]) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(1024, 768);
 	glutInitWindowPosition(100, 100);
-	glutCreateWindow("透视投影");
-	glutDisplayFunc(Render);
-	glutIdleFunc(IdleFunc);
-	/*camera.SetPerspectiveProj(50.0f, 1.f, 0.3f, 5.0f);
-	cout << camera.m_persProj * lan::Vector4F(0, 0,4.5, 1)<<endl;*/
+	glutCreateWindow("相机控制"); 
+	InitializeGlutCallbacks();
 
+	GLclampf;
 	GLenum res = glewInit();
 	if (res != GLEW_OK)
 	{
@@ -77,7 +73,7 @@ int main(int  argc, char* argv[]) {
 	glGenBuffers(1, &IBO1);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO1);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
-	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx7.vert", "lx6.frag");
+	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx7.vert", "lx4.frag");
 	GLint Location = shader->GetAttribLocation("Position");//获得对应顶点属性的下标
 	glEnableVertexAttribArray(Location);
 	glVertexAttribPointer(Location, 3, GL_FLOAT, GL_FALSE, 0, 0);

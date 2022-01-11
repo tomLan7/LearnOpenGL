@@ -1,5 +1,6 @@
 #pragma once
 #include"HomogeneousCoordinates4F.h"
+#include<algorithm>
 namespace lan {
 	struct Matrix4F {
 
@@ -19,14 +20,38 @@ namespace lan {
 			data[2] = d3;
 			data[3] = d4;
 		}
-		HomogeneousCoordinates4F operator*(const HomogeneousCoordinates4F& vec) {
+
+		Matrix4F transpose() {
+			Matrix4F returnValue = *this;
+			returnValue.transposed();
+			return returnValue;
+		}
+		
+		void transposed() {
+			//遍历每个列
+			for (int i = 0; i < 4; i++) {
+				//遍历每行
+				for (int j = i+1; j <4;j++ ) {
+					std::swap(data[i][j],data[j][i]);
+				}
+			}
+		}
+		bool operator==(const Matrix4F& mat)const {
+			for (int i = 0; i < sizeof(data) / sizeof(data[0]);i++) {
+				if (data[i] != mat[i]) {
+					return false;
+				}
+			}
+			return true;
+		}
+		HomogeneousCoordinates4F operator*(const HomogeneousCoordinates4F& vec)const{
 			HomogeneousCoordinates4F result;
 			for (int i = 0; i < sizeof(data)/sizeof(data[0]);i++) {
 				result+=data[i] * vec[i];
 			}
 			return result;
 		}
-		Matrix4F operator*(const Matrix4F& mat) {
+		Matrix4F operator*(const Matrix4F& mat)const {
 			Matrix4F result;
 			for (int i = 0; i < 4;i++) {
 				result[i]=(*this)*mat[i];
@@ -40,10 +65,10 @@ namespace lan {
 			return data[index];
 		}
 
-		static Matrix4F Translation(Vector3F translate) {
+		static Matrix4F Translate(Vector3F translate) {
 			return Matrix4F{ {1,0,0,0},{0,1.f,0,0},{0,0,1.f,0},{translate,1} };
 		}
-		static Matrix4F Scaling(Vector3F scale) {
+		static Matrix4F Scale(Vector3F scale) {
 			return Matrix4F{ {scale.x,0,0,0},{0,scale.y,0,0},{0,0,scale.z,0},{0,0,0,1} };
 		}
 		//绕轴逆时针旋转
@@ -68,7 +93,7 @@ namespace lan {
 			newY.rotateZ(-radian);
 			return Matrix4F({ newX,0 }, { newY, 0 }, { 0,0,1,0 }, { 0,0,0,1 });
 		}
-		static Matrix4F Rotation(Vector3F rotate) {
+		static Matrix4F Rotate(Vector3F rotate) {
 			return RotationZ(rotate.z)*RotationY(rotate.y)*RotationX(rotate.x);
 		}
 		static Matrix4F FaceTo(Vector3F face,Vector3F up) {
@@ -80,8 +105,25 @@ namespace lan {
 			returnValue[1] = Vector4F(V, 0);
 			returnValue[2] = Vector4F(N, 0);
 			returnValue[3] = Vector4F(0, 0, 0, 1);
-			return returnValue;
+			return returnValue.transpose();
 		}
+		static Matrix4F OrthoProjTransform(float left, float right, float bottom, float top, float zNear, float zFar) {
+			float width = right - left;
+			float height = top - bottom;
+			float deep = zFar - zNear;
+			float xMid = (right + left) / 2;
+			float yMid = (top + bottom) / 2;
+			float zMid = (zFar + zNear) / 2;
+			/*
+			Vector4F newX(2/width,0,0,0);
+			Vector4F newY(0,2/height,0,0);
+			Vector4F newZ(0,0,2/deep,0);
+			Vector4F newW(-xMid/width,-yMid / height,-zMid / deep,1);
+			return Matrix4F(newX, newY, newZ, newW);*/
+			return Scale({ 2 / width,2 / height,2 / deep }) * Translate({ -xMid,-yMid,-zMid });
+		}
+
+
 		static Matrix4F PersProjTransform(float FOV, float aspectRatio, float zNear, float zFar) {
 
 			Matrix4F returnValue;
@@ -102,7 +144,7 @@ namespace lan {
 			returnValue[2][0] = 0.0f;
 			returnValue[2][1] = 0.0f;
 			returnValue[2][2] = (-zNear - zFar) / zRange;
-			returnValue[2][3] = 1.0f;
+			returnValue[2][3] = 1.0f;//让w等于z，z越大w越大
 
 			returnValue[3][0] = 0.0f;
 			returnValue[3][1] = 0.0f;
@@ -111,5 +153,11 @@ namespace lan {
 			return returnValue;
 		}
 
+		static Matrix4F frustum(float left,float right,float bottom,float top,float near,float far){
+
+		}
+		static Matrix4F lookAt(lan::Vector3F eye, lan::Vector3F center, lan::Vector3F up) {
+			return {};
+		}
 	};
 }
