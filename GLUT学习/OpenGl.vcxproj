@@ -239,6 +239,7 @@
     <None Include="lx6.frag" />
     <None Include="lx6.vert" />
     <None Include="lx7.vert" />
+    <None Include="lx9.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

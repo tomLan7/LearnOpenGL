@@ -27,7 +27,21 @@ void IdleFunc() {
 void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	shader->Uniform("gMat",Matrix4F::OrthoProjTransform(-1,1,-1,1,0,1)* p.GetCameraTransform());
+	Vector4F test1(0,1,sin(Rate)+0.5,1);
+	Vector4F test2(1, 0, sin(Rate) + 0.5, 1);
+	Vector4F test3(1, 1, sin(Rate) + 0.5, 1);
+	Vector4F test4(0, 0, sin(Rate) + 0.5, 1);
+	cout << test1 << endl;
+	cout << test2 << endl;
+	cout << test3 << endl;
+	cout << test4 << endl;
+	cout << Matrix4F::OrthoProjTransform(-1, 1, -1, 1, 0, 1) * test1 << endl;
+	cout << Matrix4F::OrthoProjTransform(-1, 1, -1, 1, 0, 1) * test2 << endl;
+	cout << Matrix4F::OrthoProjTransform(-1, 1, -1, 1, 0, 1) * test3 << endl;
+	cout << Matrix4F::OrthoProjTransform(-1, 1, -1, 1, 0, 1) * test4 << endl;
+	cout << "下一轮"<< endl;
+	//shader->Uniform("gMat",Matrix4F::OrthoProjTransform(-1,1,-1,1,0,1)* p.GetCameraTransform());
+	shader->Uniform("gMat",Matrix4F::PersProjTransform(150,1,0,1)* p.GetCameraTransform());
 	//shader->Uniform("gMat", Matrix4F());
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO1);
@@ -48,7 +62,7 @@ int main(int  argc, char* argv[]) {
 	glutCreateWindow("Tutorial 02");
 	glutDisplayFunc(Render);
 	glutIdleFunc(IdleFunc);
-
+	glEnable(GL_CULL_FACE);
 	GLenum res = glewInit();
 	if (res != GLEW_OK)
 	{
@@ -67,7 +81,7 @@ int main(int  argc, char* argv[]) {
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-	glEnable(GL_DEPTH_TEST);
+	
 	unsigned int Indices[] = { 0, 3, 1,
 						   1, 3, 2,
 						   2, 3, 0,
@@ -75,7 +89,7 @@ int main(int  argc, char* argv[]) {
 	glGenBuffers(1, &IBO1);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO1);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
-	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx7.vert", "lx4.frag");
+	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx7.vert", "lx9.frag");
 	GLint Location = shader->GetAttribLocation("Position");//获得对应顶点属性的下标
 	glEnableVertexAttribArray(Location);
 	glVertexAttribPointer(Location, 3, GL_FLOAT, GL_FALSE, 0, 0);

@@ -52,8 +52,8 @@ namespace lan {
             m_persProj = Matrix4F::PersProjTransform(FOV,aspectRatio,zNear,zFar);
         }
         
-        void initCamera(const Vector3F& position,const Vector3F& Target, const Vector3F& Up) {
-            main_camera=Camera(position,Target,Up);
+        void initCamera(const Vector3F& position,const Vector3F& Face, const Vector3F& Up) {
+            main_camera=Camera(position, Face,Up);
         }
         
         const Matrix4F& GetTransNoProj() {
