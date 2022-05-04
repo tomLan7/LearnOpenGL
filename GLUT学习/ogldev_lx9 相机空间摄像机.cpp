@@ -41,7 +41,7 @@ void Render() {
 	cout << Matrix4F::OrthoProjTransform(-1, 1, -1, 1, 0, 1) * test4 << endl;
 	cout << "ÏÂÒ»ÂÖ"<< endl;
 	//shader->Uniform("gMat",Matrix4F::OrthoProjTransform(-1,1,-1,1,0,1)* p.GetCameraTransform());
-	shader->Uniform("gMat",Matrix4F::PersProjTransform(150,1,0,1)* p.GetCameraTransform());
+	shader->Uniform("gMat",Matrix4F::OrthoProjTransform(150,1,0,1)* p.GetCameraTransform());
 	//shader->Uniform("gMat", Matrix4F());
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO1);

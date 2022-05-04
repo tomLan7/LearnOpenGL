@@ -1,12 +1,11 @@
 #pragma once
 #include"HomogeneousCoordinates4F.h"
 #include<algorithm>
+#include <vector>
+#include<ConstantDef.h>
 namespace lan {
 	struct Matrix4F {
 
-		#define M_PI 3.14159f
-		#define ToRadian(x) ((x) * M_PI / 180.0f)
-		#define ToDegree(x) ((x) * 180.0f / M_PI)
 		HomogeneousCoordinates4F data[4];//4个列向量，分别对应该矩阵的新坐标基
 		Matrix4F() {
 			data[0] = { 1,0,0,0 };
@@ -26,7 +25,7 @@ namespace lan {
 			returnValue.transposed();
 			return returnValue;
 		}
-		
+		//转置
 		void transposed() {
 			//遍历每个列
 			for (int i = 0; i < 4; i++) {
@@ -93,6 +92,7 @@ namespace lan {
 			newY.rotateZ(-radian);
 			return Matrix4F({ newX,0 }, { newY, 0 }, { 0,0,1,0 }, { 0,0,0,1 });
 		}
+		//欧拉角求旋转矩阵
 		static Matrix4F Rotate(Vector3F rotate) {
 			return RotationZ(rotate.z)*RotationY(rotate.y)*RotationX(rotate.x);
 		}
@@ -158,6 +158,59 @@ namespace lan {
 		}
 		static Matrix4F lookAt(lan::Vector3F eye, lan::Vector3F center, lan::Vector3F up) {
 			return {};
+		}
+		//使用高斯消元法
+		float Determinant() {
+			Matrix4F temp_data=*this;
+			float rate = 1;
+			for (int i = 0; i < 4;i++) {
+				int y = i;
+				for (; temp_data[y][i] == 0; y++);
+				if (y == 4) {//第一行全是0
+					return 0;
+				}
+				if (y != i) {
+					rate = -rate;//交换行列式的列
+					std::swap(temp_data[i],temp_data[y]);
+				}
+				//主元提取出来
+				rate *= temp_data[i][i];
+				temp_data[i] /= temp_data[i][i];//单位化
+				for (int j = i+1; j < 4;j++) {
+					temp_data[j] -= temp_data[i] * temp_data[j][i];//消去其他元
+				}
+			}
+			return rate;
+		}
+		//使用初等代数法
+		Matrix4F Inverse() {
+			Matrix4F temp_data = *this;
+			//一个单位矩阵
+			Matrix4F return_matrix;
+			for (int i = 0; i < 4; i++) {
+				int y = i;
+				for (; temp_data[y][i] == 0; y++);
+				if (y == 4) {//第一行全是0
+					throw std::exception("不是可逆矩阵");
+				}
+				if (y != i) {
+					std::swap(temp_data[i], temp_data[y]);
+					std::swap(return_matrix[i], return_matrix[y]);
+				}
+				//要么保留主元的值，要么先操作return_matrix[i]。先操作temp_data的话主元值就变了
+				return_matrix[i] /= temp_data[i][i];
+				temp_data[i] /= temp_data[i][i];
+				
+				for (int j = i + 1; j < 4; j++) {
+					return_matrix[j] -= return_matrix[i] * temp_data[j][i];
+					temp_data[j] -= temp_data[i] * temp_data[j][i];//消去其他元
+				}
+			}
+			return return_matrix;
+		}
+
+		bool IsOrthogonal() {
+			return (*this * this->transpose())==Matrix4F();
 		}
 	};
 }

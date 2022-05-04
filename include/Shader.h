@@ -4,38 +4,15 @@
 #include<iostream>
 #include <glm/glm.hpp>
 #include"Matrix4F.h"
+#include"OpenGLObjectBase.h"
+
 /*封装原则：
 * 一些经常用来分享的用智能指针包装。
 * 一些经常临时使用的用栈区对象
 * 一些需要长期保留的用堆区封装
 */
 namespace lan {
-	class OpenGLObjectBase {
-	protected:
-		GLuint ObjectId = 0;
-		virtual ~OpenGLObjectBase() {
-		}
-
-		OpenGLObjectBase() = delete;
-		OpenGLObjectBase(const OpenGLObjectBase&) = delete;
-
-	public:
-		OpenGLObjectBase(GLuint ObjectId) {
-			this->ObjectId = ObjectId;
-		}
-		OpenGLObjectBase(OpenGLObjectBase&& other) {
-			std::swap(this->ObjectId, other.ObjectId);
-		}
-		explicit operator GLuint() {
-			return ObjectId;
-		}
-		GLboolean IsShader() {
-			return glIsShader(ObjectId);
-		}
-		GLboolean IsProgram() {
-			return glIsProgram(ObjectId);
-		}
-	};
+	
 	class Shader :public OpenGLObjectBase
 	{
 		GLenum ShaderType;
@@ -74,6 +51,7 @@ namespace lan {
 			return std::make_shared<std::string>(infoLog);
 		}
 	};
+
 	class ShaderProgram :public OpenGLObjectBase {
 	public:
 		using OpenGLObjectBase::OpenGLObjectBase;

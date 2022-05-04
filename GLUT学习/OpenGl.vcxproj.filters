@@ -90,6 +90,9 @@
     <ClCompile Include="Pipeline.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="GLUTWindow.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OGLan.h">
@@ -102,6 +105,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GLUTWindow.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

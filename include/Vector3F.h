@@ -61,6 +61,14 @@ namespace lan {
 			x = x1;
 		}
 
+		static Vector3F ToEuler(const Vector3F& angleXYZ) {
+			return Vector3F(angleXYZ.z, angleXYZ.y, angleXYZ.x);
+		}
+		static Vector3F FromEuler(const Vector3F& eulerAngle) {
+			return Vector3F(eulerAngle.z, eulerAngle.y, eulerAngle.x);
+
+		}
+
 		//Àƒ‘Ú‘ÀÀ„
 		Vector3F operator+(const Vector3F& vec)const {
 			return Vector3F(x + vec.x, y + vec.y, z + vec.z);
