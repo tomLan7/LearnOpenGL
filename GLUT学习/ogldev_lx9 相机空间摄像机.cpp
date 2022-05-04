@@ -7,6 +7,7 @@
 #include"Shader.h"
 #include"Matrix4F.h"
 #include"Pipeline.h"
+#include"GLUTWindow.h"
 using namespace std;
 using namespace lan;
 GLuint VBO1;
@@ -27,6 +28,7 @@ void IdleFunc() {
 void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
+	/*测试问题代码
 	Vector4F test1(0,1,sin(Rate)+0.5,1);
 	Vector4F test2(1, 0, sin(Rate) + 0.5, 1);
 	Vector4F test3(1, 1, sin(Rate) + 0.5, 1);
@@ -40,8 +42,10 @@ void Render() {
 	cout << Matrix4F::OrthoProjTransform(-1, 1, -1, 1, 0, 1) * test3 << endl;
 	cout << Matrix4F::OrthoProjTransform(-1, 1, -1, 1, 0, 1) * test4 << endl;
 	cout << "下一轮"<< endl;
-	//shader->Uniform("gMat",Matrix4F::OrthoProjTransform(-1,1,-1,1,0,1)* p.GetCameraTransform());
-	shader->Uniform("gMat",Matrix4F::OrthoProjTransform(150,1,0,1)* p.GetCameraTransform());
+	*/
+	//能看到是因为，OpenGL的NDC的z范围是-1到1，所以摄像机旋转后还是能看见。
+	shader->Uniform("gMat",Matrix4F::OrthoProjTransform(-1,1,-1,1,0,1)* p.GetCameraTransform());
+	//shader->Uniform("gMat",Matrix4F::PersProjTransform(120,1,0,1)* p.GetCameraTransform());
 	//shader->Uniform("gMat", Matrix4F());
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, IBO1);
@@ -55,20 +59,13 @@ void Render() {
 int main(int  argc, char* argv[]) {
 
 
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(1024, 768);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Tutorial 02");
-	glutDisplayFunc(Render);
-	glutIdleFunc(IdleFunc);
+	InitGLUT(&argc, argv);
+	GLUTWindow window("Lx7");
+	InitGLEW();
+	window.setDisplayFunc(Render);
+	window.setIdleFunc(IdleFunc);
+
 	glEnable(GL_CULL_FACE);
-	GLenum res = glewInit();
-	if (res != GLEW_OK)
-	{
-		cerr << "Error:" << glewGetErrorString(res) << endl;
-		return 1;
-	}
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 

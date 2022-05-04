@@ -16,10 +16,15 @@ namespace lan {
 			glutInitWindowPosition(x, y);
 			id=glutCreateWindow(title.c_str());
 		}
-		void DisplayFunc(void(*callback)() ) {
+		void setDisplayFunc(void(*callback)() ) {
 			glutDisplayFunc(callback);
 		}
+		void setIdleFunc(void(*callback)()) {
+			glutIdleFunc(callback);
+		}
 	};
-	static void InitGLUT(int* argcp, char** argv);
+	extern void InitGLUT(int* argcp, char** argv);
+	//必须在GLUTCreateWindow之后初始化GLEW，否则会报错，未识别的版本
+	extern void InitGLEW();
 }
 

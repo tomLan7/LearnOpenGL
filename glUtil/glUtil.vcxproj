@@ -144,11 +144,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GLBuffer.cpp" />
     <ClCompile Include="glUtil.cpp" />
     <ClCompile Include="OpenGLObjectBase.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\GLBuffer.h" />
     <ClInclude Include="..\include\OpenGLObjectBase.h" />
     <ClInclude Include="..\include\Shader.h" />
   </ItemGroup>

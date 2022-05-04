@@ -46,7 +46,7 @@ namespace lan {
             }
             return worldTransformation;
         }
-
+        //
         void initPerspectiveProj(float FOV,float aspectRatio,float zNear, float zFar) {
             isPersProjTransDirty = true;
             m_persProj = Matrix4F::PersProjTransform(FOV,aspectRatio,zNear,zFar);
@@ -55,9 +55,9 @@ namespace lan {
         void initCamera(const Vector3F& position,const Vector3F& Face, const Vector3F& Up) {
             main_camera=Camera(position, Face,Up);
         }
-        
-        const Matrix4F& GetTransNoProj() {
-            return worldTransformation;
+        //没有透视和相机
+        Matrix4F GetTransNoProj() {
+            return getWorldTransform();
         }
         //单纯透视变换，没有相机
         const Matrix4F& GetTransByPerspective() {

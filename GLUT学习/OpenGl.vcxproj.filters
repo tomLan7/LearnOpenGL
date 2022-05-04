@@ -21,9 +21,6 @@
     <ClCompile Include="OGLan.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="lanOGlUtil.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="lx1 基本内容.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -96,9 +93,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OGLan.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="lanOGlUtil.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Pipeline.h">

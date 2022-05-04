@@ -7,7 +7,11 @@
 #include"Shader.h"
 #include"Matrix4F.h"
 #include"Camera.h"
+#include"Pipeline.h"
+#include"GLUTWindow.h"
+
 using namespace std;
+using namespace lan;
 GLuint VBO1;
 GLuint IBO1;
 lan::ShaderProgram* shader;
@@ -15,14 +19,14 @@ lan::Matrix4F M_trans;
 lan::Matrix4F M_rotate;
 lan::Matrix4F M_scaling;
 lan::Pipeline p;
+
 float Rate = 0;
 void IdleFunc() {
 	Rate += 0.001;
-	p.Rotate(0,0,Rate*30);
-	p.WorldPos(sin(Rate), 0, 0);
-	p.Scale(sin(Rate), sin(Rate), sin(Rate));
-
-	p.setPerspectiveProj(250.0f, 1024, 768, 0.f, 1.0f);
+	p.initRotate(0,0,Rate*30);
+	p.initWorldOffset(sin(Rate), 0, 0);
+	p.initScale(sin(Rate), sin(Rate), sin(Rate));
+	
 	glutPostRedisplay();
 }
 void Render() {
@@ -38,22 +42,12 @@ void Render() {
 	glutSwapBuffers();
 }
 int main(int  argc, char* argv[]) {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(1024, 768);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Tutorial 02");
-	glutDisplayFunc(Render);
-	glutIdleFunc(IdleFunc);
+	InitGLUT(&argc, argv);
+	GLUTWindow window("Lx7");
+	InitGLEW();
+	window.setDisplayFunc(Render);
+	window.setIdleFunc(IdleFunc);
 	
-
-	GLenum res = glewInit();
-	if (res != GLEW_OK)
-	{
-		cerr << "Error:" << glewGetErrorString(res) << endl;
-		return 1;
-	}
-
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	lan::Vector3F Vertices[4];

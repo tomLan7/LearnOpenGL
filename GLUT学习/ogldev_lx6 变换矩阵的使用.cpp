@@ -6,7 +6,9 @@
 #include"Vector3F.h"
 #include"Shader.h"
 #include"Matrix4F.h"
+#include"GLUTWindow.h"
 using namespace std;
+using namespace lan;
 GLuint VBO1;
 lan::ShaderProgram* shader;
 lan::Matrix4F M_trans;
@@ -31,20 +33,11 @@ void Render() {
 	glutSwapBuffers();
 }
 int main(int  argc, char* argv[]) {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(1024, 768);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Tutorial 02");
-	glutDisplayFunc(Render);
-	glutIdleFunc(IdleFunc);
-
-	GLenum res = glewInit();
-	if (res != GLEW_OK)
-	{
-		cerr << "Error:" << glewGetErrorString(res) << endl;
-		return 1;
-	}
+	InitGLUT(&argc, argv);
+	GLUTWindow window("Lx6");
+	InitGLEW();
+	window.setDisplayFunc(Render);
+	window.setIdleFunc(IdleFunc);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 

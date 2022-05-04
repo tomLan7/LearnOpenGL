@@ -3,33 +3,25 @@
 #include"GL/glew.h"
 #include"glut.h"
 #include<iostream>
-#include"Vector3.h"
+#include"Vector3F.h"
+#include"GLUTWindow.h"
 #include"Shader.h"
+#include"GlBuffer.h"
 using namespace std;
-GLuint VBO1;
+using namespace lan;
+GLBuffer* vbo1;
 void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
-
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+	vbo1->BindBuffer(GLBuffer::Target_Type::ARRAY_BUFFER);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 
 	glutSwapBuffers();
 }
 int main(int  argc, char* argv[]) {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(1024, 768);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Tutorial 02");
-	glutDisplayFunc(Render);
-
-	GLenum res = glewInit();
-	if (res != GLEW_OK)
-	{
-		cerr << "Error:" << glewGetErrorString(res) << endl;
-		return 1;
-	}
+	InitGLUT(&argc, argv);
+	GLUTWindow window("Lx4");
+	InitGLEW();
+	window.setDisplayFunc(Render);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -37,10 +29,11 @@ int main(int  argc, char* argv[]) {
 	Vertices[0] = lan::Vector3F(-1.0f, -1.0f, 0.0f);
 	Vertices[1] = lan::Vector3F(1.0f, -1.0f, 0.0f);
 	Vertices[2] = lan::Vector3F(0.0f, 1.0f, 0.0f);
-	glGenBuffers(1, &VBO1);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
+	vbo1 = new GLBuffer();
+	
+	vbo1->BindBuffer(GLBuffer::Target_Type::ARRAY_BUFFER);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
+	GLBuffer::BufferData(GLBuffer::Target_Type::ARRAY_BUFFER, Vertices,sizeof(Vertices), GLBuffer::Usage_Type::STATIC_DRAW);
 	auto shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx4.vert", "lx4.frag");
 	GLint Location=shader->GetAttribLocation("Position");//获得对应顶点属性的下标
 	glEnableVertexAttribArray(Location);

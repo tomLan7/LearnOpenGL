@@ -3,32 +3,22 @@
 #include"GL/glew.h"
 #include"glut.h"
 #include<iostream>
-#include"Vector3.h"
+#include"Vector3F.h"
+#include"GLUTWindow.h"
 using namespace std;
+using namespace lan;
 GLuint VBO1;
 void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
-
-
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
-
 	glutSwapBuffers();
 }
 int main(int  argc, char* argv[]) {
-	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowSize(1024, 768);
-	glutInitWindowPosition(100, 100);
-	glutCreateWindow("Tutorial 02");
-	glutDisplayFunc(Render);
-
-	GLenum res = glewInit();
-	if (res != GLEW_OK)
-	{
-		cerr << "Error:" << glewGetErrorString(res) << endl;
-		return 1;
-	}
+	InitGLUT(&argc, argv);
+	GLUTWindow window("Lx3");
+	InitGLEW();
+	window.setDisplayFunc(Render);
 
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 

@@ -16,7 +16,7 @@ void Render() {
 }
 int main(int  argc, char* argv[]) {
 	GLUTWindow window("Lx2");
-	window.DisplayFunc(Render);
+	window.setDisplayFunc(Render);
 
 	GLenum res = glewInit();
 	if (res != GLEW_OK)

@@ -120,7 +120,8 @@ namespace lan {
 			Vector4F newZ(0,0,2/deep,0);
 			Vector4F newW(-xMid/width,-yMid / height,-zMid / deep,1);
 			return Matrix4F(newX, newY, newZ, newW);*/
-			return Scale({ 2 / width,2 / height,1}) * Translate({ -xMid,-yMid,-zMid });
+			//关于z值，如果是Dx，就应该是1/deep，因为Dx的NDC的z轴范围为0~1.
+			return Scale({ 2 / width,2 / height,2/ deep}) * Translate({ -xMid,-yMid,-zMid });
 		}
 
 
