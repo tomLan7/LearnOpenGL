@@ -9,7 +9,6 @@ GLuint VBO1;
 void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-
 	glBindBuffer(GL_ARRAY_BUFFER, VBO1);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 

@@ -24,6 +24,7 @@
     <ProjectGuid>{a9324424-556f-414a-b375-a9c89f38cc98}</ProjectGuid>
     <RootNamespace>glUtil</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>glCore</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
