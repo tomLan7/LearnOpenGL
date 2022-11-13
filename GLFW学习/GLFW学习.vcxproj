@@ -263,7 +263,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="resource1.h" />
-    <ClInclude Include="Window.h" />
+    <ClInclude Include="GLFWWindow.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="lx6.vs" />

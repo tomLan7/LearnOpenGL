@@ -9,16 +9,36 @@
 #include "Shader.h"
 using namespace std;
 using namespace lan;
-void ShaderProgram::Uniform(const std::string& attName,const glm::mat4& mat)
+bool ShaderProgram::Uniform(const std::string& attrName, const glm::mat4& mat)
 {
-	GLuint transformLoc = glGetUniformLocation(ObjectId, attName.c_str());
-	glUniformMatrix4fv(transformLoc, 1, GL_FALSE, glm::value_ptr(mat));
+	GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
+	bool rtn = true;
+	if (uniformIndex == -1) {
+		rtn = false;
+	}
+	else {
+		glUniformMatrix4fv(uniformIndex, 1, GL_FALSE, glm::value_ptr(mat));
+	}
+	return rtn;
+
+}
+bool lan::ShaderProgram::Uniform(const std::string& attrName, const Matrix4F& mat)
+{
+	GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
+	bool rtn = true;
+	if (uniformIndex == -1) {
+		rtn = false;
+	}
+	else {
+		glUniformMatrix4fv(uniformIndex, 1, GL_FALSE, (const float*)&mat.data);
+	}
+	return rtn;
 }
 ShaderProgram* ShaderProgram::CreateFromVertexAndFragmentPath(const std::string& vertexPath, const std::string& fragmentPath) {
 	auto ShaderVertex = Shader::FromFile(vertexPath, GL_VERTEX_SHADER);
 	auto ShaderFragment = Shader::FromFile(fragmentPath, GL_FRAGMENT_SHADER);
 	if (!ShaderVertex.CompileShader()) {
-		cout << "Failed To Vertex Shader Compile"<<ShaderVertex.GetLog() << endl;
+		cout << "Failed To Vertex Shader Compile" << ShaderVertex.GetLog() << endl;
 		return nullptr;
 	}
 	if (!ShaderFragment.CompileShader()) {
@@ -59,7 +79,7 @@ Shader Shader::FromFile(const std::string& path, GLenum shaderType)
 	}
 	const GLchar* ShaderCode_C = ShaderCode.c_str();
 	Shader newShader(glCreateShader(shaderType), shaderType);
-	GLuint guint=(GLuint)newShader;
+	GLuint guint = (GLuint)newShader;
 	glShaderSource(guint, 1, &ShaderCode_C, NULL);
 	return newShader;
 }

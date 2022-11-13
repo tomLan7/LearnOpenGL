@@ -2,6 +2,7 @@
 #include"glut.h"
 #include<vector>
 #define paint Pen::getInstance()
+//glut的非核心模式窗口及绘制封装
 class OGLan
 {
 public:
