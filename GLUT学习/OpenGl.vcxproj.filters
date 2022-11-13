@@ -33,14 +33,24 @@
     <ClCompile Include="LanGlutTest.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="lx4.frag">
-      <Filter>资源文件</Filter>
-    </None>
-    <None Include="lx4.vert">
-      <Filter>资源文件</Filter>
-    </None>
+    <ClCompile Include="ogldev_lx6 变换矩阵的使用.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ogldev_lx7 索引绘制.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ogldev_lx8 透视投影摄像机.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ogldev_lx9 相机空间摄像机.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ogldev_lx10 相机控制.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ogldev_lx5 uniform变量.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LanGlut.h">
@@ -51,5 +61,28 @@
     <Text Include="ReadMe.md">
       <Filter>源文件</Filter>
     </Text>
+    <Text Include="lx4.vert">
+      <Filter>资源文件</Filter>
+    </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="lx7.vert">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx9.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx5.vert">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx6.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx6.vert">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx4.frag">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

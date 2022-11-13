@@ -1,10 +1,6 @@
-
-#define GLEW_STATIC
-#include"GL/glew.h"
-#include"glut.h"
 #include<iostream>
 #include"Vector3F.h"
-#include"GLUTWindow.h"
+#include"LanGlut.h"
 #include"Shader.h"
 #include"GlBuffer.h"
 using namespace std;
@@ -18,28 +14,28 @@ void Render() {
 	glutSwapBuffers();
 }
 int main(int  argc, char* argv[]) {
-	InitGLUT(&argc, argv);
-	GLUTWindow window("Lx4");
-	InitGLEW();
-	window.setDisplayFunc(Render);
-
+	LanGlut::Init(argc, argv);
+	LanGlut::SetDisplayFunc(Render);
+	LanGlut::SetWindowTitle("着色器使用");
+	LanGlut::SetIdleFunc(NULL);
+	LanGlut::SetPassiveMotionFunc(NULL);
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
 	lan::Vector3F Vertices[3];
 	Vertices[0] = lan::Vector3F(-1.0f, -1.0f, 0.0f);
 	Vertices[1] = lan::Vector3F(1.0f, -1.0f, 0.0f);
 	Vertices[2] = lan::Vector3F(0.0f, 1.0f, 0.0f);
 	vbo1 = new GLBuffer();
-	
 	vbo1->BindBuffer(GLBuffer::Target_Type::ARRAY_BUFFER);
-
 	GLBuffer::BufferData(GLBuffer::Target_Type::ARRAY_BUFFER, Vertices,sizeof(Vertices), GLBuffer::Usage_Type::STATIC_DRAW);
 	auto shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx4.vert", "lx4.frag");
-	GLint Location=shader->GetAttribLocation("Position");//获得对应顶点属性的下标
-	glEnableVertexAttribArray(Location);
-	glVertexAttribPointer(Location, 3, GL_FLOAT, GL_FALSE, 0, 0);
+	GLint location=shader->GetAttribLocation("Position");//获得对应顶点属性的下标
+	cout << "对应属性下标是" << location << endl;
+	//开启对应的数据源
+	glEnableVertexAttribArray(location);
+	//以数据源创建数组
+	glVertexAttribPointer(location, 3, GL_FLOAT, GL_FALSE, 0, 0);
  
 	shader->User();
-	glutMainLoop();
+	LanGlut::MainLoop();
 	return 0;
 }

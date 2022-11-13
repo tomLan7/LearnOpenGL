@@ -13,7 +13,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "LanMath", "LanMath\LanMath.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "软渲染", "软渲染\软渲染.vcxproj", "{72FB5E2F-371D-4F16-B875-71DA8CB8B099}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glCore", "glUtil\glUtil.vcxproj", "{A9324424-556F-414A-B375-A9C89F38CC98}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "glCore", "glCore\glUtil.vcxproj", "{A9324424-556F-414A-B375-A9C89F38CC98}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "OpenGL固定管线学习", "OpenGL固定管线学习\OpenGL固定管线学习.vcxproj", "{357E2D73-92C5-482B-876A-50C828F6C54C}"
 EndProject

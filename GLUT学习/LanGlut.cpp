@@ -93,6 +93,7 @@ void LanGlut::Init(int& argcp, char** argv) {
 
 	_InitGlew();
 	LanGlut::SetDisplayFunc(_DefaultRenderHandler);
+
 	LanGlut::SetReshapeFunc(_DefaultReshapeHandler);
 	LanGlut::SetKeyboardFunc(_DefaultKeyboardHandler);
 	LanGlut::SetMouseFunc(_DefaultMouseHandler);

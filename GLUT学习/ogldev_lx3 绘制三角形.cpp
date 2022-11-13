@@ -3,7 +3,7 @@
 #include"GL/glew.h"
 #include"glut.h"
 #include<iostream>
-#include"Vector3.h"
+#include"Vector3F.h"
 using namespace std;
 GLuint VBO1;
 void Render() {

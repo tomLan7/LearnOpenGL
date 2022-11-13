@@ -45,10 +45,10 @@ namespace lan {
 			glGetShaderiv(ObjectId, GL_COMPILE_STATUS, &success);
 			return success;
 		}
-		std::shared_ptr<std::string> GetLog() {
+		std::string GetLog() {
 			GLchar infoLog[512];
 			glGetShaderInfoLog(ObjectId, 512, NULL, infoLog);
-			return std::make_shared<std::string>(infoLog);
+			return infoLog;
 		}
 	};
 
@@ -78,10 +78,10 @@ namespace lan {
 			return glGetAttribLocation(ObjectId,str.c_str());
 		}
 
-		std::shared_ptr<std::string> GetLog() {
+		std::string GetLog() {
 			GLchar infoLog[512];
 			glGetProgramInfoLog(ObjectId, 512, NULL, infoLog);
-			return std::make_shared<std::string>(infoLog);
+			return infoLog;
 		}
 		void User() {
 			glUseProgram(ObjectId);

@@ -35,16 +35,24 @@ bool lan::ShaderProgram::Uniform(const std::string& attrName, const Matrix4F& ma
 	return rtn;
 }
 ShaderProgram* ShaderProgram::CreateFromVertexAndFragmentPath(const std::string& vertexPath, const std::string& fragmentPath) {
+	cout <<"start Create ShaderProgram from"<<vertexPath<<" and "<<fragmentPath<< endl;
 	auto ShaderVertex = Shader::FromFile(vertexPath, GL_VERTEX_SHADER);
 	auto ShaderFragment = Shader::FromFile(fragmentPath, GL_FRAGMENT_SHADER);
 	if (!ShaderVertex.CompileShader()) {
-		cout << "Failed To Vertex Shader Compile" << ShaderVertex.GetLog() << endl;
+		cerr << "Failed To Vertex Shader Compile" << ShaderVertex.GetLog() << endl;
 		return nullptr;
+	}
+	else {
+		cout << vertexPath<< " VertexShader Compile Success" << endl;
 	}
 	if (!ShaderFragment.CompileShader()) {
-		cout << "Failed To Fragment Shader Compile" << ShaderFragment.GetLog() << endl;
+		cerr << "Failed To Fragment Shader Compile" << ShaderFragment.GetLog() << endl;
 		return nullptr;
 	}
+	else {
+		cout << fragmentPath << " FragmentShader Compile Success" << endl;
+	}
+
 	auto shaderProgram = ShaderProgram::Create();
 	shaderProgram->AttachShader(ShaderVertex);
 	shaderProgram->AttachShader(ShaderFragment);
@@ -52,6 +60,9 @@ ShaderProgram* ShaderProgram::CreateFromVertexAndFragmentPath(const std::string&
 		cout << "Failed To Shader Link" << shaderProgram->GetLog() << endl;
 		delete shaderProgram;
 		return nullptr;
+	}
+	else {
+		cout <<"ShaderProgram Link Success" << endl;
 	}
 	return shaderProgram;
 }
@@ -75,7 +86,7 @@ Shader Shader::FromFile(const std::string& path, GLenum shaderType)
 	}
 	catch (std::ifstream::failure e)
 	{
-		std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+		std::cerr << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
 	}
 	const GLchar* ShaderCode_C = ShaderCode.c_str();
 	Shader newShader(glCreateShader(shaderType), shaderType);
