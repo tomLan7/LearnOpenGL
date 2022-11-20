@@ -1,19 +1,19 @@
 #pragma once
 namespace lan {
-	class OpenGLObjectBase {
+	class GLObjectBase {
 	protected:
 		GLuint ObjectId = 0;
-		virtual ~OpenGLObjectBase() {
+		virtual ~GLObjectBase() {
 		}
 
-		OpenGLObjectBase() = delete;
-		OpenGLObjectBase(const OpenGLObjectBase&) = delete;
+		GLObjectBase() = delete;
+		GLObjectBase(const GLObjectBase&) = delete;
 
 	public:
-		OpenGLObjectBase(GLuint ObjectId) {
+		GLObjectBase(GLuint ObjectId) {
 			this->ObjectId = ObjectId;
 		}
-		OpenGLObjectBase(OpenGLObjectBase&& other) {
+		GLObjectBase(GLObjectBase&& other) {
 			std::swap(this->ObjectId, other.ObjectId);
 		}
 		explicit operator GLuint() {
@@ -24,6 +24,10 @@ namespace lan {
 		}
 		GLboolean IsProgram() {
 			return glIsProgram(ObjectId);
+		}
+
+		GLboolean IsBuffer() {
+			return glIsBuffer(ObjectId);
 		}
 	};
 

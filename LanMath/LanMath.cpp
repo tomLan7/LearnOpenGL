@@ -5,6 +5,10 @@
 #include"HomogeneousCoordinates4F.h"
 #include"Matrix4F.h"
 #include"Quaternion.h"
+
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 using namespace lan;
 using namespace std;
 void testMatrix() {
@@ -19,9 +23,35 @@ void testMatrix() {
 	cout << matrix.Determinant() << endl;
 	//cout << Matrix4F::Translate({1,5,3}) * a << endl;
 }
+
+
+static std::ostream& operator<<(std::ostream& out, const glm::qua<float>& q) {
+	cout << q.x << "," << q.y << "," << q.z << "," << q.w << endl;
+	return out;
+}
 void testQuaternion() {
-	Quaternion q1({50,50,24});
+	auto q1=Quaternion::fromEulerAngle(0,45,90);
 	cout << q1 << endl;
+	auto q2 = Quaternion::fromEulerAngle(0, 30, 20);
+	cout << q2 << endl;
+	cout << (q1*q2) << endl;
+	cout << (q2 * q1) << endl;
+	cout << q1.toEuler()*Rad2Deg << endl;
+	cout << q2.toEuler() * Rad2Deg << endl;
+	cout << (q1  * q2).toEuler() * Rad2Deg << endl;
+
+	glm::mat4 model = glm::mat4(1.0f); //创建一个单位矩阵
+	glm::qua<float> q3 = glm::qua<float>(glm::radians(glm::vec3(0.0f, 45.0f, 90.0f))); //创建一个绕z轴旋转90度的四元数
+	glm::qua<float> q4 = glm::qua<float>(glm::radians(glm::vec3(0.0f, 30.0f, 20.0f))); //创建一个绕z轴旋转90度的四元数
+	cout << q3 << endl;
+	cout << q4 << endl;
+	cout << (q3*q4) << endl;
+	cout << (q4 * q3) << endl;
+	cout << glm::eulerAngles(q3) * Rad2Deg << endl;
+	cout << glm::eulerAngles(q4) * Rad2Deg << endl;
+	cout << glm::eulerAngles(q3 * q4) * Rad2Deg << endl;
+	
+	//model = glm::mat4_cast(q) * model;	//得到一个旋转的模型矩阵
 }
 int main()
 {

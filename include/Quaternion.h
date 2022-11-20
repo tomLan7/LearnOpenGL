@@ -21,14 +21,13 @@ namespace lan {
 			this->z = v.z;
 			this->w = w;
 		}
-		Quaternion(Vector3F angleXYZ,bool leftHand=true) {
-			//使用顺序，y，x,z
-			Quaternion q_x(sin(angleXYZ.x/2*Deg2Rad),0,0, cos(angleXYZ.x / 2 * Deg2Rad));
-			Quaternion q_y(0, sin(angleXYZ.y / 2 * Deg2Rad),  0, cos(angleXYZ.y / 2 * Deg2Rad));
-			Quaternion q_z(0, 0, sin(angleXYZ.z / 2 * Deg2Rad),  cos(angleXYZ.z / 2 * Deg2Rad));
-			*this = q_y*q_x*q_z;
+		/// <summary>
+		/// 当rate为0结果为a，当rate为1结果为b
+		/// </summary>
+		static Quaternion Lerp(const Quaternion& a,const Quaternion& b, float rate) {
+			return Quaternion(a.x+(b.x-a.x)*rate, a.y + (b.y - a.y) * rate, a.z + (b.z - a.z) * rate, a.w + (b.w - a.w) * rate);
 		}
-		
+
 		//共轭
 		Quaternion Conjugate() {
 			return Quaternion{ -x,-y,-z,w };
@@ -49,9 +48,6 @@ namespace lan {
 
 		Quaternion operator/(float rate) {
 			return Quaternion{ x / rate, y / rate, z / rate, w / rate };
-		}
-		Quaternion operator-() {
-			return Quaternion{ -x, -y, -z , -w};
 		}
 		//待测试
 		Quaternion operator^(float exponent) {
@@ -114,12 +110,21 @@ namespace lan {
 			yaw = atan2(siny_cosp, cosy_cosp);
 			//    return yaw;
 		}
+		
+		static Quaternion fromEulerAngle(float x,float y,float z) {
+			//使用顺序，y，x,z
+			Quaternion q_x(sin(x / 2 * Deg2Rad), 0, 0, cos(x / 2 * Deg2Rad));
+			Quaternion q_y(0, sin(y / 2 * Deg2Rad), 0, cos(y / 2 * Deg2Rad));
+			Quaternion q_z(0, 0, sin(z / 2 * Deg2Rad), cos(z / 2 * Deg2Rad));
+			return q_y * q_x * q_z;
+		}
+		
 		std::string toString()const {
 			return "["+std::to_string(x)+","+ std::to_string(y)+","+ std::to_string(z)+","+ std::to_string(w) +"]";
 		}
 	};
 
-	std::ostream& operator<<(std::ostream& out, const Quaternion& other) {
+	static std::ostream& operator<<(std::ostream& out, const Quaternion& other) {
 		out << other.toString();
 		return out;
 	}

@@ -4,27 +4,22 @@
 #include<iostream>
 #include <glm/glm.hpp>
 #include"Matrix4F.h"
-#include"OpenGLObjectBase.h"
+#include"GLObjectBase.h"
 
-/*封装原则：
-* 一些经常用来分享的用智能指针包装。
-* 一些经常临时使用的用栈区对象
-* 一些需要长期保留的用堆区封装
-*/
 namespace lan {
 	
-	class Shader :public OpenGLObjectBase
+	class Shader :public GLObjectBase
 	{
 		GLenum ShaderType;
 	public:
-		Shader(GLuint ObjectId, GLenum Type) :OpenGLObjectBase(ObjectId) {
+		Shader(GLuint ObjectId, GLenum Type) :GLObjectBase(ObjectId) {
 			ShaderType = Type;
 		}
 
 		Shader(GLenum Type) :Shader(glCreateShader(Type), Type) {
 		}
 
-		Shader(Shader&& other) :OpenGLObjectBase(std::move(other)) {
+		Shader(Shader&& other) :GLObjectBase(std::move(other)) {
 			std::swap(this->ShaderType, other.ShaderType);
 		}
 
@@ -52,9 +47,9 @@ namespace lan {
 		}
 	};
 
-	class ShaderProgram :public OpenGLObjectBase {
+	class ShaderProgram :public GLObjectBase {
 	public:
-		using OpenGLObjectBase::OpenGLObjectBase;
+		using GLObjectBase::GLObjectBase;
 
 		void AttachShader(Shader& shader) {
 			glAttachShader(ObjectId, (GLuint)shader);

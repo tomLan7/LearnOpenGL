@@ -89,7 +89,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
+      <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>../include;</AdditionalIncludeDirectories>
@@ -145,7 +145,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ArrayBufferTarget.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="ElementBufferTarget.cpp" />
     <ClCompile Include="GLBuffer.cpp" />
     <ClCompile Include="glUtil.cpp" />
     <ClCompile Include="OpenGLObjectBase.cpp" />
@@ -153,9 +155,13 @@
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\include\ArrayBufferTarget.h" />
     <ClInclude Include="..\include\Camera.h" />
+    <ClInclude Include="..\include\ElementBufferTarget.h" />
     <ClInclude Include="..\include\GLBuffer.h" />
-    <ClInclude Include="..\include\OpenGLObjectBase.h" />
+    <ClInclude Include="..\include\GLDef.h" />
+    <ClInclude Include="..\include\GLHeader.h" />
+    <ClInclude Include="..\include\GLObjectBase.h" />
     <ClInclude Include="..\include\Pipeline.h" />
     <ClInclude Include="..\include\Shader.h" />
   </ItemGroup>

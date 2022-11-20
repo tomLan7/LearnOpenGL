@@ -51,6 +51,12 @@
     <ClCompile Include="ogldev_lx5 uniform变量.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ogldev_lx11 四元数插值测试.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ogldev_lx12 鼠标控制相机.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LanGlut.h">

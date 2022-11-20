@@ -74,14 +74,31 @@ struct LanGlut {
     /// <param name="value">参数的值。</param>
     static void TriggerTimer(unsigned int msecs,
         void (*func)(int value), int value);
+
+    /// <summary>
+    /// post不是立刻调用。所以不用Trigger。标记需要绘制
+    /// </summary>
+    static void PostRedisplay() {
+        glutPostRedisplay();
+    }
+
+    /// <summary>
+    /// 特殊按键，如方向键等
+    /// </summary>
+    /// <param name="func"></param>
+    static void SetSpecialKeyFunc(void (*func)(int key, int x, int y)) {
+        glutSpecialFunc(func);
+    }
+
     /*
     * 还欠缺的事件回调
     * glutVisibilityFunc    设置窗口可见性的回调
     * glutEntryFunc         进入或离开窗口
-    * glutSpecialFunc       特殊按键
     * Spaceball设备相关，ButtonBox设备，Dials设备，Tablet设备，
     * glutMenuStatusFunc    弹出菜单回调
-    * 
+    * int glutIgnoreKeyRepeat(int repeatMode); 禁用keyboard的repeatMode 传递0，开启auto repeat，非0则禁用auto repeat。
+    * Void glutKeyboardUpFunc(void (*func)(unsigned char key,int x,int y));
+    * Void glutSpecialUpFunc(void (*func)(int key,int x,int y));
     */
 };
 

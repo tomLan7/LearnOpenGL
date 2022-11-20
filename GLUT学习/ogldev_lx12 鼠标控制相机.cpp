@@ -2,6 +2,7 @@
 #include<iostream>
 #include"Vector3F.h"
 #include"Matrix4F.h"
+#include"Quaternion.h"
 #include<glm/gtc/quaternion.hpp>
 #include "LanGlut.h"
 using namespace std;
@@ -10,28 +11,52 @@ GLBuffer* VBO1;
 GLBuffer* EBO1;
 lan::ShaderProgram* shader;
 lan::Pipeline p;
+
+Quaternion startQ = Quaternion::fromEulerAngle(0, 90, 0);
+Quaternion endQ = Quaternion::fromEulerAngle(0, 0, 180);
+
+
+float rate = 0;
+
 void IdleFunc() {
-	
+	rate += 0.005;
+	if (rate > 1)rate -= 1;
+	auto quat = Quaternion::slerp(startQ, endQ, rate);
+	auto euler = quat.toEuler() * Rad2Deg;
+
+	p.initWorldRotate(euler);
+	cout << "rate" << rate << "四元数" << quat << "欧拉角" << euler << endl;
 	LanGlut::PostRedisplay();
 }
 
 void Render() {
+	cout << "绘图" << endl;
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	p.initPerspectiveProj(60.0f, 1.f, 0.3f, 1000.f);
-	shader->Uniform("gMat", p.GetTransByCameraAndPerspective());
+	shader->Uniform("gMat", p.GetTransByPerspective() * p.GetCameraTransform() * p.getWorldTransform());
 	ElementBufferTarget::DrawElements(EBO1, GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
 
 	glutSwapBuffers();
 }
 
 int main(int  argc, char* argv[]) {
+
 	LanGlut::Init(argc, argv);
 	LanGlut::SetDisplayFunc(Render);
-	LanGlut::SetWindowTitle("相机空间变换摄像机的运用");
+	LanGlut::SetWindowTitle("鼠标移动相机 插值");
+
 	LanGlut::SetIdleFunc(IdleFunc);
 	LanGlut::SetPassiveMotionFunc(NULL);
+	LanGlut::SetMotionFunc([](int x,int y) {
+
+		});
+	LanGlut::SetKeyboardFunc([](unsigned char key,int x,int y){
+		if (key == 'q') {
+			exit(0);
+		}
+	});
 	LanGlut::SetSpecialKeyFunc(p.SpecialKeyboardCB);
 	p.initCamera(Vector3F(0, 0, 0), lan::Vector3F(0, 0, 1), lan::Vector3F(0, 1, 0));
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);

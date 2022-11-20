@@ -4,13 +4,16 @@
 #include<iostream>
 #include"Camera.h"
 namespace lan {
+    /*
+    * 有模型、光源、摄像机、粒子等数据
+    * CPU剔除，合批，渲染顺序，渲染顺序，渲染目标，渲染模式，DrawCall
+    */
     class Pipeline
     {
         Vector3F worldScale;
         Vector3F worldOffset;
         Vector3F worldRotation;
         Matrix4F worldTransformation;
-        bool isWorldTransDirty = false;
 
         static Camera main_camera;
         Matrix4F m_persProj;
@@ -20,30 +23,32 @@ namespace lan {
     public:
         Pipeline() {
             //setPerspectiveProj(30.0f, 1.f, 0.3f, 1.0f);
+
+            initWorldRotate(0, 0, 0);
+            initWorldScale(1, 1, 1);
+            initWorldOffset(0, 0, 0);
         }
-        void initScale(float ScaleX, float ScaleY, float ScaleZ) {
-            isWorldTransDirty = true;
+        void initWorldScale(float ScaleX, float ScaleY, float ScaleZ) {
             worldScale = {ScaleX,ScaleY,ScaleZ};
         }
         void initWorldOffset(float x, float y, float z) {
-            isWorldTransDirty = true;
             worldOffset = { x,y,z };
         }
 
-        void initRotate(float RotateX, float RotateY, float RotateZ) {
-            isWorldTransDirty = true;
-            worldRotation = { ToRadian(RotateX),ToRadian(RotateY),ToRadian(RotateZ) };
+        /// 参数是角度
+        void initWorldRotate(float RotateX, float RotateY, float RotateZ) {
+            worldRotation = { ToRadian(RotateX), ToRadian(RotateY), ToRadian(RotateZ) };
+        }
+        void initWorldRotate(Vector3F xyz) {
+            initWorldRotate(xyz.x,xyz.y,xyz.z);
         }
 
         Matrix4F getWorldTransform() {
-            if (isWorldTransDirty) {
-                isWorldTransDirty = false;
                 Matrix4F ScaleTrans, RotateTrans, TranslationTrans;
                 ScaleTrans = Matrix4F::Scale(worldScale);
                 RotateTrans = Matrix4F::Rotate(worldRotation);
                 TranslationTrans = Matrix4F::Translate(worldOffset);
                 worldTransformation = TranslationTrans * RotateTrans * ScaleTrans;
-            }
             return worldTransformation;
         }
         //
@@ -75,6 +80,7 @@ namespace lan {
         }
         static void SpecialKeyboardCB(int Key, int x, int y)
         {
+            std::cout << "key："<<Key<<"和x："<<x<<"和y："<<y << std::endl;
             main_camera.OnKeyboard(Key);
         }
     };

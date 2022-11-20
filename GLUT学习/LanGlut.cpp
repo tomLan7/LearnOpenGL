@@ -82,7 +82,7 @@ void LanGlut::SetPassiveMotionFunc(void (*func)(int x, int y)) {
 void LanGlut::SetIdleFunc(void (*func)(void)) {
 	glutIdleFunc(func);
 }
-
+bool _runMainLoop = false;
 void LanGlut::Init(int& argcp, char** argv) {
     glutInit(&argcp, argv);
 	//参考这里，留着以后扩展 https://www.opengl.org/resources/libraries/glut/spec3/node12.html#SECTION00033000000000000000
@@ -100,9 +100,16 @@ void LanGlut::Init(int& argcp, char** argv) {
 	LanGlut::SetMotionFunc(_DefaultMotionHandler);
 	LanGlut::SetPassiveMotionFunc(_DefaultPassiveMotionHandler);
 	LanGlut::SetIdleFunc(_DefaultIdleHandler);
+	atexit([](){
+		if (_runMainLoop == false) {
+			printf("请在main函数最后运行LanGlut::MainLoop()");
+			system("pause");
+		}
+	});
 }
 
 void LanGlut::MainLoop() {
+	_runMainLoop = true;
 	glutDisplayFunc(_renderFuncHandler);
 	/*除了显示函数，其他函数不需要兜底机制
 	glutReshapeFunc(_reshapeFuncHandler);

@@ -1,11 +1,7 @@
 
-#define GLEW_STATIC
-#include"GL/glew.h"
-#include"glut.h"
+#include"GLHeader.h"
 #include<iostream>
-#include"Vector3F.h"
-#include"Shader.h"
-#include"GLUTWindow.h"
+#include "LanGlut.h"
 using namespace std;
 using namespace lan;
 GLuint VBO1;
@@ -26,14 +22,15 @@ void Render() {
 	glutSwapBuffers();
 }
 int main(int  argc, char* argv[]) {
-	InitGLUT(&argc, argv);
-	GLUTWindow window("Lx3");
-	InitGLEW();
-	window.setDisplayFunc(Render);
 
-	glutIdleFunc(IdleFunc);
+	LanGlut::Init(argc, argv);
+	LanGlut::SetDisplayFunc(Render);
+	LanGlut::SetWindowTitle("uniform±äÁ¿");
+	LanGlut::SetIdleFunc(IdleFunc);
+	LanGlut::SetPassiveMotionFunc(NULL);
+	LanGlut::SetDisplayFunc(Render);
 
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	//glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	lan::Vector3F Vertices[3];
 	Vertices[0] = lan::Vector3F(-1.0f, -1.0f, 0.0f);
@@ -49,6 +46,6 @@ int main(int  argc, char* argv[]) {
 	glVertexAttribPointer(Location, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
 	shader->User();
-	glutMainLoop();
+	LanGlut::MainLoop();
 	return 0;
 }

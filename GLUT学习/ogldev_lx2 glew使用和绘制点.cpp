@@ -4,7 +4,6 @@
 #include"glut.h"
 #include<iostream>
 #include"Vector3F.h"
-#include"GLUTWindow.h"
 using namespace std;
 using namespace lan;
 GLuint VBO1;
@@ -15,8 +14,12 @@ void Render() {
 	glutSwapBuffers();
 }
 int main(int  argc, char* argv[]) {
-	GLUTWindow window("Lx2");
-	window.setDisplayFunc(Render);
+	glutInit(&argc, argv);
+	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowSize(1024, 768);
+	glutInitWindowPosition(100, 100);
+	glutCreateWindow("Tutorial 01");
+	glutDisplayFunc(Render);
 
 	GLenum res = glewInit();
 	if (res != GLEW_OK)
