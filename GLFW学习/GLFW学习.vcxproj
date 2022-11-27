@@ -79,8 +79,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <LibraryPath>..\install\x64-Debug\lib;$(LibraryPath)</LibraryPath>
-    <IncludePath>..\install\x64-Debug\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\lib;$(SolutionDir)lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\ImageMagick-7.1.0-Q16-HDRI\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -97,7 +97,7 @@
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>G:\core\OpenGLRelated\glew-2.1.0\lib\Debug\Win32;G:\core\OpenGLRelated\glfw-3.3.4\out\install\x64-Debug\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>SOIL.lib;glUtil.lib;glew32sd.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SOIL.lib;glCore.lib;glew32sd.lib;opengl32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

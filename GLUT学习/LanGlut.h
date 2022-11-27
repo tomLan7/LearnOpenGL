@@ -3,6 +3,7 @@
 #include"GL/glew.h"
 #include<glut.h>
 #include<string>
+#include"GLHeader.h"
 /// <summary>
 /// ²Î¿¼GLUT½Ì³Ì https://www.jianshu.com/p/86f8ce123de1
 /// </summary>
@@ -87,7 +88,19 @@ struct LanGlut {
     /// </summary>
     /// <param name="func"></param>
     static void SetSpecialKeyFunc(void (*func)(int key, int x, int y)) {
-        glutSpecialFunc(func);
+        glutSpecialFunc(func); 
+    }
+
+    static lan::Vector2F GetScreenSize() {
+        auto swidth = glutGet(GLUT_SCREEN_WIDTH);
+        auto sheight = glutGet(GLUT_SCREEN_HEIGHT);
+        return {swidth,sheight};
+    }
+
+    static lan::Vector2F GetWindowSize() {
+        auto wwidth = glutGet(GLUT_WINDOW_WIDTH);
+        auto wheight = glutGet(GLUT_WINDOW_HEIGHT);
+        return { wwidth,wheight };
     }
 
     /*

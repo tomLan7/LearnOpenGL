@@ -57,6 +57,9 @@
     <ClCompile Include="ogldev_lx12 鼠标控制相机.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ogldev_lx13 使用纹理.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LanGlut.h">
@@ -88,6 +91,12 @@
       <Filter>资源文件</Filter>
     </None>
     <None Include="lx4.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx13.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx13.vert">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>

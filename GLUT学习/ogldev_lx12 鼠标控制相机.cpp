@@ -19,18 +19,18 @@ Quaternion endQ = Quaternion::fromEulerAngle(0, 0, 180);
 float rate = 0;
 
 void IdleFunc() {
-	rate += 0.005;
+	//rate += 0.005;
 	if (rate > 1)rate -= 1;
 	auto quat = Quaternion::slerp(startQ, endQ, rate);
 	auto euler = quat.toEuler() * Rad2Deg;
 
 	p.initWorldRotate(euler);
-	cout << "rate" << rate << "四元数" << quat << "欧拉角" << euler << endl;
+	//cout << "rate" << rate << "四元数" << quat << "欧拉角" << euler << endl;
 	LanGlut::PostRedisplay();
 }
 
 void Render() {
-	cout << "绘图" << endl;
+	//cout << "绘图" << endl;
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
@@ -50,14 +50,20 @@ int main(int  argc, char* argv[]) {
 	LanGlut::SetIdleFunc(IdleFunc);
 	LanGlut::SetPassiveMotionFunc(NULL);
 	LanGlut::SetMotionFunc([](int x,int y) {
-
+		auto windowSize = LanGlut::GetWindowSize();
+		float h= x / windowSize.x * 360 - 180;
+		float v= -(y / windowSize.y * 180 - 90);
+		cout << "横角度:" << h << "\t纵角度:" << v << endl;
+		p.getMainCamera().setHVAngle(h,v);
 		});
 	LanGlut::SetKeyboardFunc([](unsigned char key,int x,int y){
 		if (key == 'q') {
 			exit(0);
 		}
 	});
-	LanGlut::SetSpecialKeyFunc(p.SpecialKeyboardCB);
+	LanGlut::SetSpecialKeyFunc([](int key, int x, int y) {p.SpecialKeyboardCB(key, x, y);
+	std::cout << p.getMainCamera().toString() << std::endl; 
+		});
 	p.initCamera(Vector3F(0, 0, 0), lan::Vector3F(0, 0, 1), lan::Vector3F(0, 1, 0));
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 

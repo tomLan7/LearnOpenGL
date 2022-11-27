@@ -143,12 +143,14 @@
   <ItemGroup>
     <ClCompile Include="EulerAngles.cpp" />
     <ClCompile Include="LanMath.cpp" />
+    <ClCompile Include="Vector2F.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\ConstantDef.h" />
     <ClInclude Include="..\include\HomogeneousCoordinates4F.h" />
     <ClInclude Include="..\include\Matrix4F.h" />
     <ClInclude Include="..\include\Quaternion.h" />
+    <ClInclude Include="..\include\Vector2F.h" />
     <ClInclude Include="..\include\Vector3F.h" />
     <ClInclude Include="EulerAngles.h" />
   </ItemGroup>

@@ -15,12 +15,16 @@ namespace lan {
         Vector3F worldRotation;
         Matrix4F worldTransformation;
 
-        static Camera main_camera;
+        Camera main_camera;
         Matrix4F m_persProj;
         bool isPersProjTransDirty = false;
 
         Matrix4F transformation;
     public:
+        Camera& getMainCamera() {
+            return main_camera;
+        }
+
         Pipeline() {
             //setPerspectiveProj(30.0f, 1.f, 0.3f, 1.0f);
 
@@ -58,7 +62,7 @@ namespace lan {
         }
         
         void initCamera(const Vector3F& position,const Vector3F& Face, const Vector3F& Up) {
-            main_camera=Camera(position, Face,Up);
+            main_camera=Camera(position, position+Face,Up);
         }
         //没有透视和相机
         Matrix4F GetTransNoProj() {
@@ -78,10 +82,15 @@ namespace lan {
             Matrix4F pt = GetTransByPerspective();//拷贝构造方式存到pt变量中
             return pt*ct;//成功
         }
-        static void SpecialKeyboardCB(int Key, int x, int y)
+        void SpecialKeyboardCB(int Key, int x, int y)
         {
-            std::cout << "key："<<Key<<"和x："<<x<<"和y："<<y << std::endl;
-            main_camera.OnKeyboard(Key);
+            //std::cout << "key："<<Key<<"和x："<<x<<"和y："<<y << std::endl;
+            getMainCamera().OnKeyboard(Key,true);
+        }
+        void ASCIIKeyboardCB(unsigned char Key, int x, int y)
+        {
+            //std::cout << "key：" << Key << "和x：" << x << "和y：" << y << std::endl;
+            getMainCamera().OnKeyboard(Key,false);
         }
     };
 

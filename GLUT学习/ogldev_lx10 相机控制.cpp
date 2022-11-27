@@ -32,7 +32,7 @@ int main(int  argc, char* argv[]) {
 	LanGlut::SetWindowTitle("相机空间变换摄像机的运用");
 	LanGlut::SetIdleFunc(IdleFunc);
 	LanGlut::SetPassiveMotionFunc(NULL);
-	LanGlut::SetSpecialKeyFunc(p.SpecialKeyboardCB);
+	LanGlut::SetSpecialKeyFunc([](int key, int x, int y) {p.SpecialKeyboardCB(key,x,y); });
 	p.initCamera(Vector3F(0, 0, 0), lan::Vector3F(0, 0, 1), lan::Vector3F(0, 1, 0));
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 

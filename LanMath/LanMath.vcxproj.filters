@@ -21,6 +21,9 @@
     <ClCompile Include="EulerAngles.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Vector2F.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\include\Vector3F.h">
@@ -39,6 +42,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="EulerAngles.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\include\Vector2F.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

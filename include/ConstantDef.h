@@ -17,4 +17,16 @@ namespace lan {
 			theta += M_Pi;
 		return theta;
 	}
+
+	//¼Ð¾ß
+	inline float clamp(float x, float min, float max) {
+		if (x < min) {
+			x = min;
+		}
+		else
+			if (x > max) {
+				x = max;
+			}
+		return x;
+	}
 }

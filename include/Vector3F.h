@@ -33,7 +33,7 @@ namespace lan {
 			return *this / length();
 		}
 
-		//归一化，魔方了unity的命名规则。
+		//归一化，模仿了unity的命名规则。
 		void normalized() {
 			*this /= length();
 		}
