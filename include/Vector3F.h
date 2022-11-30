@@ -23,7 +23,7 @@ namespace lan {
 			this->z = z;
 		}
 
-		//Ò»Ğ©²Ù×÷
+		//ä¸€äº›æ“ä½œ
 
 		auto length()const {
 			return powf(powf(x, 2) + powf(y, 2) + powf(z, 2), 0.5);
@@ -33,7 +33,7 @@ namespace lan {
 			return *this / length();
 		}
 
-		//¹éÒ»»¯£¬Ä£·ÂÁËunityµÄÃüÃû¹æÔò¡£
+		//å½’ä¸€åŒ–ï¼Œæ¨¡ä»¿äº†unityçš„å‘½åè§„åˆ™ã€‚
 		void normalized() {
 			*this /= length();
 		}
@@ -41,7 +41,7 @@ namespace lan {
 		Vector3F operator-()const {
 			return *this * -1;
 		}
-		//Î§ÈÆZÖáµÄĞı×ª£¬ÓÃĞı×ª¹«Ê½µÃµ½ĞÂµÄxºÍy
+		//å›´ç»•Zè½´çš„æ—‹è½¬ï¼Œç”¨æ—‹è½¬å…¬å¼å¾—åˆ°æ–°çš„xå’Œy
 		void rotateZ(float radians) {
 			float x1 = x * cos(radians) - y * sin(radians);
 			float y1 = x * sin(radians) + y * cos(radians);
@@ -69,7 +69,7 @@ namespace lan {
 
 		}
 
-		//ËÄÔòÔËËã
+		//å››åˆ™è¿ç®—
 		Vector3F operator+(const Vector3F& vec)const {
 			return Vector3F(x + vec.x, y + vec.y, z + vec.z);
 		}
@@ -120,23 +120,23 @@ namespace lan {
 			return x == vec.x && y == vec.y && z == vec.z;
 		}
 
-		//¾²Ì¬·½·¨£¬ÕâĞ©·½·¨ÊÊºÏ¸Ã·½Ê½µ÷ÓÃ±È½ÏÖ±¹Û
+		//é™æ€æ–¹æ³•ï¼Œè¿™äº›æ–¹æ³•é€‚åˆè¯¥æ–¹å¼è°ƒç”¨æ¯”è¾ƒç›´è§‚
 		static float distant(const Vector3F& a, const Vector3F& b) {
 			return (a - b).length();
 		}
 		static Vector3F cross(const Vector3F& a, const Vector3F& b) {
 			return Vector3F(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x);
 		}
-		//aÍ¶Ó°µ½bÉÏ
+		//aæŠ•å½±åˆ°bä¸Š
 		static Vector3F projection(const Vector3F& a, const Vector3F& b) {
 			return b.unit() * ((a * b) / b.length());
 		}
-		//»ñµÃaµ½bµÄ¼Ğ½ÇÓàÏÒ
+		//è·å¾—aåˆ°bçš„å¤¹è§’ä½™å¼¦
 		static float angleCos(const Vector3F& a, const Vector3F& b) {
 			return (a * b) / (a.length() * b.length());
 		}
 
-		//¸ù¾İÈëÉä¹âÏßºÍ·¨ÏßÇó·´Éä¹âÏß
+		//æ ¹æ®å…¥å°„å…‰çº¿å’Œæ³•çº¿æ±‚åå°„å…‰çº¿
 		static Vector3F reflect(const Vector3F& incident, const Vector3F& normal) {
 			return incident + projection(-incident, normal) * 2;
 		}

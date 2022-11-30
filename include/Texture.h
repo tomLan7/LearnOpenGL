@@ -5,11 +5,20 @@
 namespace lan {
     class Texture
     {
+        GLuint obj;
     public:
         Texture(const std::string& FileName);
 
-        bool Load();
+        void Bind(int UnitIndex);
+        virtual ~Texture() {
+            glDeleteTextures(1, &obj);
+        }
 
-        void Bind(GLenum TextureUnit);
+
+        static int ActiveTexture(int index=0);
+
+        //可用的纹理单元数量
+        constexpr static int GetMaxCombinedTextureImageUnitsCount();
+        
     };
 }

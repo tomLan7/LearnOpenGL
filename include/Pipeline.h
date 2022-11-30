@@ -5,8 +5,8 @@
 #include"Camera.h"
 namespace lan {
     /*
-    * ÓĞÄ£ĞÍ¡¢¹âÔ´¡¢ÉãÏñ»ú¡¢Á£×ÓµÈÊı¾İ
-    * CPUÌŞ³ı£¬ºÏÅú£¬äÖÈ¾Ë³Ğò£¬äÖÈ¾Ë³Ğò£¬äÖÈ¾Ä¿±ê£¬äÖÈ¾Ä£Ê½£¬DrawCall
+    * æœ‰æ¨¡å‹ã€å…‰æºã€æ‘„åƒæœºã€ç²’å­ç­‰æ•°æ®
+    * CPUå‰”é™¤ï¼Œåˆæ‰¹ï¼Œæ¸²æŸ“é¡ºåºï¼Œæ¸²æŸ“é¡ºåºï¼Œæ¸²æŸ“ç›®æ ‡ï¼Œæ¸²æŸ“æ¨¡å¼ï¼ŒDrawCall
     */
     class Pipeline
     {
@@ -39,7 +39,7 @@ namespace lan {
             worldOffset = { x,y,z };
         }
 
-        /// ²ÎÊıÊÇ½Ç¶È
+        /// å‚æ•°æ˜¯è§’åº¦
         void initWorldRotate(float RotateX, float RotateY, float RotateZ) {
             worldRotation = { ToRadian(RotateX), ToRadian(RotateY), ToRadian(RotateZ) };
         }
@@ -60,36 +60,36 @@ namespace lan {
             isPersProjTransDirty = true;
             m_persProj = Matrix4F::PersProjTransform(FOV,aspectRatio,zNear,zFar);
         }
-        
+
         void initCamera(const Vector3F& position,const Vector3F& Face, const Vector3F& Up) {
             main_camera=Camera(position, position+Face,Up);
         }
-        //Ã»ÓĞÍ¸ÊÓºÍÏà»ú
+        //æ²¡æœ‰é€è§†å’Œç›¸æœº
         Matrix4F GetTransNoProj() {
             return getWorldTransform();
         }
-        //µ¥´¿Í¸ÊÓ±ä»»£¬Ã»ÓĞÏà»ú
+        //å•çº¯é€è§†å˜æ¢ï¼Œæ²¡æœ‰ç›¸æœº
         const Matrix4F& GetTransByPerspective() {
             return m_persProj;
         }
-        //µ¥´¿Ïà»ú±ä»»£¬²»Í¸ÊÓ
+        //å•çº¯ç›¸æœºå˜æ¢ï¼Œä¸é€è§†
         Matrix4F GetCameraTransform() {
             return main_camera.CameraTransformation();
         }
-        //Í¸ÊÓºÍÏà»ú
+        //é€è§†å’Œç›¸æœº
         Matrix4F GetTransByCameraAndPerspective() {
-            Matrix4F ct=GetCameraTransform();//¿½±´¹¹Ôì·½Ê½´æµ½ct±äÁ¿ÖĞ
-            Matrix4F pt = GetTransByPerspective();//¿½±´¹¹Ôì·½Ê½´æµ½pt±äÁ¿ÖĞ
-            return pt*ct;//³É¹¦
+            Matrix4F ct=GetCameraTransform();//æ‹·è´æ„é€ æ–¹å¼å­˜åˆ°ctå˜é‡ä¸­
+            Matrix4F pt = GetTransByPerspective();//æ‹·è´æ„é€ æ–¹å¼å­˜åˆ°ptå˜é‡ä¸­
+            return pt*ct;//æˆåŠŸ
         }
         void SpecialKeyboardCB(int Key, int x, int y)
         {
-            //std::cout << "key£º"<<Key<<"ºÍx£º"<<x<<"ºÍy£º"<<y << std::endl;
+            //std::cout << "keyï¼š"<<Key<<"å’Œxï¼š"<<x<<"å’Œyï¼š"<<y << std::endl;
             getMainCamera().OnKeyboard(Key,true);
         }
         void ASCIIKeyboardCB(unsigned char Key, int x, int y)
         {
-            //std::cout << "key£º" << Key << "ºÍx£º" << x << "ºÍy£º" << y << std::endl;
+            //std::cout << "keyï¼š" << Key << "å’Œxï¼š" << x << "å’Œyï¼š" << y << std::endl;
             getMainCamera().OnKeyboard(Key,false);
         }
     };

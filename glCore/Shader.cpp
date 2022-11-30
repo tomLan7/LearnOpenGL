@@ -74,14 +74,14 @@ Shader Shader::FromFile(const std::string& path, GLenum shaderType)
 	ShaderFile.exceptions(std::ifstream::badbit);
 	try
 	{
-		// 打开文件
+		// 鎵撳紑鏂囦欢
 		ShaderFile.open(path);
 		std::stringstream ShaderStream;
-		// 读取文件的缓冲内容到流中
+		// 璇诲彇鏂囦欢鐨勭紦鍐插唴瀹瑰埌娴佷腑
 		ShaderStream << ShaderFile.rdbuf();
-		// 关闭文件
+		// 鍏抽棴鏂囦欢
 		ShaderFile.close();
-		// 转换流至GLchar数组
+		// 杞崲娴佽嚦GLchar鏁扮粍
 		ShaderCode = ShaderStream.str();
 	}
 	catch (std::ifstream::failure e)

@@ -5,9 +5,9 @@
 
 namespace lan {
 	enum class Target_Type {
-		//VAO 顶点数组对象
+		//VAO 椤剁偣鏁扮粍瀵硅薄
 		ARRAY_BUFFER,
-		//索引数组对象
+		//绱㈠紩鏁扮粍瀵硅薄
 		ELEMENT_ARRAY_BUFFER,
 	};
 	enum class Usage_Type {
@@ -24,7 +24,7 @@ namespace lan {
 		default:
 			break;
 		}
-		throw new std::exception("未支持的BuffTarget类型枚举");
+		throw new std::exception("鏈敮鎸佺殑BuffTarget绫诲瀷鏋氫妇");
 	}
 	static GLenum Usage2GLenum(Usage_Type target) {
 		switch (target)
@@ -34,6 +34,6 @@ namespace lan {
 		default:
 			break;
 		}
-		throw new std::exception("未支持的STATIC_DRAW类型枚举");
+		throw new std::exception("鏈敮鎸佺殑STATIC_DRAW绫诲瀷鏋氫妇");
 	}
 }

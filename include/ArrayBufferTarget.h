@@ -2,7 +2,7 @@
 #include <GLBuffer.h>
 #include"GLDef.h"
 namespace lan {
-    //´ú±íÁËArrayBufferµÄTargetÉÏÏÂÎÄ¡£¿ÉÒÔ¼ÓÔØ»º³å¶ÔÏó»ò»æÖÆµÈ²Ù×÷¡£¼¯ºÏÒ»ÏµÁĞ¸Ã²Ù×÷
+    //ä»£è¡¨äº†ArrayBufferçš„Targetä¸Šä¸‹æ–‡ã€‚å¯ä»¥åŠ è½½ç¼“å†²å¯¹è±¡æˆ–ç»˜åˆ¶ç­‰æ“ä½œã€‚é›†åˆä¸€ç³»åˆ—è¯¥æ“ä½œ
     class ArrayBufferTarget
     {
         static GLBuffer* current_buffer;
@@ -25,7 +25,7 @@ namespace lan {
         }
 
 
-        ///»æÖÆÖ¸¶¨µÄbuffer
+        ///ç»˜åˆ¶æŒ‡å®šçš„buffer
         static void DrawArrays(GLBuffer* buffer, GLenum mode, GLint first, GLsizei count) {
             if (buffer) {
                 auto backup = current_buffer;
@@ -38,7 +38,7 @@ namespace lan {
         }
 
         /// <summary>
-        /// ÍùtargetºÍUsage_TypeËù¶ÔÓ¦µÄÄ¿±êÄÚ´æ´«ÊäÊı¾İ¡£
+        /// å¾€targetå’ŒUsage_Typeæ‰€å¯¹åº”çš„ç›®æ ‡å†…å­˜ä¼ è¾“æ•°æ®ã€‚
         /// </summary>
         /// <param name="target"></param>
         /// <param name="data"></param>

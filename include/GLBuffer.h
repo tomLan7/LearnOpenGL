@@ -2,13 +2,13 @@
 #include<exception>
 #include"GLDef.h"
 namespace lan {
-	//代表一个缓冲区对象
+	//浠ｈ〃涓�涓紦鍐插尯瀵硅薄
 	class GLBuffer
 	{
 		GLuint id;
 
 	public:
-		
+
 		~GLBuffer() {
 			if (id != 0) {
 				glDeleteBuffers(1, &id);
@@ -23,7 +23,7 @@ namespace lan {
 			this->id = id;
 		}
 		/// <summary>
-		/// 绑定当前缓冲区到指定Target
+		/// 缁戝畾褰撳墠缂撳啿鍖哄埌鎸囧畾Target
 		/// </summary>
 		/// <param name="target"></param>
 		void BindBuffer(Target_Type target) {
@@ -31,7 +31,7 @@ namespace lan {
 		}
 
 		/// <summary>
-		/// 让指定区域的Target解绑
+		/// 璁╂寚瀹氬尯鍩熺殑Target瑙ｇ粦
 		/// </summary>
 		/// <param name="target"></param>
 		static void UnBindBuffer(Target_Type target) {

@@ -4,13 +4,13 @@
 #include<ConstantDef.h>
 namespace lan {
 
-	//heading-pitch-bankÅ·À­½Ç  y,x,z?
+	//heading-pitch-bankæ¬§æ‹‰è§’  y,x,z?
 	struct EulerAngles
 	{
 
-		float heading;//yÖá¡£ÉÏ¡£
-		float pitch;//xÖá£¬ÓÒ¡£¸©½Ç
-		float bank;//zÖá¡£ÏòÉãÏñ»ú
+		float heading;//yè½´ã€‚ä¸Šã€‚
+		float pitch;//xè½´ï¼Œå³ã€‚ä¿¯è§’
+		float bank;//zè½´ã€‚å‘æ‘„åƒæœº
 		EulerAngles() = default;
 		EulerAngles(float h, float p, float b){
 			heading = h;
@@ -20,11 +20,11 @@ namespace lan {
 		void identity() {
 			pitch = bank = heading = 0.0f;
 		}
-		//È·±£Å·À­½Ç´¦ÓÚÏŞÖÆ¼¯ÖĞ£¬Èç£ºheadingºÍbankÏŞÖÆ+180µ½-180Ö®¼ä£¬pitchÏŞÖÆÔÚ90µ½-90Ö®¼ä¡£
+		//ç¡®ä¿æ¬§æ‹‰è§’å¤„äºé™åˆ¶é›†ä¸­ï¼Œå¦‚ï¼šheadingå’Œbanké™åˆ¶+180åˆ°-180ä¹‹é—´ï¼Œpitché™åˆ¶åœ¨90åˆ°-90ä¹‹é—´ã€‚
 		void canonize() {
 			pitch = std::min(PiOver2,pitch);
 			pitch = std::max(-PiOver2, pitch);
-			
+
 			if (fabsf(pitch) == PiOver2) {
 				heading += bank;
 				bank = 0;

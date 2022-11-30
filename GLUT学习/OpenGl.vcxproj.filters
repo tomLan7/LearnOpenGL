@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="源文件\imgui">
+      <UniqueIdentifier>{8d9f1e29-3450-402e-9fb5-52d531eb507b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ogldev_lx1 glut窗口.cpp">
@@ -60,10 +63,34 @@
     <ClCompile Include="ogldev_lx13 使用纹理.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\imgui-master\imgui.cpp">
+      <Filter>源文件\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui-master\imgui_draw.cpp">
+      <Filter>源文件\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui-master\imgui_tables.cpp">
+      <Filter>源文件\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui-master\imgui_widgets.cpp">
+      <Filter>源文件\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="imguiTest.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\imgui-master\backends\imgui_impl_glut.cpp">
+      <Filter>源文件\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="ogldev_lx14 方向光.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="LanGlut.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\imgui-master\backends\imgui_impl_glut.h">
+      <Filter>源文件\imgui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -22,17 +22,17 @@ namespace lan {
 			this->w = w;
 		}
 		/// <summary>
-		/// µ±rateÎª0½á¹ûÎªa£¬µ±rateÎª1½á¹ûÎªb
+		/// å½“rateä¸º0ç»“æœä¸ºaï¼Œå½“rateä¸º1ç»“æœä¸ºb
 		/// </summary>
 		static Quaternion Lerp(const Quaternion& a,const Quaternion& b, float rate) {
 			return Quaternion(a.x+(b.x-a.x)*rate, a.y + (b.y - a.y) * rate, a.z + (b.z - a.z) * rate, a.w + (b.w - a.w) * rate);
 		}
 
-		//¹²éî
+		//å…±è½­
 		Quaternion Conjugate() {
 			return Quaternion{ -x,-y,-z,w };
 		}
-		//Ïà·´Êı´ú±íÏàÍ¬µÄ½ÇÎ»ÒÆ¡£Ò»¸ö½Ç¶È¼ÓÉÏ360¡ãÒ²²»»á¸Ä±äqµÄ½ÇÎ»ÒÆ
+		//ç›¸åæ•°ä»£è¡¨ç›¸åŒçš„è§’ä½ç§»ã€‚ä¸€ä¸ªè§’åº¦åŠ ä¸Š360Â°ä¹Ÿä¸ä¼šæ”¹å˜qçš„è§’ä½ç§»
 		Quaternion operator-() {
 			return Quaternion{ -x,-y,-z,-w };
 		}
@@ -49,7 +49,7 @@ namespace lan {
 		Quaternion operator/(float rate) {
 			return Quaternion{ x / rate, y / rate, z / rate, w / rate };
 		}
-		//´ı²âÊÔ
+		//å¾…æµ‹è¯•
 		Quaternion operator^(float exponent) {
 			float alpha=acos(w);
 			float newAlpha = alpha * exponent;
@@ -60,7 +60,7 @@ namespace lan {
 			float newZ =z* mult;
 			return Quaternion{newX,newY,newZ,newW};
 		}
-		//´ı²âÊÔ
+		//å¾…æµ‹è¯•
 		Quaternion operator*(Quaternion other) {
 			Vector3F v1(x,y,z);
 			float w1 = w;
@@ -70,14 +70,14 @@ namespace lan {
 			float newW = w1 * w2  - (v1 * v2);
 			return Quaternion(newV,newW);
 		}
-		//´ı²âÊÔ
+		//å¾…æµ‹è¯•
 		static float dot(Quaternion a, Quaternion b) {
 
 			Vector3F v1(a.x, a.y, a.z);
 			Vector3F v2(b.x, b.y, b.z);
 			return a.w * b.w + v1 * v2;
 		}
-		//´ı²âÊÔ£¬²»ÊÇ×îÓÅ·½·¨
+		//å¾…æµ‹è¯•ï¼Œä¸æ˜¯æœ€ä¼˜æ–¹æ³•
 		static Quaternion slerp(Quaternion start, Quaternion end, float r) {
 			return start*((start.Inverse()*end)^r);
 		}
@@ -88,7 +88,7 @@ namespace lan {
 			return Vector3F(roll,pitch,yaw);
 		}
 
-		//Ò»°ãÍÆ¼öy,x,zĞı×ª·½Ê½×ª»»ÎªÅ·À­½Ç¡£
+		//ä¸€èˆ¬æ¨èy,x,zæ—‹è½¬æ–¹å¼è½¬æ¢ä¸ºæ¬§æ‹‰è§’ã€‚
 		//CSDN https://blog.csdn.net/zisuina_2/article/details/102568015
 		static void toEulerAngle(const double x, const double y, const double z, const double w, double& roll, double& pitch, double& yaw)
 		{
@@ -110,15 +110,15 @@ namespace lan {
 			yaw = atan2(siny_cosp, cosy_cosp);
 			//    return yaw;
 		}
-		
+
 		static Quaternion fromEulerAngle(float x,float y,float z) {
-			//Ê¹ÓÃË³Ğò£¬y£¬x,z
+			//ä½¿ç”¨é¡ºåºï¼Œyï¼Œx,z
 			Quaternion q_x(sin(x / 2 * Deg2Rad), 0, 0, cos(x / 2 * Deg2Rad));
 			Quaternion q_y(0, sin(y / 2 * Deg2Rad), 0, cos(y / 2 * Deg2Rad));
 			Quaternion q_z(0, 0, sin(z / 2 * Deg2Rad), cos(z / 2 * Deg2Rad));
 			return q_y * q_x * q_z;
 		}
-		
+
 		std::string toString()const {
 			return "["+std::to_string(x)+","+ std::to_string(y)+","+ std::to_string(z)+","+ std::to_string(w) +"]";
 		}

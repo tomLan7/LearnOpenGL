@@ -6,7 +6,7 @@
 namespace lan {
 	struct Matrix4F {
 
-		HomogeneousCoordinates4F data[4];//4¸öÁĞÏòÁ¿£¬·Ö±ğ¶ÔÓ¦¸Ã¾ØÕóµÄĞÂ×ø±ê»ù
+		HomogeneousCoordinates4F data[4];//4ä¸ªåˆ—å‘é‡ï¼Œåˆ†åˆ«å¯¹åº”è¯¥çŸ©é˜µçš„æ–°åæ ‡åŸº
 		Matrix4F() {
 			data[0] = { 1,0,0,0 };
 			data[1] = { 0,1,0,0 };
@@ -25,11 +25,11 @@ namespace lan {
 			returnValue.transposed();
 			return returnValue;
 		}
-		//×ªÖÃ
+		//è½¬ç½®
 		void transposed() {
-			//±éÀúÃ¿¸öÁĞ
+			//éå†æ¯ä¸ªåˆ—
 			for (int i = 0; i < 4; i++) {
-				//±éÀúÃ¿ĞĞ
+				//éå†æ¯è¡Œ
 				for (int j = i+1; j <4;j++ ) {
 					std::swap(data[i][j],data[j][i]);
 				}
@@ -70,7 +70,7 @@ namespace lan {
 		static Matrix4F Scale(Vector3F scale) {
 			return Matrix4F{ {scale.x,0,0,0},{0,scale.y,0,0},{0,0,scale.z,0},{0,0,0,1} };
 		}
-		//ÈÆÖáÄæÊ±ÕëĞı×ª
+		//ç»•è½´é€†æ—¶é’ˆæ—‹è½¬
 		static Matrix4F RotationX(float radian) {
 			Vector3F newY = { 0,1,0 };
 			Vector3F newZ = { 0,0,1 };
@@ -92,15 +92,15 @@ namespace lan {
 			newY.rotateZ(-radian);
 			return Matrix4F({ newX,0 }, { newY, 0 }, { 0,0,1,0 }, { 0,0,0,1 });
 		}
-		//Å·À­½ÇÇóĞı×ª¾ØÕó
+		//æ¬§æ‹‰è§’æ±‚æ—‹è½¬çŸ©é˜µ
 		static Matrix4F Rotate(Vector3F rotate) {
 			return RotationZ(rotate.z)*RotationY(rotate.y)*RotationX(rotate.x);
 		}
 		static Matrix4F FaceTo(Vector3F face,Vector3F up) {
 			Matrix4F returnValue;
-			Vector3F N = face.unit();//¶ÔÓ¦ĞÂ×ø±êÏµZÖá
-			Vector3F U = Vector3F::cross(up, face).unit();//¶ÔÓ¦ĞÂ×ø±êÏµXÖá
-			Vector3F V = Vector3F::cross(N, U);//¶ÔÓ¦ĞÂ×ø±êÏµYÖá
+			Vector3F N = face.unit();//å¯¹åº”æ–°åæ ‡ç³»Zè½´
+			Vector3F U = Vector3F::cross(up, face).unit();//å¯¹åº”æ–°åæ ‡ç³»Xè½´
+			Vector3F V = Vector3F::cross(N, U);//å¯¹åº”æ–°åæ ‡ç³»Yè½´
 			returnValue[0] = Vector4F(U, 0);
 			returnValue[1] = Vector4F(V, 0);
 			returnValue[2] = Vector4F(N, 0);
@@ -120,7 +120,7 @@ namespace lan {
 			Vector4F newZ(0,0,2/deep,0);
 			Vector4F newW(-xMid/width,-yMid / height,-zMid / deep,1);
 			return Matrix4F(newX, newY, newZ, newW);*/
-			//¹ØÓÚzÖµ£¬Èç¹ûÊÇDx£¬¾ÍÓ¦¸ÃÊÇ1/deep£¬ÒòÎªDxµÄNDCµÄzÖá·¶Î§Îª0~1.
+			//å…³äºzå€¼ï¼Œå¦‚æœæ˜¯Dxï¼Œå°±åº”è¯¥æ˜¯1/deepï¼Œå› ä¸ºDxçš„NDCçš„zè½´èŒƒå›´ä¸º0~1.
 			return Scale({ 2 / width,2 / height,2/ deep}) * Translate({ -xMid,-yMid,-zMid });
 		}
 
@@ -128,7 +128,7 @@ namespace lan {
 		static Matrix4F PersProjTransform(float FOV, float aspectRatio, float zNear, float zFar) {
 
 			Matrix4F returnValue;
-			const float ar = aspectRatio;//ºá×İ±È
+			const float ar = aspectRatio;//æ¨ªçºµæ¯”
 			const float zRange = zNear - zFar;
 			const float tanHalfFOV = tanf(ToRadian(FOV / 2.0));
 
@@ -145,7 +145,7 @@ namespace lan {
 			returnValue[2][0] = 0.0f;
 			returnValue[2][1] = 0.0f;
 			returnValue[2][2] = (-zNear - zFar) / zRange;
-			returnValue[2][3] = 1.0f;//ÈÃwµÈÓÚz£¬zÔ½´ówÔ½´ó
+			returnValue[2][3] = 1.0f;//è®©wç­‰äºzï¼Œzè¶Šå¤§wè¶Šå¤§
 
 			returnValue[3][0] = 0.0f;
 			returnValue[3][1] = 0.0f;
@@ -160,51 +160,51 @@ namespace lan {
 		static Matrix4F lookAt(lan::Vector3F eye, lan::Vector3F center, lan::Vector3F up) {
 			return {};
 		}
-		//Ê¹ÓÃ¸ßË¹ÏûÔª·¨
+		//ä½¿ç”¨é«˜æ–¯æ¶ˆå…ƒæ³•
 		float Determinant() {
 			Matrix4F temp_data=*this;
 			float rate = 1;
 			for (int i = 0; i < 4;i++) {
 				int y = i;
 				for (; temp_data[y][i] == 0; y++);
-				if (y == 4) {//µÚÒ»ĞĞÈ«ÊÇ0
+				if (y == 4) {//ç¬¬ä¸€è¡Œå…¨æ˜¯0
 					return 0;
 				}
 				if (y != i) {
-					rate = -rate;//½»»»ĞĞÁĞÊ½µÄÁĞ
+					rate = -rate;//äº¤æ¢è¡Œåˆ—å¼çš„åˆ—
 					std::swap(temp_data[i],temp_data[y]);
 				}
-				//Ö÷ÔªÌáÈ¡³öÀ´
+				//ä¸»å…ƒæå–å‡ºæ¥
 				rate *= temp_data[i][i];
-				temp_data[i] /= temp_data[i][i];//µ¥Î»»¯
+				temp_data[i] /= temp_data[i][i];//å•ä½åŒ–
 				for (int j = i+1; j < 4;j++) {
-					temp_data[j] -= temp_data[i] * temp_data[j][i];//ÏûÈ¥ÆäËûÔª
+					temp_data[j] -= temp_data[i] * temp_data[j][i];//æ¶ˆå»å…¶ä»–å…ƒ
 				}
 			}
 			return rate;
 		}
-		//Ê¹ÓÃ³õµÈ´úÊı·¨
+		//ä½¿ç”¨åˆç­‰ä»£æ•°æ³•
 		Matrix4F Inverse() {
 			Matrix4F temp_data = *this;
-			//Ò»¸öµ¥Î»¾ØÕó
+			//ä¸€ä¸ªå•ä½çŸ©é˜µ
 			Matrix4F return_matrix;
 			for (int i = 0; i < 4; i++) {
 				int y = i;
 				for (; temp_data[y][i] == 0; y++);
-				if (y == 4) {//µÚÒ»ĞĞÈ«ÊÇ0
-					throw std::exception("²»ÊÇ¿ÉÄæ¾ØÕó");
+				if (y == 4) {//ç¬¬ä¸€è¡Œå…¨æ˜¯0
+					throw std::exception("ä¸æ˜¯å¯é€†çŸ©é˜µ");
 				}
 				if (y != i) {
 					std::swap(temp_data[i], temp_data[y]);
 					std::swap(return_matrix[i], return_matrix[y]);
 				}
-				//ÒªÃ´±£ÁôÖ÷ÔªµÄÖµ£¬ÒªÃ´ÏÈ²Ù×÷return_matrix[i]¡£ÏÈ²Ù×÷temp_dataµÄ»°Ö÷ÔªÖµ¾Í±äÁË
+				//è¦ä¹ˆä¿ç•™ä¸»å…ƒçš„å€¼ï¼Œè¦ä¹ˆå…ˆæ“ä½œreturn_matrix[i]ã€‚å…ˆæ“ä½œtemp_dataçš„è¯ä¸»å…ƒå€¼å°±å˜äº†
 				return_matrix[i] /= temp_data[i][i];
 				temp_data[i] /= temp_data[i][i];
-				
+
 				for (int j = i + 1; j < 4; j++) {
 					return_matrix[j] -= return_matrix[i] * temp_data[j][i];
-					temp_data[j] -= temp_data[i] * temp_data[j][i];//ÏûÈ¥ÆäËûÔª
+					temp_data[j] -= temp_data[i] * temp_data[j][i];//æ¶ˆå»å…¶ä»–å…ƒ
 				}
 			}
 			return return_matrix;

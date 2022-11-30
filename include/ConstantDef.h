@@ -8,8 +8,8 @@ namespace lan {
 #define ToDegree(x) ((x) * 180.0f / M_Pi)
 #define Deg2Rad (M_Pi/180.f)
 #define Rad2Deg (180.f/M_Pi)
-	
-	//½«½Ç¶ÈÏÞÖÆÔÚ-piµ½piÇø¼äÄÚ
+
+	//å°†è§’åº¦é™åˆ¶åœ¨-piåˆ°piåŒºé—´å†…
 	inline float wrapPi(float theta) {
 		while (theta > PiOver2)
 			theta -= M_Pi;
@@ -18,7 +18,7 @@ namespace lan {
 		return theta;
 	}
 
-	//¼Ð¾ß
+	//å¤¹å…·
 	inline float clamp(float x, float min, float max) {
 		if (x < min) {
 			x = min;

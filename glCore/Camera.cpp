@@ -27,7 +27,7 @@ bool lan::Camera::OnKeyboard(int Key,bool spicial)
         case GLUT_KEY_LEFT:
         {
 
-            Vector3F Left = Vector3F::cross(Face(), m_up);//Unity是左手坐标系
+            Vector3F Left = Vector3F::cross(Face(), m_up);//Unity鏄乏鎵嬪潗鏍囩郴
             Left.normalized();
             Left *= StepSize;
             m_pos += Left;
@@ -70,7 +70,7 @@ bool lan::Camera::OnKeyboard(int Key,bool spicial)
         case 'a':
         {
 
-            Vector3F Left = Vector3F::cross(Face(), m_up);//Unity是左手坐标系
+            Vector3F Left = Vector3F::cross(Face(), m_up);//Unity鏄乏鎵嬪潗鏍囩郴
             Left.normalized();
             Left *= StepSize;
             m_pos += Left;

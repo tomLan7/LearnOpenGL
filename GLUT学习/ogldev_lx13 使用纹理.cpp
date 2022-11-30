@@ -11,6 +11,7 @@ using namespace std;
 using namespace lan;
 GLBuffer* VBO1;
 GLBuffer* EBO1;
+Texture* texture1;
 lan::ShaderProgram* shader;
 lan::Pipeline p;
 
@@ -27,17 +28,19 @@ void IdleFunc() {
 	auto euler = quat.toEuler() * Rad2Deg;
 
 	p.initWorldRotate(euler);
-	//cout << "rate" << rate << "Àƒ‘™ ˝" << quat << "≈∑¿≠Ω«" << euler << endl;
+	//cout << "rate" << rate << "ÂõõÂÖÉÊï∞" << quat << "Ê¨ßÊãâËßí" << euler << endl;
 	LanGlut::PostRedisplay();
 }
 
 void Render() {
-	//cout << "ªÊÕº" << endl;
+	//cout << "ÁªòÂõæ" << endl;
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	p.initPerspectiveProj(60.0f, 1.f, 0.3f, 1000.f);
 	shader->Uniform("gWVP", p.GetTransByPerspective() * p.GetCameraTransform() * p.getWorldTransform());
+	texture1->Bind(3);
+	shader->UniformTextureUnit("gSampler", 3);
 	ElementBufferTarget::DrawElements(EBO1, GL_TRIANGLES, 12, GL_UNSIGNED_INT, 0);
 
 	glutSwapBuffers();
@@ -46,7 +49,7 @@ void Render() {
 int main(int  argc, char* argv[]) {
 	LanGlut::Init(argc, argv);
 	LanGlut::SetDisplayFunc(Render);
-	LanGlut::SetWindowTitle(" π”√Œ∆¿Ì");
+	LanGlut::SetWindowTitle("‰ΩøÁî®Á∫πÁêÜ");
 
 	LanGlut::SetIdleFunc(IdleFunc);
 	LanGlut::SetPassiveMotionFunc(NULL);
@@ -54,7 +57,7 @@ int main(int  argc, char* argv[]) {
 		auto windowSize = LanGlut::GetWindowSize();
 		float h = x / windowSize.x * 360 - 180;
 		float v = -(y / windowSize.y * 180 - 90);
-		cout << "∫·Ω«∂»:" << h << "\t◊›Ω«∂»:" << v << endl;
+		cout << "Ê®™ËßíÂ∫¶:" << h << "\tÁ∫µËßíÂ∫¶:" << v << endl;
 		p.getMainCamera().setHVAngle(h, v);
 		});
 	LanGlut::SetKeyboardFunc([](unsigned char key, int x, int y) {
@@ -64,25 +67,29 @@ int main(int  argc, char* argv[]) {
 		});
 	LanGlut::SetSpecialKeyFunc([](int key, int x, int y) {
 		p.SpecialKeyboardCB(key, x, y);
-		std::cout << "key£∫" << key << "∫Õx£∫" << x << "∫Õy£∫" << y << std::endl;
-	std::cout << p.getMainCamera().toString() << std::endl;
+		cout << "keyÔºö" << key << "ÂíåxÔºö" << x << "ÂíåyÔºö" << y << endl;
+		cout << p.getMainCamera().toString() << endl;
 		});
 
 	LanGlut::SetKeyboardFunc([](unsigned char key, int x, int y) {
 		p.ASCIIKeyboardCB(key, x, y);
-		std::cout << "key£∫" << key << "∫Õx£∫" << x << "∫Õy£∫" << y << std::endl;
-		std::cout << p.getMainCamera().toString() << std::endl;
+		cout << "keyÔºö" << key << "ÂíåxÔºö" << x << "ÂíåyÔºö" << y << endl;
+		cout << p.getMainCamera().toString() << endl;
 		});
 	p.initCamera(Vector3F(0, 0, 0), lan::Vector3F(0, 0, 1), lan::Vector3F(0, 1, 0));
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-	Texture texture("container.jpg");
+	texture1 = new Texture("container.jpg");
+	cout << "ÊîØÊåÅÁ∫πÁêÜÂçïÂÖÉÊï∞‰∏∫" << Texture::GetMaxCombinedTextureImageUnitsCount() << endl;
 	lan::Vector3F oldVertices[4];
 	oldVertices[0] = lan::Vector3F(0.f, 0.1f, 1.f);
 	oldVertices[1] = lan::Vector3F(0.f, 0.8f, 0.5f);
 	oldVertices[2] = lan::Vector3F(.9f, -.9f, 0.5f);
 	oldVertices[3] = lan::Vector3F(-0.9f, -0.9f, 0.5f);
 
+	glFrontFace(GL_CW);//ËÆæÁΩÆÊ≠£Èù¢ÊñπÂêë
+	glCullFace(GL_BACK);//ËÆæÁΩÆÂâîÈô§Èù¢
+	glEnable(GL_CULL_FACE);//ÂºÄÂêØËÉåÈù¢ÂâîÈô§
 	Vertex Vertices[4] = {
 	Vertex(Vector3F(-1.0f, -1.0f, 0.5773f), Vector2F(0.0f, 0.0f)),
 	Vertex(Vector3F(0.0f, -1.0f, -1.15475), Vector2F(0.5f, 0.0f)),
@@ -99,8 +106,8 @@ int main(int  argc, char* argv[]) {
 	EBO1 = new GLBuffer();
 	ElementBufferTarget::BufferData(EBO1, sizeof(Indices), Indices, Usage_Type::STATIC_DRAW);
 	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx13.vert", "lx13.frag");
-	GLint Location1 = shader->GetAttribLocation("Position");//ªÒµ√∂‘”¶∂•µ„ Ù–‘µƒœ¬±Í
-	GLint Location2 = shader->GetAttribLocation("TexCoord");//ªÒµ√∂‘”¶∂•µ„ Ù–‘µƒœ¬±Í
+	GLint Location1 = shader->GetAttribLocation("Position");//Ëé∑ÂæóÂØπÂ∫îÈ°∂ÁÇπÂ±ûÊÄßÁöÑ‰∏ãÊ†á
+	GLint Location2 = shader->GetAttribLocation("TexCoord");//Ëé∑ÂæóÂØπÂ∫îÈ°∂ÁÇπÂ±ûÊÄßÁöÑ‰∏ãÊ†á
 	glEnableVertexAttribArray(Location1);
 	glEnableVertexAttribArray(Location2);
 	glVertexAttribPointer(Location1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);

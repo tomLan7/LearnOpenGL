@@ -3,7 +3,7 @@
 namespace lan {
 	struct  HomogeneousCoordinates4F :Vector3F
 	{
-		float w = 0.f;//Æë´Î×ø±êÍ¸ÊÓÏµÊı
+		float w = 0.f;//é½æ¬¡åæ ‡é€è§†ç³»æ•°
 		HomogeneousCoordinates4F() = default;
 
 		HomogeneousCoordinates4F(float x, float y, float z, float w) :lan::Vector3F(x, y, z) {
@@ -21,7 +21,7 @@ namespace lan {
 			this->w = w;
 		}
 
-		//Ò»Ğ©²Ù×÷
+		//ä¸€äº›æ“ä½œ
 
 		HomogeneousCoordinates4F unit()const {
 			return *this / length();
@@ -35,7 +35,7 @@ namespace lan {
 				*this /= w;
 			}
 		}
-		//ËÄÔòÔËËã
+		//å››åˆ™è¿ç®—
 		HomogeneousCoordinates4F operator+(const HomogeneousCoordinates4F& vec)const {
 			return HomogeneousCoordinates4F(x + vec.x, y + vec.y, z + vec.z, w + vec.w);
 		}
@@ -104,7 +104,7 @@ namespace lan {
 			case 3:
 				return w;
 			default:
-				throw "Òì³£µÄÏòÁ¿Ë÷Òı";
+				throw "å¼‚å¸¸çš„å‘é‡ç´¢å¼•";
 				return 0;
 				break;
 			}
@@ -124,7 +124,7 @@ namespace lan {
 
 				break;
 			}
-			throw "Òì³£µÄÏòÁ¿Ë÷Òı";
+			throw "å¼‚å¸¸çš„å‘é‡ç´¢å¼•";
 		}
 		std::string toString()const {
 			std::ostringstream str;

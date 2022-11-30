@@ -30,7 +30,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v142</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -78,7 +78,7 @@
     <LibraryPath>C:\Program Files %28x86%29\ImageMagick-7.1.0-Q16\lib;$(SolutionDir)lib/x86;$(LibraryPath)</LibraryPath>
     <ReferencePath>$(VC_ReferencesPath_x86);</ReferencePath>
     <ExecutablePath>$(SolutionDir)target;$(VC_ExecutablePath_x86);$(CommonExecutablePath)</ExecutablePath>
-    <IncludePath>C:\Program Files %28x86%29\ImageMagick-7.1.0-Q16\include;$(SolutionDir)include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)imgui-master;C:\Program Files %28x86%29\ImageMagick-7.1.0-Q16\include;$(SolutionDir)include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -133,6 +133,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\imgui-master\backends\imgui_impl_glut.cpp" />
+    <ClCompile Include="..\imgui-master\imgui.cpp" />
+    <ClCompile Include="..\imgui-master\imgui_draw.cpp" />
+    <ClCompile Include="..\imgui-master\imgui_tables.cpp" />
+    <ClCompile Include="..\imgui-master\imgui_widgets.cpp" />
+    <ClCompile Include="imguiTest.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="LanGlut.cpp" />
     <ClCompile Include="ogldev_lx1 glut窗口.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -150,7 +158,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="ogldev_lx13 使用纹理.cpp" />
+    <ClCompile Include="ogldev_lx13 使用纹理.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="ogldev_lx14 方向光.cpp" />
     <ClCompile Include="ogldev_lx2 glew使用和绘制点.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
@@ -189,6 +200,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\imgui-master\backends\imgui_impl_glut.h" />
     <ClInclude Include="LanGlut.h" />
   </ItemGroup>
   <ItemGroup>

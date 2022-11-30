@@ -81,6 +81,7 @@ namespace lan {
 		void User() {
 			glUseProgram(ObjectId);
 		}
+		//设置float类型变量
 		bool  Uniform(const std::string& attrName, float Value) {
 			GLint uniformIndex=glGetUniformLocation(this->ObjectId, attrName.c_str());
 			bool rtn = true;
@@ -90,6 +91,7 @@ namespace lan {
 			glUniform1f(uniformIndex, Value);
 			return rtn;
 		}
+		//设置vec4类型变量
 		bool Uniform(const std::string& attrName, float ValueX, float ValueY, float ValueZ, float ValueW) {
 			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
 			bool rtn = true;
@@ -101,17 +103,19 @@ namespace lan {
 			}
 			return rtn;
 		}
-		bool UniformTextureIndex(const std::string& attrName, int TextureIndex) {
+		//设置变量为某个纹理单元
+		bool UniformTextureUnit(const std::string& attrName, int TextureUnitIndex) {
 			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
 			bool rtn = true;
 			if (uniformIndex == -1) {
 				rtn = false;
 			}
 			else {
-				glUniform1i(uniformIndex, TextureIndex);
+				glUniform1i(uniformIndex, TextureUnitIndex);
 			}
 			return rtn;
 		}
+		//设置vec3变量
 		bool Uniform(const std::string& attrName, glm::vec3 value) {
 			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
 			bool rtn = true;
@@ -135,6 +139,7 @@ namespace lan {
 			return rtn;
 			
 		}
+		//设置变量为矩阵
 		bool Uniform(const std::string& attName, const glm::mat4& mat);
 		bool Uniform(const std::string& attName, const Matrix4F& mat);
 

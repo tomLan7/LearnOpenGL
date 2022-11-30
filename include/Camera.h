@@ -3,23 +3,23 @@
 #include"Matrix4F.h"
 #include "ConstantDef.h"
 namespace lan {
-    //¿ÉÒÔ°ÑÆäËû·¶Î§±ä»»µ½±ê×¼Éè±¸×ø±êÏµÖĞ¡£
+    //å¯ä»¥æŠŠå…¶ä»–èŒƒå›´å˜æ¢åˆ°æ ‡å‡†è®¾å¤‡åæ ‡ç³»ä¸­ã€‚
     class Camera {
-        //ÉãÏñ»úÎ»ÖÃ
+        //æ‘„åƒæœºä½ç½®
         Vector3F m_pos;
-        //Ä¿±êµã£¬²»ÊÇÃæ³¯·½Ïò
-        Vector3F m_target;//Ä¬ÈÏµÄÉÏ·½ÏòÊÇ0,0,1£¬Ò²¾ÍÊÇ·ÂÕÕunity£¬zÕı·½ÏòÏòÇ°
-        //ÉÏ·½Ïò
-        Vector3F m_up;//Ä¬ÈÏµÄÉÏ·½ÏòÊÇ0,1,0£¬Ò²¾ÍÊÇ·ÂÕÕunity£¬yÖáÏòÉÏ
+        //ç›®æ ‡ç‚¹ï¼Œä¸æ˜¯é¢æœæ–¹å‘
+        Vector3F m_target;//é»˜è®¤çš„ä¸Šæ–¹å‘æ˜¯0,0,1ï¼Œä¹Ÿå°±æ˜¯ä»¿ç…§unityï¼Œzæ­£æ–¹å‘å‘å‰
+        //ä¸Šæ–¹å‘
+        Vector3F m_up;//é»˜è®¤çš„ä¸Šæ–¹å‘æ˜¯0,1,0ï¼Œä¹Ÿå°±æ˜¯ä»¿ç…§unityï¼Œyè½´å‘ä¸Š
         /// <summary>
-        /// ¸©Ñö½ÇPitch¡¢Æ«º½½ÇYawºÍ¹ö×ª½ÇRoll
+        /// ä¿¯ä»°è§’Pitchã€åèˆªè§’Yawå’Œæ»šè½¬è§’Roll
         /// </summary>
         float horizontalAngle;
         float verticalAngle;
         static constexpr float MAXHorizontalAngle=360.f;
         static constexpr float MinHorizontalAngle = 0.f;
         static constexpr float MaxVerticalAngle = 90.f;
-        static constexpr float MinVerticalAngle = 0.f;
+        static constexpr float MinVerticalAngle = -90.f;
 
 
     public:
@@ -29,8 +29,8 @@ namespace lan {
         }
 
 
-        /// <param name="horizontalAngle">Ë®Æ½½Ç360¶È¶¼¿ÉÒÔ</param>
-        /// <param name="verticalAngle">´¹Ö±½Ç£¬ÏŞÖÆÔÚ90¶Èµ½0¶È¡£</param>
+        /// <param name="horizontalAngle">æ°´å¹³è§’360åº¦éƒ½å¯ä»¥</param>
+        /// <param name="verticalAngle">å‚ç›´è§’ï¼Œé™åˆ¶åœ¨90åº¦åˆ°0åº¦ã€‚</param>
         void setHVAngle(float horizontalAngle, float verticalAngle) {
             horizontalAngle = fmodf(horizontalAngle, MAXHorizontalAngle- MinHorizontalAngle)+MinHorizontalAngle;
             verticalAngle = clamp(verticalAngle, MinVerticalAngle, MaxVerticalAngle);
@@ -38,7 +38,7 @@ namespace lan {
             auto newFaceVec = Vector3F(sinf(horizontalAngle * Deg2Rad), sinf(verticalAngle * Deg2Rad), cosf(horizontalAngle * Deg2Rad));
             newFaceVec.normalized();
             m_target = m_pos+ newFaceVec* faceLengh;
-            std::cout << "Êµ¼ÊµÄh"<<horizontalAngle<<"Êµ¼ÊµÄv"<<verticalAngle << std::endl;
+            std::cout << "å®é™…çš„h"<<horizontalAngle<<"å®é™…çš„v"<<verticalAngle << std::endl;
             std::cout<<toString()<<std::endl;
         }
         bool OnKeyboard(int Key,bool spicial);
@@ -51,8 +51,8 @@ namespace lan {
         const Vector3F& GetUp() const {
             return m_up;
         }
-        
-        /// »ñµÃÃæ³¯ÏòÁ¿
+
+        /// è·å¾—é¢æœå‘é‡
         const Vector3F Face() {
             return m_target - m_pos;
         }
