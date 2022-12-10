@@ -104,10 +104,10 @@ namespace lan {
 			case 3:
 				return w;
 			default:
-				throw "异常的向量索引";
-				return 0;
+				throw "异常的向量索引 ";
 				break;
 			}
+			return 0;
 		}
 		float& operator[](size_t index) {
 			switch (index)
@@ -124,7 +124,7 @@ namespace lan {
 
 				break;
 			}
-			throw "异常的向量索引";
+			throw "异常的向量索引 ";
 		}
 		std::string toString()const {
 			std::ostringstream str;

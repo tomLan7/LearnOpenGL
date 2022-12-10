@@ -57,7 +57,7 @@ int main(int  argc, char* argv[]) {
 	Vertices[2] = lan::Vector3F(.9f, -.9f, 0.5f);
 	Vertices[3] = lan::Vector3F(-0.9f, -0.9f, 0.5f);
 	VBO1 = new GLBuffer();
-	ArrayBufferTarget::BufferData(VBO1, sizeof(Vertices), Vertices, Usage_Type::STATIC_DRAW);
+	ArrayBufferTarget::BufferData(VBO1, sizeof(Vertices), Vertices, EUsage_Type::STATIC_DRAW);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
 	unsigned int Indices[] = { 0, 3, 1,
@@ -65,7 +65,7 @@ int main(int  argc, char* argv[]) {
 						   2, 3, 0,
 						   0, 1, 2 };
 	EBO1 = new GLBuffer();
-	ElementBufferTarget::BufferData(EBO1, sizeof(Indices), Indices, Usage_Type::STATIC_DRAW);
+	ElementBufferTarget::BufferData(EBO1, sizeof(Indices), Indices, EUsage_Type::STATIC_DRAW);
 	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx7.vert", "lx9.frag");
 	GLint Location = shader->GetAttribLocation("Position");//获得对应顶点属性的下标
 	glEnableVertexAttribArray(Location);

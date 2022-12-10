@@ -43,7 +43,7 @@ int main(int  argc, char* argv[]) {
 	Vertices[1] = lan::Vector3F(1.0f, -1.0f, 0.0f);
 	Vertices[2] = lan::Vector3F(0.0f, 1.0f, 0.0f);
 	vbo = new GLBuffer();
-	ArrayBufferTarget::BufferData(vbo, sizeof(Vertices), Vertices, Usage_Type::STATIC_DRAW);
+	ArrayBufferTarget::BufferData(vbo, sizeof(Vertices), Vertices, EUsage_Type::STATIC_DRAW);
 	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx6.vert", "lx6.frag");
 	GLint Location = shader->GetAttribLocation("Position");//获得对应顶点属性的下标
 	cout << "顶点属性下标为" << Location << endl;

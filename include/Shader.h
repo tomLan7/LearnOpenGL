@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include"Matrix4F.h"
 #include"GLObjectBase.h"
+#include"light.h"
 
 namespace lan {
 	
@@ -103,6 +104,37 @@ namespace lan {
 			}
 			return rtn;
 		}
+
+		bool Uniform(const std::string& attrName, Vector4F vec4) {
+			return Uniform(attrName, vec4.x, vec4.y, vec4.z, vec4.w);
+		}
+
+		//设置vec4类型变量
+		bool Uniform(const std::string& attrName, float ValueX, float ValueY, float ValueZ) {
+			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
+			bool rtn = true;
+			if (uniformIndex == -1) {
+				rtn = false;
+			}
+			else {
+				glUniform3f(uniformIndex, ValueX, ValueY, ValueZ);
+			}
+			return rtn;
+		}
+
+
+		bool Uniform(const std::string& attrName, Vector3F vec3) {
+			return Uniform(attrName, vec3.x, vec3.y, vec3.z);
+		}
+
+		bool Uniform(const std::string& attrName, DirectionalLight light) {
+			bool ret =	Uniform(attrName + ".Color",light.Color);
+			ret &=		Uniform(attrName + ".Direction", light.Direction);
+			ret &=		Uniform(attrName + ".AmbientIntensity", light.AmbientIntensity);
+			ret &=		Uniform(attrName + ".DiffuseIntensity", light.DiffuseIntensity);
+			return ret;
+		}
+
 		//设置变量为某个纹理单元
 		bool UniformTextureUnit(const std::string& attrName, int TextureUnitIndex) {
 			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
@@ -115,28 +147,13 @@ namespace lan {
 			}
 			return rtn;
 		}
-		//设置vec3变量
+
 		bool Uniform(const std::string& attrName, glm::vec3 value) {
-			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
-			bool rtn = true;
-			if (uniformIndex == -1) {
-				rtn = false;
-			}
-			else {
-				glUniform3f(uniformIndex, value.x, value.y, value.z);
-			}
-			return rtn;
+			return Uniform(attrName, value.x, value.y, value.z);
 		}
+
 		bool Uniform(const std::string& attrName, glm::vec4 value) {
-			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
-			bool rtn = true;
-			if (uniformIndex == -1) {
-				rtn = false;
-			}
-			else {
-				glUniform4f(uniformIndex, value.x, value.y, value.z, value.w);
-			}
-			return rtn;
+			return Uniform(attrName, value.x, value.y, value.z, value.w);
 			
 		}
 		//设置变量为矩阵

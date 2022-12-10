@@ -1,5 +1,6 @@
 #pragma once
 #include <GLBuffer.h>
+#include<vector>
 #include"GLDef.h"
 namespace lan {
     //代表了ArrayBuffer的Target上下文。可以加载缓冲对象或绘制等操作。集合一系列该操作
@@ -7,7 +8,7 @@ namespace lan {
     {
         static GLBuffer* current_buffer;
     public:
-        static const Target_Type type = Target_Type::ELEMENT_ARRAY_BUFFER;
+        static const ETarget_Type type = ETarget_Type::ELEMENT_ARRAY_BUFFER;
 
         static void  BindBuffer(GLBuffer& buffer) {
             if (&buffer != current_buffer) {
@@ -46,11 +47,22 @@ namespace lan {
         /// <param name="data"></param>
         /// <param name="len"></param>
         /// <param name="usage"></param>
-        static void BufferData(size_t len, const void* data, Usage_Type usage) {
+        static void BufferData(size_t len, const void* data, EUsage_Type usage) {
             glBufferData(Target2GLenum(type), len, data, Usage2GLenum(usage));
         }
 
-        static void BufferData(GLBuffer* buffer, size_t len, const void* data, Usage_Type usage) {
+        static void BufferData(GLBuffer* buffer,std::vector<int>& data, EUsage_Type usage) {
+            if (buffer) {
+                auto backup = current_buffer;
+                BindBuffer(buffer);
+                BufferData(data.size()*sizeof(int), data.data(), usage);
+                if (backup != buffer) {
+                    BindBuffer(backup);
+                }
+            }
+        }
+
+        static void BufferData(GLBuffer* buffer, size_t len, const void* data, EUsage_Type usage) {
             if (buffer) {
                 auto backup = current_buffer;
                 BindBuffer(buffer);

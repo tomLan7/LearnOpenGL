@@ -159,7 +159,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ogldev_lx13 使用纹理.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="ogldev_lx14 方向光.cpp" />
     <ClCompile Include="ogldev_lx2 glew使用和绘制点.cpp">
@@ -210,6 +210,8 @@
   <ItemGroup>
     <None Include="lx13.frag" />
     <None Include="lx13.vert" />
+    <None Include="lx14.frag" />
+    <None Include="lx14.vert" />
     <None Include="lx4.frag" />
     <None Include="lx5.vert" />
     <None Include="lx6.frag" />

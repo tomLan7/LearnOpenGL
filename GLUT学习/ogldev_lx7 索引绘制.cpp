@@ -26,7 +26,7 @@ void IdleFunc() {
 void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	shader->Uniform("gMat", p.GetTransNoProj());
-	VBO1->BindBuffer(Target_Type::ARRAY_BUFFER);
+	VBO1->BindBuffer(ETarget_Type::ARRAY_BUFFER);
 	//EBO1->BindBuffer(Target_Type::ELEMENT_ARRAY_BUFFER);这句不加会怎么样？
 	ElementBufferTarget::DrawElements(EBO1,GL_TRIANGLES,12,GL_UNSIGNED_INT,0);
 
@@ -49,14 +49,14 @@ int main(int  argc, char* argv[]) {
 	Vertices[2] = lan::Vector3F(1.0f, -1.0f, 0.5f);
 	Vertices[3] = lan::Vector3F(0.f, 1.0f, 0.5f);
 	VBO1 = new GLBuffer();
-	ArrayBufferTarget::BufferData(VBO1, sizeof(Vertices), Vertices, Usage_Type::STATIC_DRAW);
+	ArrayBufferTarget::BufferData(VBO1, sizeof(Vertices), Vertices, EUsage_Type::STATIC_DRAW);
 
 	unsigned int Indices[] = { 0, 3, 1,
 						   1, 3, 2,
 						   2, 3, 0,
 						   0, 1, 2 };
 	EBO1 = new GLBuffer();
-	ElementBufferTarget::BufferData(EBO1,sizeof(Indices), Indices, Usage_Type::STATIC_DRAW);
+	ElementBufferTarget::BufferData(EBO1,sizeof(Indices), Indices, EUsage_Type::STATIC_DRAW);
 	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx7.vert", "lx6.frag");
 	GLint Location = shader->GetAttribLocation("Position");//获得对应顶点属性的下标
 

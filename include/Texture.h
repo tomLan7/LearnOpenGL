@@ -17,8 +17,8 @@ namespace lan {
 
         static int ActiveTexture(int index=0);
 
-        //¿ÉÓÃµÄÎÆÀíµ¥ÔªÊıÁ¿
-        constexpr static int GetMaxCombinedTextureImageUnitsCount();
-        
+        //å¯ç”¨çš„çº¹ç†å•å…ƒæ•°é‡
+        static int GetMaxCombinedTextureImageUnitsCount();
+
     };
 }

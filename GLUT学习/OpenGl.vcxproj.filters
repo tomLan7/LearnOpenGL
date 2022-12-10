@@ -126,5 +126,11 @@
     <None Include="lx13.vert">
       <Filter>资源文件</Filter>
     </None>
+    <None Include="lx14.frag">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="lx14.vert">
+      <Filter>资源文件</Filter>
+    </None>
   </ItemGroup>
 </Project>

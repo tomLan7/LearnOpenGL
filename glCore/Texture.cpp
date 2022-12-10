@@ -38,11 +38,13 @@ int lan::Texture::ActiveTexture(int index)
         glActiveTexture(GL_TEXTURE0 + index);
     }
     else {
-        throw new exception("尝试激活纹理单元超出允许数量");
+        throw new exception("尝试激活纹理单元超出允许数量 ");
     }
 }
 
-constexpr int lan::Texture::GetMaxCombinedTextureImageUnitsCount()
+int lan::Texture::GetMaxCombinedTextureImageUnitsCount()
 {
-    return GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS;
+    int rtn;
+    glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &rtn);
+    return rtn;
 }

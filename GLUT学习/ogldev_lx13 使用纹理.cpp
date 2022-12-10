@@ -67,13 +67,13 @@ int main(int  argc, char* argv[]) {
 		});
 	LanGlut::SetSpecialKeyFunc([](int key, int x, int y) {
 		p.SpecialKeyboardCB(key, x, y);
-		cout << "key：" << key << "和x：" << x << "和y：" << y << endl;
+		cout << "key： " << key << "和x： " << x << "和y： " << y << endl;
 		cout << p.getMainCamera().toString() << endl;
 		});
 
 	LanGlut::SetKeyboardFunc([](unsigned char key, int x, int y) {
 		p.ASCIIKeyboardCB(key, x, y);
-		cout << "key：" << key << "和x：" << x << "和y：" << y << endl;
+		cout << "key： " << key << "和x： " << x << "和y： " << y << endl;
 		cout << p.getMainCamera().toString() << endl;
 		});
 	p.initCamera(Vector3F(0, 0, 0), lan::Vector3F(0, 0, 1), lan::Vector3F(0, 1, 0));
@@ -96,7 +96,7 @@ int main(int  argc, char* argv[]) {
 	Vertex(Vector3F(1.0f, -1.0f, 0.5773f), Vector2F(1.0f, 0.0f)),
 	Vertex(Vector3F(0.0f, 1.0f, 0.0f), Vector2F(0.5f, 1.0f)) };
 	VBO1 = new GLBuffer();
-	ArrayBufferTarget::BufferData(VBO1, sizeof(Vertices), Vertices, Usage_Type::STATIC_DRAW);
+	ArrayBufferTarget::BufferData(VBO1, sizeof(Vertices), Vertices, EUsage_Type::STATIC_DRAW);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	glEnable(GL_DEPTH_TEST);
 	unsigned int Indices[] = { 0, 3, 1,
@@ -104,7 +104,7 @@ int main(int  argc, char* argv[]) {
 						   2, 3, 0,
 						   0, 1, 2 };
 	EBO1 = new GLBuffer();
-	ElementBufferTarget::BufferData(EBO1, sizeof(Indices), Indices, Usage_Type::STATIC_DRAW);
+	ElementBufferTarget::BufferData(EBO1, sizeof(Indices), Indices, EUsage_Type::STATIC_DRAW);
 	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx13.vert", "lx13.frag");
 	GLint Location1 = shader->GetAttribLocation("Position");//获得对应顶点属性的下标
 	GLint Location2 = shader->GetAttribLocation("TexCoord");//获得对应顶点属性的下标

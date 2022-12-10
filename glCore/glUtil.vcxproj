@@ -156,6 +156,7 @@
     <ClCompile Include="ElementBufferTarget.cpp" />
     <ClCompile Include="GLBuffer.cpp" />
     <ClCompile Include="glUtil.cpp" />
+    <ClCompile Include="Light.cpp" />
     <ClCompile Include="OpenGLObjectBase.cpp" />
     <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="..\include\GLDef.h" />
     <ClInclude Include="..\include\GLHeader.h" />
     <ClInclude Include="..\include\GLObjectBase.h" />
+    <ClInclude Include="..\include\Light.h" />
     <ClInclude Include="..\include\Pipeline.h" />
     <ClInclude Include="..\include\Shader.h" />
     <ClInclude Include="..\include\Texture.h" />

@@ -192,7 +192,7 @@ namespace lan {
 				int y = i;
 				for (; temp_data[y][i] == 0; y++);
 				if (y == 4) {//第一行全是0
-					throw std::exception("不是可逆矩阵");
+					throw std::exception("不是可逆矩阵 ");
 				}
 				if (y != i) {
 					std::swap(temp_data[i], temp_data[y]);

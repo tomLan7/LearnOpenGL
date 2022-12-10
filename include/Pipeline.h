@@ -3,6 +3,7 @@
 #include"Matrix4F.h"
 #include<iostream>
 #include"Camera.h"
+#include <GLDef.h>
 namespace lan {
     /*
     * 有模型、光源、摄像机、粒子等数据
@@ -91,6 +92,26 @@ namespace lan {
         {
             //std::cout << "key：" << Key << "和x：" << x << "和y：" << y << std::endl;
             getMainCamera().OnKeyboard(Key,false);
+        }
+
+        void ClearBuffer(EClear_Buffer flag) {
+            glClear(Buffer2GLbitfield(flag));
+        }
+
+        void FontFace(EWrap_Direction warpDirection) {
+            glFrontFace(WrapDirection2GLenum(warpDirection));
+        }
+
+        void CullFace(ESide side) {
+            glCullFace(Side2GLenum(side));
+        }
+
+        void EnableFeatures(EFeatures feature) {
+            glEnable(Features2GLenum(feature));
+        }
+
+        void DisableFeatures(EFeatures feature) {
+            glDisable(Features2GLenum(feature));
         }
     };
 

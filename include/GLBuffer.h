@@ -26,7 +26,7 @@ namespace lan {
 		/// 绑定当前缓冲区到指定Target
 		/// </summary>
 		/// <param name="target"></param>
-		void BindBuffer(Target_Type target) {
+		void BindBuffer(ETarget_Type target) {
 			glBindBuffer(Target2GLenum(target), id);
 		}
 
@@ -34,7 +34,7 @@ namespace lan {
 		/// 让指定区域的Target解绑
 		/// </summary>
 		/// <param name="target"></param>
-		static void UnBindBuffer(Target_Type target) {
+		static void UnBindBuffer(ETarget_Type target) {
 			glBindBuffer(Target2GLenum(target), 0);
 		}
 	};
