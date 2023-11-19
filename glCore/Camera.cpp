@@ -1,5 +1,5 @@
 #include"Camera.h"
-#include "glut.h"
+#include "GL/glut.h"
 #include<iostream>
 using namespace std;
 #define StepSize 1.0

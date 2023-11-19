@@ -33,7 +33,7 @@
 #include "imgui_impl_glut.h"
 #define GL_SILENCE_DEPRECATION
 //#ifdef __APPLE__
-#include <glut.h>
+#include <GL/glut.h>
 //#else
 //#include <GL/freeglut.h>
 //#endif

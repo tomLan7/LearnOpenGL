@@ -1,5 +1,6 @@
 #include "LanGlut.h"
 #include<iostream>
+#include <windows.h>
 using namespace std;
 
 static void _InitGlew() {
@@ -10,11 +11,11 @@ static void _InitGlew() {
 		exit(1);
 	}
 	else {
-		cout << "GLEW³õÊ¼»¯³É¹¦" << endl;
+		cout << "GLEWåˆå§‹åŒ–æˆåŠŸ " << endl;
 	}
 }
 static void (*_renderFuncHandler)();
-/*Ö»ÓÐÏÔÊ¾º¯ÊýÊÇ±ØÐëÉèÖÃ£¬ÆäËûµÄ²»ÉèÖÃÒ²¿ÉÒÔ£¬ËùÒÔ²»ÐèÒª¶µµ×
+/*åªæœ‰æ˜¾ç¤ºå‡½æ•°æ˜¯å¿…é¡»è®¾ç½®ï¼Œå…¶ä»–çš„ä¸è®¾ç½®ä¹Ÿå¯ä»¥ï¼Œæ‰€ä»¥ä¸éœ€è¦å…œåº•
 static void (*_reshapeFuncHandler)(int width, int height);
 static void (*_keyboardFuncHandler)(unsigned char key, int x, int y);
 static void (*_mouseFuncHandler)(int button, int state, int x, int y);
@@ -29,23 +30,23 @@ void LanGlut::SetDisplayFunc(void (*func)(void)) {
 
 void LanGlut::TriggerTimer(unsigned int msecs,
 	void (*func)(int value), int value) {
-	glutTimerFunc(msecs,func,value);
+	glutTimerFunc(msecs, func, value);
 }
 
 static void _DefaultRenderHandler() {
-	cout << "default render function call"<<endl;
+	cout << "default render function call" << endl;
 	glClear(GL_COLOR_BUFFER_BIT);
 	glutSwapBuffers();
 }
 static void _DefaultReshapeHandler(int width, int height) {
-	cout << "default reshape function call width:"<<width <<" height:"<< height << endl;
+	cout << "default reshape function call width:" << width << " height:" << height << endl;
 }
 
 static void _DefaultKeyboardHandler(unsigned char key, int x, int y) {
-	cout << "default keyboard function call key:"<<key<<" x:" << x << " y:" << y << endl;
+	cout << "default keyboard function call key:" << key << " x:" << x << " y:" << y << endl;
 }
 static void _DefaultMouseHandler(int button, int state, int x, int y) {
-	cout << "default mouse function call button:"<<button<<" state:"<<state<<" x:" << x << " y:" << y << endl;
+	cout << "default mouse function call button:" << button << " state:" << state << " x:" << x << " y:" << y << endl;
 }
 static void _DefaultMotionHandler(int x, int y) {
 	cout << "default motion function call x:" << x << " y:" << y << endl;
@@ -56,7 +57,7 @@ static void _DefaultPassiveMotionHandler(int x, int y) {
 }
 
 static void _DefaultIdleHandler() {
-	cout << "default idle call"<< endl;
+	cout << "default idle call" << endl;
 }
 
 void LanGlut::SetReshapeFunc(void (*func)(int width, int height)) {
@@ -84,13 +85,15 @@ void LanGlut::SetIdleFunc(void (*func)(void)) {
 }
 bool _runMainLoop = false;
 void LanGlut::Init(int& argcp, char** argv) {
-    glutInit(&argcp, argv);
-	//²Î¿¼ÕâÀï£¬Áô×ÅÒÔºóÀ©Õ¹ https://www.opengl.org/resources/libraries/glut/spec3/node12.html#SECTION00033000000000000000
+
+
+	glutInit(&argcp, argv);
+	//å‚è€ƒè¿™é‡Œï¼Œç•™ç€ä»¥åŽæ‰©å±• https://www.opengl.org/resources/libraries/glut/spec3/node12.html#SECTION00033000000000000000
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
 	glutInitWindowSize(1024, 768);
 	glutInitWindowPosition(100, 100);
 	glutCreateWindow("lanGlut Learning");
-
+	SetConsoleOutputCP(CP_UTF8); //é˜²æ­¢æŽ§åˆ¶å°å‡ºçŽ°ä¹±ç 
 	_InitGlew();
 	LanGlut::SetDisplayFunc(_DefaultRenderHandler);
 
@@ -100,18 +103,18 @@ void LanGlut::Init(int& argcp, char** argv) {
 	LanGlut::SetMotionFunc(_DefaultMotionHandler);
 	LanGlut::SetPassiveMotionFunc(_DefaultPassiveMotionHandler);
 	LanGlut::SetIdleFunc(_DefaultIdleHandler);
-	atexit([](){
+	atexit([]() {
 		if (_runMainLoop == false) {
-			printf("ÇëÔÚmainº¯Êý×îºóÔËÐÐLanGlut::MainLoop()");
+			printf("è¯·åœ¨mainå‡½æ•°æœ€åŽè¿è¡ŒLanGlut::MainLoop()");
 			system("pause");
 		}
-	});
+		});
 }
 
 void LanGlut::MainLoop() {
 	_runMainLoop = true;
 	glutDisplayFunc(_renderFuncHandler);
-	/*³ýÁËÏÔÊ¾º¯Êý£¬ÆäËûº¯Êý²»ÐèÒª¶µµ×»úÖÆ
+	/*é™¤äº†æ˜¾ç¤ºå‡½æ•°ï¼Œå…¶ä»–å‡½æ•°ä¸éœ€è¦å…œåº•æœºåˆ¶
 	glutReshapeFunc(_reshapeFuncHandler);
 	glutKeyboardFunc(_keyboardFuncHandler);
 	glutMouseFunc(_mouseFuncHandler);

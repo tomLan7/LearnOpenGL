@@ -106,12 +106,21 @@ namespace lan {
             glCullFace(Side2GLenum(side));
         }
 
+        // 设置将NDC中的东西,绘制到窗口的那一块区域
+        void SetViewPort(int ldx,int ldy,int w,int h) {
+            glViewport(ldx, ldy, w, h);
+        }
+
         void EnableFeatures(EFeatures feature) {
             glEnable(Features2GLenum(feature));
         }
 
         void DisableFeatures(EFeatures feature) {
             glDisable(Features2GLenum(feature));
+        }
+
+        bool IsEnableFeatures(EFeatures feature) {
+            glIsEnabled(Features2GLenum(feature));
         }
     };
 

@@ -1,8 +1,9 @@
 #pragma once
-//¸øÍâ²¿°üº¬µÄÍ·ÎÄ¼ş£¬°üÀ¨±¾³ÌĞò¼¯ËùÓĞÄÚÈİ
+//ç»™å¤–éƒ¨åŒ…å«çš„å¤´æ–‡ä»¶ï¼ŒåŒ…æ‹¬æœ¬ç¨‹åºé›†æ‰€æœ‰å†…å®¹
 
 #include"GLDef.h"
 
+#include"helper.h"
 #include"Vector3F.h"
 #include"Vector2F.h"
 #include"Shader.h"

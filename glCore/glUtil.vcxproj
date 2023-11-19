@@ -30,26 +30,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -155,7 +155,6 @@
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ElementBufferTarget.cpp" />
     <ClCompile Include="GLBuffer.cpp" />
-    <ClCompile Include="glUtil.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="OpenGLObjectBase.cpp" />
     <ClCompile Include="Pipeline.cpp" />
@@ -171,6 +170,7 @@
     <ClInclude Include="..\include\GLDef.h" />
     <ClInclude Include="..\include\GLHeader.h" />
     <ClInclude Include="..\include\GLObjectBase.h" />
+    <ClInclude Include="..\include\Helper.h" />
     <ClInclude Include="..\include\Light.h" />
     <ClInclude Include="..\include\Pipeline.h" />
     <ClInclude Include="..\include\Shader.h" />

@@ -11,13 +11,13 @@ GLuint VBO1;
 
 void ImGUIRender() {
 	ImGui::Text("Hello, world %d", 123);
-	ImGui::Button("Save");	
+	ImGui::Button("Save");
 	char buf[512];
 	ImGui::InputText("string", buf, IM_ARRAYSIZE(buf));
 	float f;
 	ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
 }
-void Render() {
+static void Render() {
 	glClear(GL_COLOR_BUFFER_BIT);
 
 	ImGUIRender();

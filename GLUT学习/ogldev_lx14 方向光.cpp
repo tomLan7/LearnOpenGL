@@ -5,12 +5,9 @@
 #include"Quaternion.h"
 #include<glm/gtc/quaternion.hpp>
 #include "LanGlut.h"
-#include<Magick++.h>
 #include <windows.h>
 using namespace std;
 using namespace lan;
-
-
 
 GLBuffer* VBO1;
 GLBuffer* EBO1;
@@ -22,13 +19,13 @@ DirectionalLight light;
 float t;
 void IdleFunc() {
 	t += 0.01;
-	//cout << "rate" << rate << "ËÄÔªÊý" << quat << "Å·À­½Ç" << euler << endl;
+	//cout << "rate" << rate << "å››å…ƒæ•°" << quat << "æ¬§æ‹‰è§’" << euler << endl;
 	LanGlut::PostRedisplay();
 	light.Direction = Vector3F(0.5, cos(t), sin(t));
 }
 
 void Render() {
-	//cout << "»æÍ¼" << endl;
+	//cout << "ç»˜å›¾" << endl;
 	p.ClearBuffer(EClear_Buffer::COLOR_BUFFER_BIT| EClear_Buffer::DEPTH_BUFFER_BIT);
 
 	p.initPerspectiveProj(60.0f, 1.f, 0.3f, 1000.f);
@@ -44,7 +41,7 @@ void Render() {
 int main(int  argc, char* argv[]) {
 	LanGlut::Init(argc, argv);
 	LanGlut::SetDisplayFunc(Render);
-	LanGlut::SetWindowTitle("Ê¹ÓÃÎÆÀí");
+	LanGlut::SetWindowTitle("ä½¿ç”¨çº¹ç†");
 	light.Direction = Vector3F(1,0.2,0.3);
 	light.DiffuseIntensity = 0.5;
 	light.AmbientIntensity = 0.2;
@@ -55,7 +52,7 @@ int main(int  argc, char* argv[]) {
 		auto windowSize = LanGlut::GetWindowSize();
 		float h = x / windowSize.x * 360 - 180;
 		float v = -(y / windowSize.y * 180 - 90);
-		cout << "ºá½Ç¶È:" << h << "\t×Ý½Ç¶È:" << v << endl;
+		cout << "æ¨ªè§’åº¦:" << h << "\tçºµè§’åº¦:" << v << endl;
 		p.getMainCamera().setHVAngle(h, v);
 		});
 	LanGlut::SetKeyboardFunc([](unsigned char key, int x, int y) {
@@ -65,24 +62,24 @@ int main(int  argc, char* argv[]) {
 		});
 	LanGlut::SetSpecialKeyFunc([](int key, int x, int y) {
 		p.SpecialKeyboardCB(key, x, y);
-		cout << "key£º " << key << "ºÍx£º " << x << "ºÍy£º " << y << endl;
+		cout << "keyï¼š " << key << "å’Œxï¼š " << x << "å’Œyï¼š " << y << endl;
 		cout << p.getMainCamera().toString() << endl;
 		});
 
 	LanGlut::SetKeyboardFunc([](unsigned char key, int x, int y) {
 		p.ASCIIKeyboardCB(key, x, y);
-		cout << "key£º " << key << "ºÍx£º " << x << "ºÍy£º " << y << endl;
+		cout << "keyï¼š " << key << "å’Œxï¼š " << x << "å’Œyï¼š " << y << endl;
 		cout << p.getMainCamera().toString() << endl;
 		});
 	p.initCamera(Vector3F(0, 0, 0), lan::Vector3F(0, 0, 1), lan::Vector3F(0, 1, 0));
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	texture1 = new Texture("container.jpg");
-	cout << "Ö§³ÖÎÆÀíµ¥ÔªÊýÎª" << Texture::GetMaxCombinedTextureImageUnitsCount() << endl;
+	cout << "æ”¯æŒçº¹ç†å•å…ƒæ•°ä¸º" << Texture::GetMaxCombinedTextureImageUnitsCount() << endl;
 
 	p.FontFace(EWrap_Direction::CounterClockwise);
-	glCullFace(GL_BACK);//ÉèÖÃÌÞ³ýÃæ
-	glEnable(GL_CULL_FACE);//¿ªÆô±³ÃæÌÞ³ý
+	glCullFace(GL_BACK);//è®¾ç½®å‰”é™¤é¢
+	glEnable(GL_CULL_FACE);//å¼€å¯èƒŒé¢å‰”é™¤
 	std::vector<Vertex> vertices = {
 	Vertex(Vector3F(-1.0f, -1.0f, 0.5773f), Vector2F(0.0f, 0.0f)),
 	Vertex(Vector3F(0.0f, -1.0f, -1.15475), Vector2F(0.5f, 0.0f)),
@@ -105,9 +102,9 @@ int main(int  argc, char* argv[]) {
 	EBO1 = new GLBuffer();
 	ElementBufferTarget::BufferData(EBO1, Indices, EUsage_Type::STATIC_DRAW);
 	shader = lan::ShaderProgram::CreateFromVertexAndFragmentPath("lx14.vert", "lx14.frag");
-	GLint Location1 = shader->GetAttribLocation("Position");//»ñµÃ¶ÔÓ¦¶¥µãÊôÐÔµÄÏÂ±ê
-	GLint Location2 = shader->GetAttribLocation("TexCoord");//»ñµÃ¶ÔÓ¦¶¥µãÊôÐÔµÄÏÂ±ê
-	GLint Location3 = shader->GetAttribLocation("Normal");//»ñµÃ¶ÔÓ¦¶¥µãÊôÐÔµÄÏÂ±ê
+	GLint Location1 = shader->GetAttribLocation("Position");//èŽ·å¾—å¯¹åº”é¡¶ç‚¹å±žæ€§çš„ä¸‹æ ‡
+	GLint Location2 = shader->GetAttribLocation("TexCoord");//èŽ·å¾—å¯¹åº”é¡¶ç‚¹å±žæ€§çš„ä¸‹æ ‡
+	GLint Location3 = shader->GetAttribLocation("Normal");//èŽ·å¾—å¯¹åº”é¡¶ç‚¹å±žæ€§çš„ä¸‹æ ‡
 	glEnableVertexAttribArray(Location1);
 	glEnableVertexAttribArray(Location2);
 	glEnableVertexAttribArray(Location3);

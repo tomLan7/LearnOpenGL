@@ -1,94 +1,98 @@
 #pragma once
 #define GLEW_STATIC
-#include"GL/glew.h"
-#include<glut.h>
-#include<string>
 #include"GLHeader.h"
+#ifdef __APPLE__
+#include<glut/glut.h>
+#else
+#include<GL/glut.h>
+#endif
+
+#include<string>
 /// <summary>
-/// ²Î¿¼GLUT½Ì³Ì https://www.jianshu.com/p/86f8ce123de1
+/// å‚è€ƒGLUTæ•™ç¨‹ https://www.jianshu.com/p/86f8ce123de1
 /// </summary>
 struct LanGlut {
-    //³õÊ¼»¯Glut£¬±ØĞëµÚÒ»Ìõµ÷ÓÃ
+    //åˆå§‹åŒ–Glutï¼Œå¿…é¡»ç¬¬ä¸€æ¡è°ƒç”¨
     static void Init(int& argcp, char** argv);
     /// <summary>
-    /// ÉèÖÃ»æÍ¼»Øµ÷º¯Êı¡£Èç¹û²»ÉèÖÃ¾ÍÓÃÄ¬ÈÏµÄ»æÖÆº¯Êı£¬Ö»ÏÔÊ¾µ«²»½øĞĞÈÎºÎ²Ù×÷
+    /// è®¾ç½®ç»˜å›¾å›è°ƒå‡½æ•°ã€‚å¦‚æœä¸è®¾ç½®å°±ç”¨é»˜è®¤çš„ç»˜åˆ¶å‡½æ•°ï¼Œåªæ˜¾ç¤ºä½†ä¸è¿›è¡Œä»»ä½•æ“ä½œ
     /// </summary>
     /// <param name="func"></param>
     static void SetDisplayFunc(void (*func)(void));
-    //½øÈëGlutÑ­»·£¬±ØĞë×îºóÒ»Ìõµ÷ÓÃ
+    //è¿›å…¥Glutå¾ªç¯ï¼Œå¿…é¡»æœ€åä¸€æ¡è°ƒç”¨
     static void MainLoop();
 
     /// <summary>
-    /// ÉèÖÃ´°¿Ú±êÌâ
+    /// è®¾ç½®çª—å£æ ‡é¢˜
     /// </summary>
     /// <param name="titleName"></param>
     static void SetWindowTitle(const std::string& titleName);
 
     /// <summary>
-    /// ½»»»Ë«»º³åµÄ»º³åÇø£¬ÈÃºóÌ¨»º³åÇøÏÔÊ¾³öÀ´¡£
+    /// äº¤æ¢åŒç¼“å†²çš„ç¼“å†²åŒºï¼Œè®©åå°ç¼“å†²åŒºæ˜¾ç¤ºå‡ºæ¥ã€‚
     /// </summary>
     static void SwapBuffers() {
         glutSwapBuffers();
     }
 
     /// <summary>
-    /// ¿ÉÑ¡µÄÉèÖÃÖØĞÂÉèÖÃ´óĞ¡º¯Êı¡£
+    /// å¯é€‰çš„è®¾ç½®é‡æ–°è®¾ç½®å¤§å°å‡½æ•°ã€‚
     /// </summary>
     /// <param name="func"></param>
     static void SetReshapeFunc(void (*func)(int width, int height));
 
     /// <summary>
-    /// ¿ÉÑ¡µÄ¼üÅÌÊÂ¼ş
+    /// å¯é€‰çš„é”®ç›˜äº‹ä»¶
     /// </summary>
     /// <param name="func"></param>
     static void SetKeyboardFunc(void (*func)(unsigned char key, int x, int y));
 
     /// <summary>
-    /// ¿ÉÑ¡µÄÊó±êÊÂ¼ş
+    /// å¯é€‰çš„é¼ æ ‡äº‹ä»¶
     /// </summary>
     /// <param name="func"></param>
     static void SetMouseFunc(void (*func)(int button, int state, int x, int y));
 
     /// <summary>
-    /// ¿ÉÑ¡µÄÍÏ¶¯ÊÂ¼ş¡£´«NULL¼´¿É½ûÓÃ¡£
+    /// å¯é€‰çš„æ‹–åŠ¨äº‹ä»¶ã€‚ä¼ NULLå³å¯ç¦ç”¨ã€‚
     /// </summary>
     /// <param name="func"></param>
     static void SetMotionFunc(void (*func)(int x, int y));
 
     /// <summary>
-    /// ¿ÉÑ¡µÄÍÏ¶¯ÊÂ¼ş¡£´«NULL¼´¿É½ûÓÃ¡£
+    /// å¯é€‰çš„æ‹–åŠ¨äº‹ä»¶ã€‚ä¼ NULLå³å¯ç¦ç”¨ã€‚
     /// </summary>
     /// <param name="func"></param>
     static void SetPassiveMotionFunc(void (*func)(int x, int y));
 
     /// <summary>
-    /// ¿ÉÑ¡µÄÍ£Ö¹ÊÂ¼ş¡£´«NULL¼´¿É½ûÓÃ¡£
+    /// å¯é€‰çš„åœæ­¢äº‹ä»¶ã€‚ä¼ NULLå³å¯ç¦ç”¨ã€‚
     /// </summary>
     /// <param name="func"></param>
     static void SetIdleFunc(void (*func)(void));
 
     /// <summary>
-    /// ´¥·¢Ò»¸öÒ»´ÎĞÔ¶¨Ê±Æ÷¡£
+    /// è§¦å‘ä¸€ä¸ªä¸€æ¬¡æ€§å®šæ—¶å™¨ã€‚
     /// </summary>
-    /// <param name="msecs">µ¥Î»ºÁÃë</param>
+    /// <param name="msecs">å•ä½æ¯«ç§’</param>
     /// <param name="func"></param>
-    /// <param name="value">²ÎÊıµÄÖµ¡£</param>
+    /// <param name="value">å‚æ•°çš„å€¼ã€‚</param>
     static void TriggerTimer(unsigned int msecs,
         void (*func)(int value), int value);
 
     /// <summary>
-    /// post²»ÊÇÁ¢¿Ìµ÷ÓÃ¡£ËùÒÔ²»ÓÃTrigger¡£±ê¼ÇĞèÒª»æÖÆ
+    /// postä¸æ˜¯ç«‹åˆ»è°ƒç”¨ã€‚æ‰€ä»¥ä¸ç”¨Triggerã€‚æ ‡è®°éœ€è¦ç»˜åˆ¶
     /// </summary>
     static void PostRedisplay() {
         glutPostRedisplay();
     }
 
     /// <summary>
-    /// ÌØÊâ°´¼ü£¬Èç·½Ïò¼üµÈ
+    /// ç‰¹æ®ŠæŒ‰é”®ï¼Œå¦‚æ–¹å‘é”®ç­‰
     /// </summary>
     /// <param name="func"></param>
     static void SetSpecialKeyFunc(void (*func)(int key, int x, int y)) {
-        glutSpecialFunc(func); 
+        glutSpecialFunc(func);
     }
 
     static lan::Vector2F GetScreenSize() {
@@ -104,12 +108,12 @@ struct LanGlut {
     }
 
     /*
-    * »¹Ç·È±µÄÊÂ¼ş»Øµ÷
-    * glutVisibilityFunc    ÉèÖÃ´°¿Ú¿É¼ûĞÔµÄ»Øµ÷
-    * glutEntryFunc         ½øÈë»òÀë¿ª´°¿Ú
-    * SpaceballÉè±¸Ïà¹Ø£¬ButtonBoxÉè±¸£¬DialsÉè±¸£¬TabletÉè±¸£¬
-    * glutMenuStatusFunc    µ¯³ö²Ëµ¥»Øµ÷
-    * int glutIgnoreKeyRepeat(int repeatMode); ½ûÓÃkeyboardµÄrepeatMode ´«µİ0£¬¿ªÆôauto repeat£¬·Ç0Ôò½ûÓÃauto repeat¡£
+    * è¿˜æ¬ ç¼ºçš„äº‹ä»¶å›è°ƒ
+    * glutVisibilityFunc    è®¾ç½®çª—å£å¯è§æ€§çš„å›è°ƒ
+    * glutEntryFunc         è¿›å…¥æˆ–ç¦»å¼€çª—å£
+    * Spaceballè®¾å¤‡ç›¸å…³ï¼ŒButtonBoxè®¾å¤‡ï¼ŒDialsè®¾å¤‡ï¼ŒTabletè®¾å¤‡ï¼Œ
+    * glutMenuStatusFunc    å¼¹å‡ºèœå•å›è°ƒ
+    * int glutIgnoreKeyRepeat(int repeatMode); ç¦ç”¨keyboardçš„repeatMode ä¼ é€’0ï¼Œå¼€å¯auto repeatï¼Œé0åˆ™ç¦ç”¨auto repeatã€‚
     * Void glutKeyboardUpFunc(void (*func)(unsigned char key,int x,int y));
     * Void glutSpecialUpFunc(void (*func)(int key,int x,int y));
     */

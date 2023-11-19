@@ -1,8 +1,9 @@
-﻿// GLFW学习.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+// GLFW学习.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
 
 #include <iostream>
 #define GLEW_STATIC
+
 #include <GL/glew.h>
 #include<GLFW/glfw3.h>
 int main()

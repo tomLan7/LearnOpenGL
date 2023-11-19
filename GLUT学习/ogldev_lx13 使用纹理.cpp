@@ -5,7 +5,6 @@
 #include"Quaternion.h"
 #include<glm/gtc/quaternion.hpp>
 #include "LanGlut.h"
-#include<Magick++.h>
 #include <windows.h>
 using namespace std;
 using namespace lan;

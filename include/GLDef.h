@@ -1,7 +1,6 @@
 #pragma once
 #define GLEW_STATIC
 #include"GL/glew.h"
-#include"glut.h"
 #include<exception>
 
 /// <summary>
@@ -45,6 +44,34 @@ namespace lan {
 	enum class EFeatures{
 		DEPTH_TEST
 	};
+
+	enum class EErrorType {
+		INVALID_ENUM,//枚举参数超出范围
+		INVALID_VALUE,//数值超出范围
+		INVALID_OPERATION,//当前状态中操作非法
+		OUT_OF_MEMORY,//内存不足
+		NO_ERROR,//没有错误
+	};
+
+	static GLenum Error2GLenum(EErrorType error) {
+		//帮我写
+        switch (error)
+		{
+		case EErrorType::INVALID_ENUM:
+			return GL_INVALID_ENUM;
+		case EErrorType::INVALID_VALUE:
+			return GL_INVALID_VALUE;
+		case EErrorType::INVALID_OPERATION:
+			return GL_INVALID_OPERATION;
+		case EErrorType::OUT_OF_MEMORY:
+			return GL_OUT_OF_MEMORY;
+		case EErrorType::NO_ERROR:
+			return GL_NO_ERROR;
+		default:
+			break;
+		}
+		throw new std::exception("未支持的EErrorType类型枚举");
+	}
 
 	static GLenum Target2GLenum(ETarget_Type target) {
 		switch (target)
