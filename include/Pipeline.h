@@ -34,7 +34,7 @@ namespace lan {
             initWorldOffset(0, 0, 0);
         }
         void initWorldScale(float ScaleX, float ScaleY, float ScaleZ) {
-            worldScale = {ScaleX,ScaleY,ScaleZ};
+            worldScale = { ScaleX,ScaleY,ScaleZ };
         }
         void initWorldOffset(float x, float y, float z) {
             worldOffset = { x,y,z };
@@ -45,25 +45,25 @@ namespace lan {
             worldRotation = { ToRadian(RotateX), ToRadian(RotateY), ToRadian(RotateZ) };
         }
         void initWorldRotate(Vector3F xyz) {
-            initWorldRotate(xyz.x,xyz.y,xyz.z);
+            initWorldRotate(xyz.x, xyz.y, xyz.z);
         }
 
         Matrix4F getWorldTransform() {
-                Matrix4F ScaleTrans, RotateTrans, TranslationTrans;
-                ScaleTrans = Matrix4F::Scale(worldScale);
-                RotateTrans = Matrix4F::Rotate(worldRotation);
-                TranslationTrans = Matrix4F::Translate(worldOffset);
-                worldTransformation = TranslationTrans * RotateTrans * ScaleTrans;
+            Matrix4F ScaleTrans, RotateTrans, TranslationTrans;
+            ScaleTrans = Matrix4F::Scale(worldScale);
+            RotateTrans = Matrix4F::Rotate(worldRotation);
+            TranslationTrans = Matrix4F::Translate(worldOffset);
+            worldTransformation = TranslationTrans * RotateTrans * ScaleTrans;
             return worldTransformation;
         }
         //
-        void initPerspectiveProj(float FOV,float aspectRatio,float zNear, float zFar) {
+        void initPerspectiveProj(float FOV, float aspectRatio, float zNear, float zFar) {
             isPersProjTransDirty = true;
-            m_persProj = Matrix4F::PersProjTransform(FOV,aspectRatio,zNear,zFar);
+            m_persProj = Matrix4F::PersProjTransform(FOV, aspectRatio, zNear, zFar);
         }
 
-        void initCamera(const Vector3F& position,const Vector3F& Face, const Vector3F& Up) {
-            main_camera=Camera(position, position+Face,Up);
+        void initCamera(const Vector3F& position, const Vector3F& Face, const Vector3F& Up) {
+            main_camera = Camera(position, position + Face, Up);
         }
         //没有透视和相机
         Matrix4F GetTransNoProj() {
@@ -79,19 +79,30 @@ namespace lan {
         }
         //透视和相机
         Matrix4F GetTransByCameraAndPerspective() {
-            Matrix4F ct=GetCameraTransform();//拷贝构造方式存到ct变量中
+            Matrix4F ct = GetCameraTransform();//拷贝构造方式存到ct变量中
             Matrix4F pt = GetTransByPerspective();//拷贝构造方式存到pt变量中
-            return pt*ct;//成功
+            return pt * ct;//成功
         }
         void SpecialKeyboardCB(int Key, int x, int y)
         {
             //std::cout << "key："<<Key<<"和x："<<x<<"和y："<<y << std::endl;
-            getMainCamera().OnKeyboard(Key,true);
+            getMainCamera().OnKeyboard(Key, true);
         }
         void ASCIIKeyboardCB(unsigned char Key, int x, int y)
         {
             //std::cout << "key：" << Key << "和x：" << x << "和y：" << y << std::endl;
-            getMainCamera().OnKeyboard(Key,false);
+            getMainCamera().OnKeyboard(Key, false);
+        }
+
+        // 设置窗口清除的颜色
+        void SetClearColor(float r, float g, float b, float a)
+        {
+            glClearColor(r, g, b, a);
+        }
+
+        void SetClearColor(Color color)
+        {
+            SetClearColor(color.r,color.g,color.b,color.a);
         }
 
         void ClearBuffer(EClear_Buffer flag) {
@@ -107,7 +118,7 @@ namespace lan {
         }
 
         // 设置将NDC中的东西,绘制到窗口的那一块区域
-        void SetViewPort(int ldx,int ldy,int w,int h) {
+        void SetViewPort(int ldx, int ldy, int w, int h) {
             glViewport(ldx, ldy, w, h);
         }
 

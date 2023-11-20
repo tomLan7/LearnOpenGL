@@ -8,7 +8,8 @@
 #include"light.h"
 
 namespace lan {
-	
+
+	//ä»£è¡¨ä¸€ä¸ªç€è‰²å™¨å¯¹è±¡,
 	class Shader :public GLObjectBase
 	{
 		GLenum ShaderType;
@@ -48,6 +49,7 @@ namespace lan {
 		}
 	};
 
+	//ä»£è¡¨ä¸€ä¸ªç€è‰²å™¨ç¨‹åº,åŒ…å«å¤šä¸ªç€è‰²å™¨å¯¹è±¡
 	class ShaderProgram :public GLObjectBase {
 	public:
 		using GLObjectBase::GLObjectBase;
@@ -82,7 +84,7 @@ namespace lan {
 		void User() {
 			glUseProgram(ObjectId);
 		}
-		//ÉèÖÃfloatÀàĞÍ±äÁ¿
+		//è®¾ç½®floatç±»å‹å˜é‡
 		bool  Uniform(const std::string& attrName, float Value) {
 			GLint uniformIndex=glGetUniformLocation(this->ObjectId, attrName.c_str());
 			bool rtn = true;
@@ -92,7 +94,7 @@ namespace lan {
 			glUniform1f(uniformIndex, Value);
 			return rtn;
 		}
-		//ÉèÖÃvec4ÀàĞÍ±äÁ¿
+		//è®¾ç½®vec4ç±»å‹å˜é‡
 		bool Uniform(const std::string& attrName, float ValueX, float ValueY, float ValueZ, float ValueW) {
 			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
 			bool rtn = true;
@@ -109,7 +111,7 @@ namespace lan {
 			return Uniform(attrName, vec4.x, vec4.y, vec4.z, vec4.w);
 		}
 
-		//ÉèÖÃvec4ÀàĞÍ±äÁ¿
+		//è®¾ç½®vec4ç±»å‹å˜é‡
 		bool Uniform(const std::string& attrName, float ValueX, float ValueY, float ValueZ) {
 			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
 			bool rtn = true;
@@ -135,7 +137,7 @@ namespace lan {
 			return ret;
 		}
 
-		//ÉèÖÃ±äÁ¿ÎªÄ³¸öÎÆÀíµ¥Ôª
+		//è®¾ç½®å˜é‡ä¸ºæŸä¸ªçº¹ç†å•å…ƒ
 		bool UniformTextureUnit(const std::string& attrName, int TextureUnitIndex) {
 			GLint uniformIndex = glGetUniformLocation(this->ObjectId, attrName.c_str());
 			bool rtn = true;
@@ -154,9 +156,9 @@ namespace lan {
 
 		bool Uniform(const std::string& attrName, glm::vec4 value) {
 			return Uniform(attrName, value.x, value.y, value.z, value.w);
-			
+
 		}
-		//ÉèÖÃ±äÁ¿Îª¾ØÕó
+		//è®¾ç½®å˜é‡ä¸ºçŸ©é˜µ
 		bool Uniform(const std::string& attName, const glm::mat4& mat);
 		bool Uniform(const std::string& attName, const Matrix4F& mat);
 

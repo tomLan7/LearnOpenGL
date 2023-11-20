@@ -72,14 +72,14 @@ int main(int  argc, char* argv[]) {
 		cout << p.getMainCamera().toString() << endl;
 		});
 	p.initCamera(Vector3F(0, 0, 0), lan::Vector3F(0, 0, 1), lan::Vector3F(0, 1, 0));
-	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	p.SetClearColor(Color::Black);
 
 	texture1 = new Texture("container.jpg");
 	cout << "支持纹理单元数为" << Texture::GetMaxCombinedTextureImageUnitsCount() << endl;
 
 	p.FontFace(EWrap_Direction::CounterClockwise);
-	glCullFace(GL_BACK);//设置剔除面
-	glEnable(GL_CULL_FACE);//开启背面剔除
+	p.CullFace(ESide::BACK);//设置剔除面
+	p.EnableFeatures(EFeatures::CULL_FACE);//开启背面剔除
 	std::vector<Vertex> vertices = {
 	Vertex(Vector3F(-1.0f, -1.0f, 0.5773f), Vector2F(0.0f, 0.0f)),
 	Vertex(Vector3F(0.0f, -1.0f, -1.15475), Vector2F(0.5f, 0.0f)),

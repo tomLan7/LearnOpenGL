@@ -42,7 +42,8 @@ namespace lan {
 	};
 
 	enum class EFeatures{
-		DEPTH_TEST
+		DEPTH_TEST,
+		CULL_FACE,
 	};
 
 	enum class EErrorType {
@@ -150,10 +151,45 @@ namespace lan {
 		{
 		case EFeatures::DEPTH_TEST:
 			return GL_DEPTH_TEST;
+		case EFeatures::CULL_FACE:
+            return GL_CULL_FACE;
 		default:
 			break;
 		}
 		throw new std::exception("未支持的EFeatures类型枚举");
 	}
+	struct Color {
+		float r;
+		float g;
+		float b;
+		float a;
+		Color(float r, float g, float b, float a = 1) :r(r), g(g), b(b), a(a) {
+			clamp();
+		}
 
+		void clamp() {
+			r = r > 1.0f ? 1.0f : r;
+			r = r < 0 ? 0 : r;
+			g = g > 1.0f ? 1.0f : g;
+			g = g < 0 ? 0 : g;
+			b = b > 1.0f ? 1.0f : b;
+			b = b < 0 ? 0 : b;
+			a = a > 1.0f ? 1.0f : a;
+			a = a < 0 ? 0 : a;
+		}
+		static const Color Black;
+		static const Color Red;
+		static const Color Green;
+		static const Color Yellow;
+		static const Color Blue;
+		static const Color Magenta;
+		static const Color Cyan;
+		static const Color DarkGray;
+		static const Color LightGray;
+		static const Color Brown;
+		static const Color PumpkinOrange;
+		static const Color PastelPink;
+		static const Color BarneyPurple;
+		static const Color While;
+	};
 }
